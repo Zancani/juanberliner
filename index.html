@@ -143,23 +143,16 @@
       object-fit: cover;
       filter: brightness(0.35) saturate(0.6);
     }
-    #hero-bg {
+    #hero-video-mobile {
       display: none;
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      filter: brightness(0.38) saturate(0.65);
-      animation: heroZoom 14s ease-in-out infinite alternate;
-      transform-origin: center center;
-      will-change: transform;
-    }
-    @keyframes heroZoom {
-      from { transform: scale(1); }
-      to   { transform: scale(1.08); }
+      filter: brightness(0.35) saturate(0.6);
     }
     @media (max-width: 768px) {
-      #hero-video { display: none; }
-      #hero-bg    { display: block; }
+      #hero-video        { display: none; }
+      #hero-video-mobile { display: block; }
     }
     #hero-overlay {
       position: absolute; inset: 0;
@@ -444,7 +437,7 @@
 ════════════════════════════════════════════ -->
 <section id="hero">
   <video id="hero-video" autoplay muted loop playsinline poster="Berlin-Skyline-Sunset.jpg" src="timelapse.mp4"></video>
-  <img id="hero-bg" src="Berlin-Skyline-Sunset.jpg" alt="" aria-hidden="true">
+  <video id="hero-video-mobile" autoplay muted loop playsinline poster="Berlin-Skyline-Sunset.jpg" src="Diseosinttulo-ezgif.com-resize-video.mp4"></video>
   <div id="hero-overlay"></div>
 
   <div id="hero-content" class="w-full max-w-7xl mx-auto px-6 md:px-10 pt-28 pb-14 md:pt-64 md:pb-24">
@@ -1430,10 +1423,19 @@ function handleBookingSubmit(e) {
       setTimeout(() => btns.forEach(b => { b.textContent = currentLang === 'es' ? 'Enviar solicitud de reserva' : 'Send booking request'; }), 3000);
     });
 }
-// Hero video autoplay fallback (desktop only — mobile uses static image)
+// Hero video autoplay fallback
 const heroVideo = document.getElementById('hero-video');
+const heroVideoMobile = document.getElementById('hero-video-mobile');
 if (heroVideo && window.innerWidth > 768) {
   heroVideo.play().catch(() => { heroVideo.style.display = 'none'; });
+}
+if (heroVideoMobile && window.innerWidth <= 768) {
+  heroVideoMobile.play().catch(() => {
+    heroVideoMobile.style.display = 'none';
+    document.getElementById('hero').style.backgroundImage = "url('Berlin-Skyline-Sunset.jpg')";
+    document.getElementById('hero').style.backgroundSize = 'cover';
+    document.getElementById('hero').style.backgroundPosition = 'center';
+  });
 }
 // Hide WA float when keyboard is open on mobile
 const waFloat = document.getElementById('whatsapp-float');
