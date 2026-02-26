@@ -59,12 +59,11 @@
     }
 
     /* Lang toggle */
-    .lang-en { display: none !important; }
-    body.lang-en .lang-es { display: none !important; }
-    body.lang-en .lang-en { display: revert !important; }
-    body.lang-en .lang-en-block { display: block !important; }
-    body.lang-en .lang-es-block { display: none !important; }
-    .lang-en-block { display: none !important; }
+    body:not(.lang-en) .lang-en  { display: none !important; }
+    body.lang-en       .lang-es  { display: none !important; }
+    body.lang-en       .lang-en-block { display: block !important; }
+    body:not(.lang-en) .lang-en-block { display: none !important; }
+    body.lang-en       .lang-es-block { display: none !important; }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 5px; }
