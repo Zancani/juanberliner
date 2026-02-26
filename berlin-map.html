@@ -187,22 +187,6 @@
     .m-wrap:hover { transform: scale(1.18) translateY(-3px) !important; }
     .m-wrap.sel { transform: scale(1.28) translateY(-4px) !important; }
 
-    /* ── PHOTO LOADING ──────────────────────────────────── */
-    .ph-loading {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(0,18,25,.55); z-index: 5;
-    }
-    .ph-loading::after {
-      content: '';
-      width: 26px; height: 26px;
-      border: 2px solid rgba(238,155,0,.25);
-      border-top-color: var(--gold);
-      border-radius: 50%;
-      animation: spin .75s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
     /* ── MOBILE ─────────────────────────────────────────── */
     @media (max-width: 768px) {
       nav { padding: 0 14px; gap: 10px; }
@@ -263,11 +247,6 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// ── GOOGLE PLACES API KEY ────────────────────────────────────────
-// Pegá tu clave aquí después de crearla en console.cloud.google.com
-// Habilitá "Places API (New)" y restringí la clave a tu dominio.
-const GOOGLE_API_KEY = '';
-
 // ── LANG ────────────────────────────────────────────────────────
 let lang = 'es';
 function setLang(l) {
@@ -893,49 +872,12 @@ function mkIcon(color, selected=false) {
   });
 }
 
-// ── GOOGLE PLACES PHOTOS ─────────────────────────────────────────
-const photosCache = {}; // key → array of photo URLs (or null if fetch failed)
-
-async function fetchGooglePhotos(place) {
-  const key = place.name + '|' + place.lat;
-  if (key in photosCache) return photosCache[key]; // cached (including null)
-  try {
-    const resp = await fetch('https://places.googleapis.com/v1/places:searchText', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Api-Key': GOOGLE_API_KEY,
-        'X-Goog-FieldMask': 'places.id,places.photos',
-      },
-      body: JSON.stringify({
-        textQuery: place.name + ' Berlin',
-        locationBias: {
-          circle: { center: { latitude: place.lat, longitude: place.lon }, radius: 300 }
-        },
-        maxResultCount: 1,
-      }),
-    });
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const data = await resp.json();
-    if (!data.places?.[0]?.photos?.length) { photosCache[key] = null; return null; }
-    photosCache[key] = data.places[0].photos.slice(0, 6).map(p =>
-      `https://places.googleapis.com/v1/${p.name}/media?maxWidthPx=800&key=${GOOGLE_API_KEY}`
-    );
-    return photosCache[key];
-  } catch (e) {
-    console.warn('Places API:', e.message);
-    photosCache[key] = null;
-    return null;
-  }
-}
-
 // ── STATE ────────────────────────────────────────────────────────
 let activeFilters = new Set(Object.keys(CAT));
 let markers = [];
 let selectedMarker = null;
 let photoIdx = 0;
 let curPhotos = [];
-let currentPlace = null; // tracks which place is open (avoids race conditions)
 
 // ── PHOTO CAROUSEL ───────────────────────────────────────────────
 function buildPhotos(photos, emoji) {
@@ -994,11 +936,9 @@ function goPhoto(i) {
 }
 
 // ── PANEL ────────────────────────────────────────────────────────
-async function openPanel(place) {
-  currentPlace = place;
+function openPanel(place) {
   const cat = CAT[place.category];
 
-  // Show fallback photos (Unsplash) or category emoji immediately — no wait
   buildPhotos(place.photos, cat.emoji);
 
   const badge = document.getElementById('p-badge');
@@ -1027,26 +967,6 @@ async function openPanel(place) {
 
   document.getElementById('panel').classList.add('open');
   setTimeout(() => map.invalidateSize(), 350);
-
-  // ── Fetch real Google Maps photos in background ──────────────
-  if (GOOGLE_API_KEY) {
-    // Show loading spinner over photos area
-    const photosEl = document.getElementById('panel-photos');
-    const loader = document.createElement('div');
-    loader.className = 'ph-loading';
-    loader.id = 'ph-loader';
-    photosEl.appendChild(loader);
-
-    const realPhotos = await fetchGooglePhotos(place);
-
-    // Only update if the user hasn't clicked a different place meanwhile
-    if (currentPlace === place) {
-      document.getElementById('ph-loader')?.remove();
-      if (realPhotos && realPhotos.length > 0) {
-        buildPhotos(realPhotos, cat.emoji);
-      }
-    }
-  }
 }
 
 function closePanel() {
