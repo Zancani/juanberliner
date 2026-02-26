@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juan Berliner — Guía oficial de turismo en Berlín</title>
+  <meta name="description" content="Tours privados y grupales en Berlín con guía certificado. Más de 2000 reseñas. Historia, cultura y autenticidad. Reserva tu tour hoy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#EE9B00',
+            'gold-light': '#E9D8A6',
+            'gold-dark': '#CA6702',
+            'berlin-dark': '#001219',
+            'berlin-surface': '#012A36',
+            'berlin-elevated': '#013747',
+            'berlin-border': '#003D52',
+            'berlin-muted': '#7FB5BF',
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            tight: '-0.03em',
+            widest: '0.15em',
+          },
+        }
+      }
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #001219;
+      color: #E9D8A6;
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.7;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* Lang toggle */
+    .lang-en { display: none !important; }
+    body.lang-en .lang-es { display: none !important; }
+    body.lang-en .lang-en { display: revert !important; }
+    body.lang-en .lang-en-block { display: block !important; }
+    body.lang-en .lang-es-block { display: none !important; }
+    .lang-en-block { display: none !important; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #001219; }
+    ::-webkit-scrollbar-thumb { background: #EE9B00; border-radius: 3px; }
+
+    /* Navbar */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(0,18,25,0.75);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+    }
+    #navbar.scrolled {
+      background: rgba(0,18,25,0.92);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 2px 32px rgba(0,0,0,0.6), 0 1px 0 rgba(238,155,0,0.15);
+    }
+
+    /* Gold glow button */
+    .btn-gold {
+      background: linear-gradient(135deg, #EE9B00 0%, #E9D8A6 50%, #EE9B00 100%);
+      color: #001219;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+      box-shadow: 0 0 0 rgba(238,155,0,0);
+    }
+    .btn-gold:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 4px 24px rgba(238,155,0,0.4), 0 0 0 1px rgba(238,155,0,0.3);
+    }
+    .btn-gold:active { transform: translateY(0) scale(0.99); }
+    .btn-gold:focus-visible { outline: 2px solid #EE9B00; outline-offset: 3px; }
+
+    .btn-outline {
+      border: 1px solid rgba(238,155,0,0.5);
+      color: #EE9B00;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.2s, box-shadow 0.2s;
+    }
+    .btn-outline:hover {
+      background: rgba(238,155,0,0.08);
+      border-color: #EE9B00;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(238,155,0,0.15);
+    }
+    .btn-outline:active { transform: translateY(0); }
+    .btn-outline:focus-visible { outline: 2px solid #EE9B00; outline-offset: 3px; }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #fff;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+    }
+    .btn-whatsapp:hover {
+      background: #1ebe5d;
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+    }
+    .btn-whatsapp:active { transform: translateY(0) scale(0.99); }
+    .btn-whatsapp:focus-visible { outline: 2px solid #25D366; outline-offset: 3px; }
+
+    /* Hero */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    #hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.35) saturate(0.6);
+    }
+    #hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0,18,25,0.15) 0%,
+        rgba(0,18,25,0.35) 40%,
+        rgba(0,18,25,0.75) 100%
+      );
+    }
+    #hero-content { position: relative; z-index: 2; }
+
+    /* Section texture */
+    .section-texture {
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(238,155,0,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(238,155,0,0.03) 0%, transparent 50%);
+    }
+
+    /* Tour cards */
+    .tour-card {
+      background: #012A36;
+      border: 1px solid #003D52;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, border-color 0.3s;
+      position: relative;
+    }
+    .tour-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .tour-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(238,155,0,0.25), 0 0 24px rgba(238,155,0,0.08);
+      border-color: rgba(238,155,0,0.3);
+    }
+    .tour-card:hover::before { border-color: rgba(238,155,0,0.2); }
+    .tour-card-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .tour-card-img img {
+      width: 100%; height: 220px;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
+      filter: brightness(0.75) saturate(0.7);
+    }
+    .tour-card:hover .tour-card-img img {
+      transform: scale(1.06);
+      filter: brightness(0.85) saturate(0.8);
+    }
+    .tour-card-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,18,25,0.7) 0%, transparent 50%);
+    }
+    .tour-card-img .tour-badge {
+      position: absolute; top: 12px; left: 12px; z-index: 2;
+    }
+
+    /* Divider */
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(238,155,0,0.4) 30%, rgba(238,155,0,0.7) 50%, rgba(238,155,0,0.4) 70%, transparent 100%);
+    }
+
+    /* Review cards */
+    .review-card {
+      background: #012A36;
+      border: 1px solid #003D52;
+      border-radius: 8px;
+      padding: 24px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .review-card:hover {
+      border-color: rgba(238,155,0,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    /* Stars */
+    .stars { color: #EE9B00; letter-spacing: 2px; }
+
+    /* Floating WhatsApp */
+    #whatsapp-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 900;
+      width: 56px; height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5), 0 2px 8px rgba(0,0,0,0.4);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+      cursor: pointer;
+    }
+    #whatsapp-float:hover {
+      transform: scale(1.12);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.65), 0 4px 12px rgba(0,0,0,0.5);
+    }
+    #whatsapp-float:active { transform: scale(0.97); }
+    #whatsapp-float::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: rgba(37,211,102,0.2);
+      animation: pulse-whatsapp 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse-whatsapp {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.25); opacity: 0; }
+    }
+    @media (max-width: 640px) {
+      #whatsapp-float { bottom: 16px; right: 16px; width: 50px; height: 50px; }
+      #whatsapp-float.input-focused { opacity: 0; pointer-events: none; }
+    }
+
+    /* Lang toggle button */
+    .lang-toggle {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 10px;
+      border: 1px solid #003D52;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: transparent;
+      color: #E9D8A6;
+    }
+    .lang-toggle:hover { border-color: #EE9B00; background: rgba(238,155,0,0.06); }
+    .lang-toggle:focus-visible { outline: 2px solid #EE9B00; outline-offset: 2px; }
+
+    /* Mobile menu */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: block; }
+
+    /* About badges */
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #013747;
+      border: 1px solid #003D52;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+
+    /* Section headings */
+    .section-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    /* Form inputs */
+    .form-input {
+      background: #013747;
+      border: 1px solid #003D52;
+      border-radius: 6px;
+      padding: 12px 16px;
+      min-height: 44px;
+      color: #E9D8A6;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      width: 100%;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input::placeholder { color: #555; }
+    .form-input:focus {
+      border-color: rgba(238,155,0,0.5);
+      box-shadow: 0 0 0 3px rgba(238,155,0,0.08);
+    }
+    .form-input:hover { border-color: #3A3A3A; }
+    select.form-input option { background: #013747; }
+
+    /* Carrusel de reseñas */
+    .reviews-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .reviews-slide { min-width: calc(100% / 3); }
+    @media (max-width: 1024px) { .reviews-slide { min-width: calc(100% / 2); } }
+    @media (max-width: 768px) { .reviews-slide { min-width: 100%; } }
+
+    /* Concrete texture for sections */
+    .texture-concrete {
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse at 50% 0%, rgba(238,155,0,0.05) 0%, transparent 70%);
+    }
+
+    /* Smooth fade-in on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+     pageFadeIn { from { opacity:0; } to { opacity:1; } }
+    body { animation: pageFadeIn 0.45s ease forwards; }
+    body.page-exit { opacity:0 !important; transition:opacity 0.3s ease !important; pointer-events:none; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════ -->
+<nav id="navbar" class="w-full py-4 px-6 md:px-10">
+  <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+
+    <!-- Logo -->
+    <a href="/" class="flex flex-col leading-none group">
+      <span class="font-display font-bold text-2xl text-white tracking-tight group-hover:text-gold transition-colors duration-200">Juan Berliner</span>
+      <span class="text-[12px] text-berlin-muted tracking-widest uppercase mt-0.5 lang-es">Guía oficial de turismo en Berlín</span>
+      <span class="text-[12px] text-berlin-muted tracking-widest uppercase mt-0.5 lang-en">Official Tour Guide in Berlin</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex items-center gap-6">
+      <a href="#tours" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-es">Tours</a>
+      <a href="#tours" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-en">Tours</a>
+      <a href="#about" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-es">Sobre mí</a>
+      <a href="#about" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-en">About me</a>
+      <a href="#reviews" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-es">Reseñas</a>
+      <a href="#reviews" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-en">Reviews</a>
+      <a href="#booking" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-es">Reserva</a>
+      <a href="#booking" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-en">Book</a>
+    </div>
+
+    <!-- Right: Lang toggle + CTA -->
+    <div class="flex items-center gap-3">
+      <button class="lang-toggle" onclick="toggleLang()" aria-label="Cambiar idioma" title="Switch language">
+        <span id="lang-flag">🇪🇸</span>
+        <span id="lang-label">ES</span>
+      </button>
+      <a href="#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-es">Reservar un tour</a>
+      <a href="#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-en">Book a tour</a>
+      <!-- Hamburger -->
+      <button id="hamburger" onclick="toggleMobileMenu()" class="md:hidden p-3 text-white" aria-label="Menú">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path id="ham-top" d="M3 5h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="transition: all 0.3s;"/>
+          <path id="ham-mid" d="M3 11h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="transition: all 0.3s;"/>
+          <path id="ham-bot" d="M3 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="transition: all 0.3s;"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden mt-4 border-t border-berlin-border pt-4 pb-2 px-2">
+    <div class="flex flex-col gap-1">
+      <a href="#tours" onclick="toggleMobileMenu()" class="py-3 px-2 text-sm text-berlin-muted hover:text-white border-b border-berlin-border lang-es">Tours</a>
+      <a href="#tours" onclick="toggleMobileMenu()" class="py-3 px-2 text-sm text-berlin-muted hover:text-white border-b border-berlin-border lang-en">Tours</a>
+      <a href="#about" onclick="toggleMobileMenu()" class="py-3 px-2 text-sm text-berlin-muted hover:text-white border-b border-berlin-border lang-es">Sobre mí</a>
+      <a href="#about" onclick="toggleMobileMenu()" class="py-3 px-2 text-sm text-berlin-muted hover:text-white border-b border-berlin-border lang-en">About me</a>
+      <a href="#reviews" onclick="toggleMobileMenu()" class="py-3 px-2 text-sm text-berlin-muted hover:text-white border-b border-berlin-border lang-es">Reseñas</a>
+      <a href="#reviews" onclick="toggleMobileMenu()" class="py-3 px-2 text-sm text-berlin-muted hover:text-white border-b border-berlin-border lang-en">Reviews</a>
+      <a href="#booking" onclick="toggleMobileMenu()" class="py-3 px-2 text-sm text-berlin-muted hover:text-white lang-es">Reserva</a>
+      <a href="#booking" onclick="toggleMobileMenu()" class="py-3 px-2 text-sm text-berlin-muted hover:text-white lang-en">Book</a>
+      <a href="#booking" onclick="toggleMobileMenu()" class="mt-3 btn-gold text-sm px-4 py-3 rounded-md text-center lang-es">Reservar un tour</a>
+      <a href="#booking" onclick="toggleMobileMenu()" class="mt-3 btn-gold text-sm px-4 py-3 rounded-md text-center lang-en">Book a tour</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section id="hero">
+  <video id="hero-video" autoplay muted loop playsinline src="timelapse.mp4">
+    <!-- fallback gradient if video fails -->
+  </video>
+  <div id="hero-overlay"></div>
+
+  <div id="hero-content" class="w-full max-w-7xl mx-auto px-6 md:px-10 pt-28 pb-14 md:pt-64 md:pb-24">
+    <div class="max-w-3xl mx-auto text-center">
+      <!-- Title -->
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-10 fade-in" style="transition-delay: 0.2s;">
+        <span class="lang-es">Tu experiencia en Berlín empieza aquí</span>
+        <span class="lang-en">Your Berlin experience starts here</span>
+      </h1>
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4 justify-center fade-in" style="transition-delay: 0.4s;">
+        <a href="#tours" class="btn-gold text-sm md:text-base px-6 py-3 rounded-md font-semibold lang-es">Mis Tours</a>
+        <a href="#tours" class="btn-gold text-sm md:text-base px-6 py-3 rounded-md font-semibold lang-en">My Tours</a>
+        <a id="wa-hero" href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Me%20gustaría%20reservar%20un%20tour%20contigo." target="_blank" rel="noopener" class="btn-whatsapp flex items-center gap-2 text-sm md:text-base px-6 py-3 rounded-md font-semibold">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span id="wa-hero-text">Contactar por WhatsApp</span>
+        </a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="flex flex-wrap gap-10 justify-center mt-14 pt-8 border-t border-white/10 fade-in" style="transition-delay: 0.5s;">
+
+        <!-- Visitantes -->
+        <div class="text-center">
+          <div class="text-3xl font-display font-bold text-gold">+15.000</div>
+          <div class="text-sm text-white/50 lang-es">Visitantes satisfechos</div>
+          <div class="text-sm text-white/50 lang-en">Satisfied visitors</div>
+        </div>
+
+        <!-- Valoración 5 estrellas -->
+        <div class="text-center">
+          <div class="flex justify-center gap-0.5 mb-1">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+          <div class="text-sm text-white/50 lang-es">Valoración 5 / 5</div>
+          <div class="text-sm text-white/50 lang-en">Rating 5 / 5</div>
+        </div>
+
+        <!-- Sociedad de Guías -->
+        <div class="text-center max-w-[180px]">
+          <div class="text-gold mb-1">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EE9B00" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="mx-auto"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+          </div>
+          <div class="text-sm text-white/50 lang-es">Miembro de la Sociedad de Guías de Berlín</div>
+          <div class="text-sm text-white/50 lang-en">Member of the Berlin Guides Association</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ═══════════════════════════════════════════
+     TOURS SECTION
+════════════════════════════════════════════ -->
+<section id="tours" class="py-20 md:py-28 section-texture">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+
+    <!-- Header -->
+    <div class="mb-14 fade-in">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-8 h-px bg-gold"></div>
+        <span class="text-gold text-xs tracking-widest uppercase font-medium lang-es">Experiencias</span>
+        <span class="text-gold text-xs tracking-widest uppercase font-medium lang-en">Experiences</span>
+      </div>
+      <h2 class="section-heading text-3xl md:text-5xl text-white lang-es">¿Qué quieres descubrir?</h2>
+      <h2 class="section-heading text-3xl md:text-5xl text-white lang-en">What do you want to discover?</h2>
+    </div>
+
+    <!-- Tour Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Card 1: Free Tour -->
+      <a href="tours/free-tour-berlin.html" class="tour-card group fade-in">
+        <div class="tour-card-img">
+          <img src="Freetour.jpg.avif" alt="Free Tour Berlín" />
+          <div class="tour-badge">
+            <span class="bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase lang-es">Pago voluntario</span>
+            <span class="bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase lang-en">Pay what you want</span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-es">Free Tour Berlín</h3>
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-en">Berlin Free Tour</h3>
+          <p class="text-sm text-berlin-muted mb-4 lang-es">Lo esencial de Berlín en un recorrido por los hitos históricos más importantes de la ciudad.</p>
+          <p class="text-sm text-berlin-muted mb-4 lang-en">Berlin's essentials — a walk through the city's most important historical landmarks.</p>
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-1">
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-es"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3h30 · Todos los días</span>
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-en"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3h30 · Every day</span>
+            </div>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-es">Ver más <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-en">See more <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2: Muro -->
+      <a href="tours/muro-de-berlin.html" class="tour-card group fade-in">
+        <div class="tour-card-img">
+          <img src="muro.jpg" alt="Muro de Berlín" />
+          <div class="tour-badge">
+            <span class="bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase lang-es">Pago voluntario</span>
+            <span class="bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase lang-en">Pay what you want</span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-es">Muro de Berlín</h3>
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-en">Berlin Wall</h3>
+          <p class="text-sm text-berlin-muted mb-4 lang-es">La historia del muro que dividió una ciudad — y un mundo — durante 28 años.</p>
+          <p class="text-sm text-berlin-muted mb-4 lang-en">The history of the wall that divided a city — and a world — for 28 years.</p>
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-1">
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-es"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3h30 · Lun–Sáb</span>
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-en"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3h30 · Mon–Sat</span>
+            </div>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-es">Ver más <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-en">See more <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3: Nazismo -->
+      <a href="tours/nazismo-tercer-reich.html" class="tour-card group fade-in">
+        <div class="tour-card-img">
+          <img src="naz.jpg" alt="Tour del Nazismo" />
+          <div class="tour-badge">
+            <span class="bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase">€20 <span class="line-through opacity-60 font-normal">€22</span></span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-es">Nazismo / Tercer Reich</h3>
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-en">Nazism / Third Reich</h3>
+          <p class="text-sm text-berlin-muted mb-4 lang-es">Un recorrido serio y riguroso por los escenarios donde se gestó uno de los regímenes más oscuros de la historia.</p>
+          <p class="text-sm text-berlin-muted mb-4 lang-en">A serious and rigorous tour through the sites where one of history's darkest regimes was forged.</p>
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-1">
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-es"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3h30 · Vie y Sáb</span>
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-en"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3h30 · Fri &amp; Sat</span>
+            </div>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-es">Ver más <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-en">See more <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 4: Sachsenhausen -->
+      <a href="tours/sachsenhausen.html" class="tour-card group fade-in">
+        <div class="tour-card-img">
+          <img src="Sachsen.jpg" alt="Campo de Concentración Sachsenhausen" />
+          <div class="tour-badge">
+            <span class="bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase">€27 <span class="line-through opacity-60 font-normal">€30</span></span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-es">Campo de Concentración Sachsenhausen</h3>
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-en">Sachsenhausen Concentration Camp</h3>
+          <p class="text-sm text-berlin-muted mb-4 lang-es">Una visita imprescindible para entender el horror del Holocausto desde sus propios escenarios.</p>
+          <p class="text-sm text-berlin-muted mb-4 lang-en">An essential visit to understand the horror of the Holocaust from its very grounds.</p>
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-1">
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-es"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>5h30 · Todos los días</span>
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-en"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>5h30 · Every day</span>
+            </div>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-es">Ver más <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-en">See more <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 5: Potsdam -->
+      <a href="tours/potsdam.html" class="tour-card group fade-in">
+        <div class="tour-card-img">
+          <img src="potsdam.jpeg.avif" alt="Tour de Potsdam" />
+          <div class="tour-badge">
+            <span class="bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase">€27 <span class="line-through opacity-60 font-normal">€30</span></span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-es">Tour de Potsdam</h3>
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-en">Potsdam Tour</h3>
+          <p class="text-sm text-berlin-muted mb-4 lang-es">Palacios, jardines y la ciudad donde se decidió el destino de la posguerra europea.</p>
+          <p class="text-sm text-berlin-muted mb-4 lang-en">Palaces, gardens, and the city where Europe's postwar fate was decided.</p>
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-1">
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-es"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>5h45 · Lun–Sáb</span>
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-en"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>5h45 · Mon–Sat</span>
+            </div>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-es">Ver más <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-en">See more <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 6: Berlín Alternativo -->
+      <a href="tours/berlin-alternativo.html" class="tour-card group fade-in">
+        <div class="tour-card-img">
+          <img src="kreuzberg-barrio-berlin.jpg.avif" alt="Berlín Alternativo" />
+          <div class="tour-badge">
+            <span class="bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase">€18 <span class="line-through opacity-60 font-normal">€20</span></span>
+          </div>
+        </div>
+        <div class="p-5 relative z-10">
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-es">Berlín Alternativo</h3>
+          <h3 class="font-display font-bold text-xl text-white mb-2 group-hover:text-gold-light transition-colors duration-200 lang-en">Alternative Berlin</h3>
+          <p class="text-sm text-berlin-muted mb-4 lang-es">Street art, cultura underground y los barrios que convirtieron a Berlín en la capital creativa de Europa.</p>
+          <p class="text-sm text-berlin-muted mb-4 lang-en">Street art, underground culture, and the neighborhoods that made Berlin Europe's creative capital.</p>
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-1">
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-es"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3h45 · Lun–Sáb</span>
+              <span class="text-xs text-berlin-muted flex items-center gap-1.5 lang-en"><svg class="w-3 h-3 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>3h45 · Mon–Sat</span>
+            </div>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-es">Ver más <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+            <span class="text-gold text-xs font-semibold tracking-wide uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200 lang-en">See more <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+    </div><!-- end grid -->
+  </div>
+</section>
+
+<div class="divider-line max-w-7xl mx-auto"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════════ -->
+<section id="about" class="py-20 md:py-28 texture-concrete">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-20 items-center">
+
+      <!-- Image side -->
+      <div class="relative fade-in">
+        <div class="relative overflow-hidden rounded-lg" style="box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(238,155,0,0.15);">
+          <img src="Perfil.jpeg" alt="Juan Berliner" class="w-full object-cover" style="filter: brightness(0.85) saturate(0.75); mix-blend-mode: normal;" />
+          <div class="absolute inset-0 bg-gradient-to-t from-berlin-dark/70 via-transparent to-transparent"></div>
+          <div class="absolute inset-0" style="background: radial-gradient(ellipse at 70% 30%, rgba(238,155,0,0.07), transparent 60%); mix-blend-mode: multiply;"></div>
+        </div>
+        <!-- Decorative corner line -->
+        <div class="absolute -top-4 -left-4 w-16 h-16 border-l-2 border-t-2 border-gold/40 rounded-tl-sm"></div>
+      </div>
+
+      <!-- Text side -->
+      <div class="fade-in">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-8 h-px bg-gold"></div>
+          <span class="text-gold text-xs tracking-widest uppercase font-medium lang-es">Sobre mí</span>
+          <span class="text-gold text-xs tracking-widest uppercase font-medium lang-en">About me</span>
+        </div>
+        <h2 class="section-heading text-3xl md:text-4xl text-white mb-6 lang-es">La persona detrás del tour</h2>
+        <h2 class="section-heading text-3xl md:text-4xl text-white mb-6 lang-en">The person behind the tour</h2>
+
+        <div class="space-y-4 text-berlin-muted text-[15px] leading-relaxed">
+          <p class="lang-es">Descubrir Berlín con alguien que realmente la conoce cambia todo. Soy Juan, guía profesional y apasionado por contar la ciudad más allá de los titulares y las postales.</p>
+          <p class="lang-en">Discovering Berlin with someone who truly knows it changes everything. I'm Juan, a professional guide passionate about showing the city beyond the headlines and the postcards.</p>
+
+          <p class="lang-es">He tenido el privilegio de acompañar a más de 15.000 personas recorriendo Berlín, con valoraciones excelentes y viajeros que muchas veces terminan recomendando la experiencia como uno de los momentos más memorables de su viaje.</p>
+          <p class="lang-en">I've had the privilege of accompanying more than 15,000 people through Berlin, with excellent ratings and travellers who often end up recommending the experience as one of the most memorable moments of their trip.</p>
+
+          <p class="lang-es">Soy miembro oficial de la Berlin Guides Association (Sociedad de guías de Berlín). Podés ver mi perfil <a href="https://www.berlinguidesassociation.com/more-guides/juan-canzani" target="_blank" rel="noopener" class="text-gold hover:text-gold-light underline underline-offset-2 transition-colors duration-200">aquí</a>.</p>
+          <p class="lang-en">I am an official member of the Berlin Guides Association. You can see my profile <a href="https://www.berlinguidesassociation.com/more-guides/juan-canzani" target="_blank" rel="noopener" class="text-gold hover:text-gold-light underline underline-offset-2 transition-colors duration-200">here</a>.</p>
+
+          <p class="lang-es">Mi camino hacia Berlín también tiene una historia personal. Estudié Relaciones Internacionales en Montevideo y obtuve una beca de la Konrad Adenauer Stiftung para completar mi Máster en Administración y Políticas Públicas en la Universidad de Potsdam. Esa formación académica se refleja en mis tours, donde combino narrativa clara con contexto histórico y político sólido.</p>
+          <p class="lang-en">My path to Berlin also has a personal story. I studied International Relations in Montevideo and received a Konrad Adenauer Stiftung scholarship to complete my Master's in Public Administration and Policy at the University of Potsdam. That academic background is reflected in my tours, where I combine clear storytelling with solid historical and political context.</p>
+
+          <p class="lang-es">Hablo cinco idiomas: español, inglés, alemán, italiano y portugués, aunque realizo mis tours principalmente en español e inglés. Esto me permite adaptarme a perfiles muy diversos y crear experiencias cercanas, claras y dinámicas.</p>
+          <p class="lang-en">I speak five languages: Spanish, English, German, Italian and Portuguese, although I conduct my tours mainly in Spanish and English. This allows me to adapt to very diverse groups and create experiences that feel personal, clear and dynamic.</p>
+
+          <p class="lang-es">Mis recorridos no son tours tradicionales. Busco que entiendas cómo funciona Berlín hoy, cómo llegó a ser lo que es y por qué sigue siendo una de las ciudades más fascinantes de Europa. Historia, política, cultura urbana y vida cotidiana se mezclan en cada parada.</p>
+          <p class="lang-en">My tours are not traditional tours. I want you to understand how Berlin works today, how it came to be what it is, and why it remains one of the most fascinating cities in Europe. History, politics, urban culture and everyday life blend at every stop.</p>
+
+          <p class="lang-es">Si querés ir más allá de lo típico y descubrir Berlín con contexto, profundidad y cercanía, te invito a caminarla conmigo.</p>
+          <p class="lang-en">If you want to go beyond the typical and discover Berlin with context, depth and closeness, I invite you to walk it with me.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line max-w-7xl mx-auto"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     REVIEWS
+════════════════════════════════════════════ -->
+<section id="reviews" class="py-20 md:py-28 section-texture">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 fade-in">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-px bg-gold"></div>
+          <span class="text-gold text-xs tracking-widest uppercase font-medium">Reseñas</span>
+        </div>
+        <h2 class="section-heading text-3xl md:text-5xl text-white lang-es">Lo que dicen los viajeros</h2>
+        <h2 class="section-heading text-3xl md:text-5xl text-white lang-en">What travelers say</h2>
+      </div>
+      <a href="#" target="_blank" rel="noopener" class="btn-outline px-5 py-2.5 rounded-md text-sm font-medium flex-shrink-0 lang-es">Ver más de 2000 reseñas →</a>
+      <a href="#" target="_blank" rel="noopener" class="btn-outline px-5 py-2.5 rounded-md text-sm font-medium flex-shrink-0 lang-en">See over 2000 reviews →</a>
+    </div>
+
+    <!-- Tab filter -->
+    <div class="flex gap-1 mb-8 bg-berlin-surface border border-berlin-border rounded-lg p-1 w-fit">
+      <button onclick="filterReviews('all')" id="tab-all" class="review-tab px-4 py-2 rounded text-sm font-medium transition-all duration-200 bg-berlin-elevated text-white lang-es">Todas</button>
+      <button onclick="filterReviews('all')" id="tab-all-en" class="review-tab px-4 py-2 rounded text-sm font-medium transition-all duration-200 bg-berlin-elevated text-white lang-en">All</button>
+      <button onclick="filterReviews('es')" id="tab-es" class="review-tab px-4 py-2 rounded text-sm font-medium transition-all duration-200 text-berlin-muted hover:text-white">Español</button>
+      <button onclick="filterReviews('en')" id="tab-en" class="review-tab px-4 py-2 rounded text-sm font-medium transition-all duration-200 text-berlin-muted hover:text-white">English</button>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="review-card fade-in review-item review-es">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"No se puede pedir más. Divertido, completo, entretenido, detallista, cercano y dinámico. Juan nos llevó por un tour de tres horas transmitiendo comentarios históricos, anécdotas y profesionalidad. Si eres turista o vives en Berlín, siempre deja buen sabor de boca. Imprescindible."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Iván Gregorio</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-en">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Juan was a great guide on our free tour of Berlin. His magnetic energy really made the story come to life. His depth of knowledge and passion for the city was evident in every word, making the experience not only informative, but also entertaining. Completely recommended!!"</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Álvaro Rojas</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-es">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Un tour imprescindible si visitas Berlín. El guía Juan, muy comprometido con la historia de esta hermosa ciudad, nos ha mostrado lugares interesantísimos de forma muy amena. Datos muy curiosos y necesarios para entender el pasado y el presente de este bonito país."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Rodrigo Santas</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-en">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"I took a sightseeing tour of Berlin with Juan and it was fantastic. He is an extremely knowledgeable guide, but also fun. Juan has a great sense of humor, making the tour entertaining, and he is very attentive, adapting to our interests. If you are looking for a tour guide in Berlin, look no further."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Nawath Sofia B.</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-es">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Nos ha tocado Juan como guía, una maravilla. Me ha parecido un tour interesantísimo, lo ha hecho muy ameno y muy divertido. Datos e historias muy curiosas y significantes. Un 10 como guía y persona."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Lucía Lakuntza</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-en">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Excellent tour with Juan. One of the best I've ever done from Sandemans. A lot of super important information in a didactic way and very well carried out. I never lost attention in the more than 2 hours that the tour lasted."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Virginia Cárcamo</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-es">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Explica muy bien. Cuando siempre iba a tours nunca me enteraba de nada, y con Juan me entero de todo. Espero que siga así, llegará muy lejos y logrará muchas cosas."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Claudia Panchón</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-en">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Juan was our guide and he was fantastic! He is very knowledgeable and passionate about Berlin's history and was able to give us an engaging history lesson while we toured the sites. He also has a great sense of humour and kept me very interested throughout."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Ada Ang</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-es">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Juan ha sido un perfecto anfitrión. Nos ha mostrado detalles que pasan inadvertidos para los viajeros, anécdotas e historias que confirman que tiene un gran conocimiento de la ciudad."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Domingo Ribelles</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-en">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Juan knows his stuff! We learned so much about Berlin history through a close visual lens. He was full of facts, transparency and little jokes to keep the crowd both entertained and informed. Highly recommend this tour for anyone visiting Berlin!"</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Aime Joya</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-es">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Maravillosa experiencia con el Free Tour acompañados de Juan. Explicaciones muy detalladas y enriquecedoras que te dan una visión muy realista de la historia de Berlín. Lo recomiendo sin duda."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Gala Canca Atencia</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-in review-item review-en">
+        <div class="stars text-sm mb-3">★★★★★</div>
+        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"We just had a great walking tour with Juan. He is very passionate and knowledgeable about the history of Berlin and Germany. He gives lots of great tips about places to visit. We would highly recommend tours with him."</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold text-white">Jennifer Macindoe</div>
+            <div class="text-xs text-berlin-muted">Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end reviews grid -->
+
+    <div id="reviews-more-btn" class="text-center mt-8">
+      <button onclick="showMoreReviews()" class="btn-outline px-6 py-2.5 rounded-md text-sm font-medium lang-es">Ver más reseñas</button>
+      <button onclick="showMoreReviews()" class="btn-outline px-6 py-2.5 rounded-md text-sm font-medium lang-en">See more reviews</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line max-w-7xl mx-auto"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     CTA / BOOKING
+════════════════════════════════════════════ -->
+<section id="booking" class="py-20 md:py-28 texture-concrete">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 md:gap-20 items-start">
+
+      <!-- CTA text side -->
+      <div class="fade-in">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-8 h-px bg-gold"></div>
+          <span class="text-gold text-xs tracking-widest uppercase font-medium lang-es">Reserva</span>
+          <span class="text-gold text-xs tracking-widest uppercase font-medium lang-en">Book</span>
+        </div>
+        <h2 class="section-heading text-3xl md:text-5xl text-white mb-6 lang-es">Tu próxima historia<br/>empieza aquí.</h2>
+        <h2 class="section-heading text-3xl md:text-5xl text-white mb-6 lang-en">Your next story<br/>starts here.</h2>
+        <p class="text-berlin-muted text-[15px] leading-relaxed mb-8 lang-es">Reserva tu tour con Juan directamente. Respuesta en menos de 24 horas. O escríbeme por WhatsApp para atención inmediata.</p>
+        <p class="text-berlin-muted text-[15px] leading-relaxed mb-8 lang-en">Book your tour directly with Juan. Response within 24 hours. Or message me on WhatsApp for immediate assistance.</p>
+
+        <!-- WhatsApp direct -->
+        <div class="bg-berlin-surface border border-berlin-border rounded-lg p-5 mb-6">
+          <div class="text-sm text-berlin-muted mb-3 lang-es">¿Prefieres hablar directamente?</div>
+          <div class="text-sm text-berlin-muted mb-3 lang-en">Prefer to talk directly?</div>
+          <a id="wa-booking" href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Me%20gustaría%20reservar%20un%20tour%20contigo." target="_blank" rel="noopener" class="btn-whatsapp flex items-center justify-center gap-3 px-6 py-3.5 rounded-md font-semibold">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span id="wa-booking-text">Escríbeme por WhatsApp</span>
+          </a>
+        </div>
+
+        <p class="text-xs text-berlin-muted lang-es">O usa el formulario para enviar una solicitud de reserva →</p>
+        <p class="text-xs text-berlin-muted lang-en">Or use the form to send a booking request →</p>
+      </div>
+
+      <!-- Form -->
+      <div class="fade-in">
+        <form onsubmit="handleBookingSubmit(event)" class="space-y-4">
+          <input type="hidden" name="access_key" value="87920977-b496-42c2-960a-351f3ad5560b">
+          <input type="hidden" name="subject" value="Nueva solicitud de reserva — Juan Berliner Tours">
+          <input type="hidden" name="from_name" value="Juan Berliner Website">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-es">Nombre</label>
+              <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-en">Name</label>
+              <input type="text" name="name" required class="form-input" placeholder="Tu nombre" />
+            </div>
+            <div>
+              <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5">Email</label>
+              <input type="email" name="email" required class="form-input" placeholder="tu@email.com" />
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-es">Tour de interés</label>
+            <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-en">Tour of interest</label>
+            <select name="tour" required class="form-input">
+              <option value="">— Selecciona un tour / Select a tour —</option>
+              <option value="Free Tour Berlín">Free Tour Berlín</option>
+              <option value="Muro de Berlín">Muro de Berlín / Berlin Wall</option>
+              <option value="Nazismo / Tercer Reich">Nazismo / Tercer Reich</option>
+              <option value="Campo de Concentración Sachsenhausen">Sachsenhausen</option>
+              <option value="Tour de Potsdam">Potsdam</option>
+              <option value="Berlín Alternativo">Berlín Alternativo / Alternative Berlin</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-es">Fecha preferida</label>
+              <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-en">Preferred date</label>
+              <input type="date" name="date" required class="form-input" />
+            </div>
+            <div>
+              <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-es">N.° de personas</label>
+              <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-en">Number of people</label>
+              <input type="number" name="people" min="1" max="99" class="form-input" placeholder="2" />
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-es">Teléfono</label>
+            <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-en">Phone</label>
+            <div class="flex gap-2">
+              <select id="phone-prefix" name="phone_prefix" class="form-input w-auto flex-shrink-0" style="min-width:100px;max-width:170px;">
+                <option value="+93">🇦🇫 Afganistán +93</option>
+                <option value="+355">🇦🇱 Albania +355</option>
+                <option value="+49">🇩🇪 Alemania +49</option>
+                <option value="+376">🇦🇩 Andorra +376</option>
+                <option value="+244">🇦🇴 Angola +244</option>
+                <option value="+1268">🇦🇬 Antigua y Barbuda +1268</option>
+                <option value="+966">🇸🇦 Arabia Saudita +966</option>
+                <option value="+213">🇩🇿 Argelia +213</option>
+                <option value="+54">🇦🇷 Argentina +54</option>
+                <option value="+374">🇦🇲 Armenia +374</option>
+                <option value="+61">🇦🇺 Australia +61</option>
+                <option value="+43">🇦🇹 Austria +43</option>
+                <option value="+994">🇦🇿 Azerbaiyán +994</option>
+                <option value="+1242">🇧🇸 Bahamas +1242</option>
+                <option value="+880">🇧🇩 Bangladés +880</option>
+                <option value="+1246">🇧🇧 Barbados +1246</option>
+                <option value="+973">🇧🇭 Baréin +973</option>
+                <option value="+32">🇧🇪 Bélgica +32</option>
+                <option value="+501">🇧🇿 Belice +501</option>
+                <option value="+229">🇧🇯 Benín +229</option>
+                <option value="+375">🇧🇾 Bielorrusia +375</option>
+                <option value="+591">🇧🇴 Bolivia +591</option>
+                <option value="+387">🇧🇦 Bosnia y Herzegovina +387</option>
+                <option value="+267">🇧🇼 Botsuana +267</option>
+                <option value="+55">🇧🇷 Brasil +55</option>
+                <option value="+673">🇧🇳 Brunéi +673</option>
+                <option value="+359">🇧🇬 Bulgaria +359</option>
+                <option value="+226">🇧🇫 Burkina Faso +226</option>
+                <option value="+257">🇧🇮 Burundi +257</option>
+                <option value="+975">🇧🇹 Bután +975</option>
+                <option value="+238">🇨🇻 Cabo Verde +238</option>
+                <option value="+855">🇰🇭 Camboya +855</option>
+                <option value="+237">🇨🇲 Camerún +237</option>
+                <option value="+1">🇨🇦 Canadá +1</option>
+                <option value="+974">🇶🇦 Catar +974</option>
+                <option value="+235">🇹🇩 Chad +235</option>
+                <option value="+56">🇨🇱 Chile +56</option>
+                <option value="+86">🇨🇳 China +86</option>
+                <option value="+357">🇨🇾 Chipre +357</option>
+                <option value="+57">🇨🇴 Colombia +57</option>
+                <option value="+269">🇰🇲 Comoras +269</option>
+                <option value="+243">🇨🇩 Congo (RD) +243</option>
+                <option value="+242">🇨🇬 Congo (Rep.) +242</option>
+                <option value="+850">🇰🇵 Corea del Norte +850</option>
+                <option value="+82">🇰🇷 Corea del Sur +82</option>
+                <option value="+225">🇨🇮 Costa de Marfil +225</option>
+                <option value="+506">🇨🇷 Costa Rica +506</option>
+                <option value="+385">🇭🇷 Croacia +385</option>
+                <option value="+53">🇨🇺 Cuba +53</option>
+                <option value="+45">🇩🇰 Dinamarca +45</option>
+                <option value="+1767">🇩🇲 Dominica +1767</option>
+                <option value="+593">🇪🇨 Ecuador +593</option>
+                <option value="+20">🇪🇬 Egipto +20</option>
+                <option value="+503">🇸🇻 El Salvador +503</option>
+                <option value="+971">🇦🇪 Emiratos Árabes Unidos +971</option>
+                <option value="+291">🇪🇷 Eritrea +291</option>
+                <option value="+421">🇸🇰 Eslovaquia +421</option>
+                <option value="+386">🇸🇮 Eslovenia +386</option>
+                <option value="+34" selected>🇪🇸 España +34</option>
+                <option value="+1-US">🇺🇸 Estados Unidos +1</option>
+                <option value="+372">🇪🇪 Estonia +372</option>
+                <option value="+251">🇪🇹 Etiopía +251</option>
+                <option value="+63">🇵🇭 Filipinas +63</option>
+                <option value="+358">🇫🇮 Finlandia +358</option>
+                <option value="+679">🇫🇯 Fiyi +679</option>
+                <option value="+33">🇫🇷 Francia +33</option>
+                <option value="+241">🇬🇦 Gabón +241</option>
+                <option value="+220">🇬🇲 Gambia +220</option>
+                <option value="+995">🇬🇪 Georgia +995</option>
+                <option value="+233">🇬🇭 Ghana +233</option>
+                <option value="+1473">🇬🇩 Granada +1473</option>
+                <option value="+30">🇬🇷 Grecia +30</option>
+                <option value="+502">🇬🇹 Guatemala +502</option>
+                <option value="+224">🇬🇳 Guinea +224</option>
+                <option value="+240">🇬🇶 Guinea Ecuatorial +240</option>
+                <option value="+245">🇬🇼 Guinea-Bisáu +245</option>
+                <option value="+592">🇬🇾 Guyana +592</option>
+                <option value="+509">🇭🇹 Haití +509</option>
+                <option value="+504">🇭🇳 Honduras +504</option>
+                <option value="+36">🇭🇺 Hungría +36</option>
+                <option value="+91">🇮🇳 India +91</option>
+                <option value="+62">🇮🇩 Indonesia +62</option>
+                <option value="+964">🇮🇶 Irak +964</option>
+                <option value="+98">🇮🇷 Irán +98</option>
+                <option value="+353">🇮🇪 Irlanda +353</option>
+                <option value="+354">🇮🇸 Islandia +354</option>
+                <option value="+692">🇲🇭 Islas Marshall +692</option>
+                <option value="+677">🇸🇧 Islas Salomón +677</option>
+                <option value="+972">🇮🇱 Israel +972</option>
+                <option value="+39">🇮🇹 Italia +39</option>
+                <option value="+1876">🇯🇲 Jamaica +1876</option>
+                <option value="+81">🇯🇵 Japón +81</option>
+                <option value="+962">🇯🇴 Jordania +962</option>
+                <option value="+7">🇰🇿 Kazajistán +7</option>
+                <option value="+254">🇰🇪 Kenia +254</option>
+                <option value="+996">🇰🇬 Kirguistán +996</option>
+                <option value="+686">🇰🇮 Kiribati +686</option>
+                <option value="+965">🇰🇼 Kuwait +965</option>
+                <option value="+856">🇱🇦 Laos +856</option>
+                <option value="+266">🇱🇸 Lesoto +266</option>
+                <option value="+371">🇱🇻 Letonia +371</option>
+                <option value="+961">🇱🇧 Líbano +961</option>
+                <option value="+231">🇱🇷 Liberia +231</option>
+                <option value="+218">🇱🇾 Libia +218</option>
+                <option value="+423">🇱🇮 Liechtenstein +423</option>
+                <option value="+370">🇱🇹 Lituania +370</option>
+                <option value="+352">🇱🇺 Luxemburgo +352</option>
+                <option value="+389">🇲🇰 Macedonia del Norte +389</option>
+                <option value="+261">🇲🇬 Madagascar +261</option>
+                <option value="+60">🇲🇾 Malasia +60</option>
+                <option value="+265">🇲🇼 Malaui +265</option>
+                <option value="+960">🇲🇻 Maldivas +960</option>
+                <option value="+223">🇲🇱 Malí +223</option>
+                <option value="+356">🇲🇹 Malta +356</option>
+                <option value="+212">🇲🇦 Marruecos +212</option>
+                <option value="+230">🇲🇺 Mauricio +230</option>
+                <option value="+222">🇲🇷 Mauritania +222</option>
+                <option value="+52">🇲🇽 México +52</option>
+                <option value="+691">🇫🇲 Micronesia +691</option>
+                <option value="+373">🇲🇩 Moldavia +373</option>
+                <option value="+377">🇲🇨 Mónaco +377</option>
+                <option value="+976">🇲🇳 Mongolia +976</option>
+                <option value="+382">🇲🇪 Montenegro +382</option>
+                <option value="+258">🇲🇿 Mozambique +258</option>
+                <option value="+95">🇲🇲 Myanmar +95</option>
+                <option value="+264">🇳🇦 Namibia +264</option>
+                <option value="+674">🇳🇷 Nauru +674</option>
+                <option value="+977">🇳🇵 Nepal +977</option>
+                <option value="+505">🇳🇮 Nicaragua +505</option>
+                <option value="+227">🇳🇪 Níger +227</option>
+                <option value="+234">🇳🇬 Nigeria +234</option>
+                <option value="+47">🇳🇴 Noruega +47</option>
+                <option value="+64">🇳🇿 Nueva Zelanda +64</option>
+                <option value="+968">🇴🇲 Omán +968</option>
+                <option value="+31">🇳🇱 Países Bajos +31</option>
+                <option value="+92">🇵🇰 Pakistán +92</option>
+                <option value="+680">🇵🇼 Palaos +680</option>
+                <option value="+970">🇵🇸 Palestina +970</option>
+                <option value="+507">🇵🇦 Panamá +507</option>
+                <option value="+675">🇵🇬 Papúa Nueva Guinea +675</option>
+                <option value="+595">🇵🇾 Paraguay +595</option>
+                <option value="+51">🇵🇪 Perú +51</option>
+                <option value="+48">🇵🇱 Polonia +48</option>
+                <option value="+351">🇵🇹 Portugal +351</option>
+                <option value="+1787">🇵🇷 Puerto Rico +1787</option>
+                <option value="+44">🇬🇧 Reino Unido +44</option>
+                <option value="+236">🇨🇫 República Centroafricana +236</option>
+                <option value="+420">🇨🇿 República Checa +420</option>
+                <option value="+1809">🇩🇴 República Dominicana +1809</option>
+                <option value="+250">🇷🇼 Ruanda +250</option>
+                <option value="+40">🇷🇴 Rumanía +40</option>
+                <option value="+7">🇷🇺 Rusia +7</option>
+                <option value="+685">🇼🇸 Samoa +685</option>
+                <option value="+1869">🇰🇳 San Cristóbal y Nieves +1869</option>
+                <option value="+378">🇸🇲 San Marino +378</option>
+                <option value="+1784">🇻🇨 San Vicente y las Granadinas +1784</option>
+                <option value="+1758">🇱🇨 Santa Lucía +1758</option>
+                <option value="+239">🇸🇹 Santo Tomé y Príncipe +239</option>
+                <option value="+221">🇸🇳 Senegal +221</option>
+                <option value="+381">🇷🇸 Serbia +381</option>
+                <option value="+248">🇸🇨 Seychelles +248</option>
+                <option value="+232">🇸🇱 Sierra Leona +232</option>
+                <option value="+65">🇸🇬 Singapur +65</option>
+                <option value="+963">🇸🇾 Siria +963</option>
+                <option value="+252">🇸🇴 Somalia +252</option>
+                <option value="+94">🇱🇰 Sri Lanka +94</option>
+                <option value="+268">🇸🇿 Suazilandia +268</option>
+                <option value="+27">🇿🇦 Sudáfrica +27</option>
+                <option value="+249">🇸🇩 Sudán +249</option>
+                <option value="+211">🇸🇸 Sudán del Sur +211</option>
+                <option value="+46">🇸🇪 Suecia +46</option>
+                <option value="+41">🇨🇭 Suiza +41</option>
+                <option value="+597">🇸🇷 Surinam +597</option>
+                <option value="+66">🇹🇭 Tailandia +66</option>
+                <option value="+255">🇹🇿 Tanzania +255</option>
+                <option value="+992">🇹🇯 Tayikistán +992</option>
+                <option value="+670">🇹🇱 Timor Oriental +670</option>
+                <option value="+228">🇹🇬 Togo +228</option>
+                <option value="+676">🇹🇴 Tonga +676</option>
+                <option value="+1868">🇹🇹 Trinidad y Tobago +1868</option>
+                <option value="+216">🇹🇳 Túnez +216</option>
+                <option value="+993">🇹🇲 Turkmenistán +993</option>
+                <option value="+90">🇹🇷 Turquía +90</option>
+                <option value="+688">🇹🇻 Tuvalu +688</option>
+                <option value="+380">🇺🇦 Ucrania +380</option>
+                <option value="+256">🇺🇬 Uganda +256</option>
+                <option value="+598">🇺🇾 Uruguay +598</option>
+                <option value="+998">🇺🇿 Uzbekistán +998</option>
+                <option value="+678">🇻🇺 Vanuatu +678</option>
+                <option value="+58">🇻🇪 Venezuela +58</option>
+                <option value="+84">🇻🇳 Vietnam +84</option>
+                <option value="+967">🇾🇪 Yemen +967</option>
+                <option value="+253">🇩🇯 Yibuti +253</option>
+                <option value="+260">🇿🇲 Zambia +260</option>
+                <option value="+263">🇿🇼 Zimbabue +263</option>
+              </select>
+              <input type="tel" name="phone" class="form-input flex-1" placeholder="612 345 678" />
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-es">Mensaje (opcional)</label>
+            <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-en">Message (optional)</label>
+            <textarea name="message" rows="4" class="form-input resize-none" placeholder="¿Alguna pregunta o petición especial?"></textarea>
+          </div>
+
+          <button type="submit" class="btn-gold w-full py-3.5 rounded-md font-semibold text-sm tracking-wide lang-es">Enviar solicitud de reserva</button>
+          <button type="submit" class="btn-gold w-full py-3.5 rounded-md font-semibold text-sm tracking-wide lang-en">Send booking request</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer class="bg-berlin-surface border-t border-berlin-border pt-12 pb-8">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mb-8 md:mb-10">
+
+      <!-- Brand -->
+      <div>
+        <div class="font-display font-bold text-xl text-white mb-2">Juan Berliner</div>
+        <div class="text-xs text-berlin-muted tracking-widest uppercase mb-4 lang-es">Guía oficial de turismo en Berlín</div>
+        <div class="text-xs text-berlin-muted tracking-widest uppercase mb-4 lang-en">Official Tour Guide in Berlin</div>
+        <p class="text-sm text-berlin-muted leading-relaxed lang-es">Tours en español e inglés. Historia, cultura y autenticidad en cada paso.</p>
+        <p class="text-sm text-berlin-muted leading-relaxed lang-en">Tours in Spanish and English. History, culture and authenticity at every step.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <div class="text-xs text-gold tracking-widest uppercase font-semibold mb-4 lang-es">Navegación</div>
+        <div class="text-xs text-gold tracking-widest uppercase font-semibold mb-4 lang-en">Navigation</div>
+        <div class="flex flex-col gap-2">
+          <a href="#tours" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-es">Tours</a>
+          <a href="#tours" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-en">Tours</a>
+          <a href="#about" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-es">Sobre mí</a>
+          <a href="#about" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-en">About me</a>
+          <a href="#reviews" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-es">Reseñas</a>
+          <a href="#reviews" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-en">Reviews</a>
+          <a href="#booking" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-es">Reserva</a>
+          <a href="#booking" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-en">Book</a>
+          <a href="privacy.html" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-es">Política de privacidad</a>
+          <a href="privacy.html" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 lang-en">Privacy policy</a>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <div class="text-xs text-gold tracking-widest uppercase font-semibold mb-4 lang-es">Contacto</div>
+        <div class="text-xs text-gold tracking-widest uppercase font-semibold mb-4 lang-en">Contact</div>
+        <a href="https://wa.me/4915736214462" target="_blank" rel="noopener" class="flex items-center gap-2 text-sm text-berlin-muted hover:text-white transition-colors duration-200 mb-3 group">
+          <svg class="w-4 h-4 text-green-500 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          +49 157 3621 4462
+        </a>
+        <div class="text-xs text-berlin-muted mb-5 lang-es">Berlín, Alemania</div>
+        <div class="text-xs text-berlin-muted mb-5 lang-en">Berlin, Germany</div>
+        <!-- Social icons placeholder -->
+        <div class="flex gap-3">
+          <a href="https://www.instagram.com/juanberliner" target="_blank" rel="noopener" aria-label="Instagram" class="w-11 h-11 border border-berlin-border rounded-lg flex items-center justify-center text-berlin-muted hover:text-white hover:border-gold/40 transition-all duration-200">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="TripAdvisor" class="w-11 h-11 border border-berlin-border rounded-lg flex items-center justify-center text-berlin-muted hover:text-white hover:border-gold/40 transition-all duration-200">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><text x="7.5" y="16" font-size="10" fill="white">T</text></svg>
+          </a>
+          <a href="#" aria-label="Google Reviews" class="w-11 h-11 border border-berlin-border rounded-lg flex items-center justify-center text-berlin-muted hover:text-white hover:border-gold/40 transition-all duration-200">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider-line mb-6"></div>
+    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+      <p class="text-xs text-berlin-muted lang-es">© 2025 Juan Berliner — Guía oficial de turismo en Berlín</p>
+      <p class="text-xs text-berlin-muted lang-en">© 2025 Juan Berliner — Official Tour Guide in Berlin</p>
+      <div class="flex gap-4">
+        <a href="privacy.html" class="text-xs text-berlin-muted hover:text-white transition-colors duration-200 lang-es">Política de privacidad</a>
+        <a href="privacy.html" class="text-xs text-berlin-muted hover:text-white transition-colors duration-200 lang-en">Privacy policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     FLOATING WHATSAPP
+════════════════════════════════════════════ -->
+<a id="whatsapp-float" href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Me%20gustaría%20reservar%20un%20tour%20contigo." target="_blank" rel="noopener" aria-label="WhatsApp" title="Escríbeme por WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+// ── Language Toggle ──────────────────────────────────────────────
+let currentLang = 'es';
+
+function toggleLang() {
+  currentLang = currentLang === 'es' ? 'en' : 'es';
+  const body = document.body;
+  const flag = document.getElementById('lang-flag');
+  const label = document.getElementById('lang-label');
+  const waFloat = document.getElementById('whatsapp-float');
+
+  const waHero = document.getElementById('wa-hero');
+  const waBooking = document.getElementById('wa-booking');
+
+  const phonePrefix = document.getElementById('phone-prefix');
+  if (currentLang === 'en') {
+    body.classList.add('lang-en');
+    flag.textContent = '🇬🇧';
+    label.textContent = 'EN';
+    waFloat.href = "https://wa.me/4915736214462?text=Hi%20Juan!%20I%20would%20like%20to%20book%20a%20tour%20with%20you.";
+    waHero.href = "https://wa.me/4915736214462?text=Hi%20Juan!%20I%20would%20like%20to%20book%20a%20tour%20with%20you.";
+    waBooking.href = "https://wa.me/4915736214462?text=Hi%20Juan!%20I%20would%20like%20to%20book%20a%20tour%20with%20you.";
+    document.getElementById('wa-hero-text').textContent = 'Contact via WhatsApp';
+    document.getElementById('wa-booking-text').textContent = 'Message me on WhatsApp';
+    document.documentElement.lang = 'en';
+    if (phonePrefix) phonePrefix.value = '+1-US';
+  } else {
+    body.classList.remove('lang-en');
+    flag.textContent = '🇪🇸';
+    label.textContent = 'ES';
+    waFloat.href = "https://wa.me/4915736214462?text=¡Hola%20Juan!%20Me%20gustaría%20reservar%20un%20tour%20contigo.";
+    waHero.href = "https://wa.me/4915736214462?text=¡Hola%20Juan!%20Me%20gustaría%20reservar%20un%20tour%20contigo.";
+    waBooking.href = "https://wa.me/4915736214462?text=¡Hola%20Juan!%20Me%20gustaría%20reservar%20un%20tour%20contigo.";
+    document.getElementById('wa-hero-text').textContent = 'Contactar por WhatsApp';
+    document.getElementById('wa-booking-text').textContent = 'Escríbeme por WhatsApp';
+    document.documentElement.lang = 'es';
+    if (phonePrefix) phonePrefix.value = '+34';
+  }
+}
+
+// ── Navbar scroll effect ──────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+}, { passive: true });
+
+// ── Mobile menu ────────────────────────────────────────────────────
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+}
+
+// ── Review filter tabs ─────────────────────────────────────────────
+function filterReviews(lang) {
+  const items = document.querySelectorAll('.review-item');
+  const moreBtn = document.getElementById('reviews-more-btn');
+  let visible = 0;
+  items.forEach(item => {
+    if (lang === 'all') {
+      if (visible < 6) { item.style.display = ''; visible++; }
+      else { item.style.display = 'none'; }
+    } else {
+      item.style.display = item.classList.contains('review-' + lang) ? '' : 'none';
+    }
+  });
+  if (moreBtn) moreBtn.style.display = lang === 'all' ? '' : 'none';
+
+  // Update tab active states
+  document.querySelectorAll('.review-tab').forEach(t => {
+    t.classList.remove('bg-berlin-elevated', 'text-white');
+    t.classList.add('text-berlin-muted');
+  });
+  const activeId = lang === 'all' ? (currentLang === 'en' ? 'tab-all-en' : 'tab-all') : ('tab-' + lang);
+  const activeEl = document.getElementById(activeId);
+  if (activeEl) {
+    activeEl.classList.add('bg-berlin-elevated', 'text-white');
+    activeEl.classList.remove('text-berlin-muted');
+  }
+}
+
+function showMoreReviews() {
+  document.querySelectorAll('.review-item').forEach(item => { item.style.display = ''; });
+  const moreBtn = document.getElementById('reviews-more-btn');
+  if (moreBtn) moreBtn.style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => filterReviews('all'));
+
+// ── Scroll fade-in ─────────────────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 60);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Trigger hero fade-ins immediately
+document.querySelectorAll('#hero-content .fade-in').forEach(el => {
+  setTimeout(() => el.classList.add('visible'), 300);
+});
+
+// ── Booking form ────────────────────────────────────────────────────
+function handleBookingSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btns = form.querySelectorAll('button[type="submit"]');
+
+  btns.forEach(b => { b.disabled = true; b.style.opacity = '0.7'; });
+  btns.forEach(b => { b.textContent = currentLang === 'es' ? 'Enviando...' : 'Sending...'; });
+
+  const data = new FormData(form);
+
+  fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
+    .then(res => res.json())
+    .then(json => {
+      if (json.success) {
+        btns.forEach(b => { b.textContent = currentLang === 'es' ? '✓ Enviado — te contactaré pronto' : '✓ Sent — I\'ll be in touch soon'; });
+        setTimeout(() => {
+          btns.forEach(b => { b.disabled = false; b.style.opacity = ''; });
+          btns.forEach(b => { b.textContent = currentLang === 'es' ? 'Enviar solicitud de reserva' : 'Send booking request'; });
+          form.reset();
+        }, 4000);
+      } else {
+        btns.forEach(b => { b.disabled = false; b.style.opacity = ''; b.textContent = currentLang === 'es' ? 'Error — intenta de nuevo' : 'Error — please try again'; });
+        setTimeout(() => btns.forEach(b => { b.textContent = currentLang === 'es' ? 'Enviar solicitud de reserva' : 'Send booking request'; }), 3000);
+      }
+    })
+    .catch(() => {
+      btns.forEach(b => { b.disabled = false; b.style.opacity = ''; b.textContent = currentLang === 'es' ? 'Error — intenta de nuevo' : 'Error — please try again'; });
+      setTimeout(() => btns.forEach(b => { b.textContent = currentLang === 'es' ? 'Enviar solicitud de reserva' : 'Send booking request'; }), 3000);
+    });
+}
+// Hide WA float when keyboard is open on mobile
+const waFloat = document.getElementById('whatsapp-float');
+document.querySelectorAll('input, textarea, select').forEach(el => {
+  el.addEventListener('focus', () => waFloat && waFloat.classList.add('input-focused'));
+  el.addEventListener('blur',  () => waFloat && waFloat.classList.remove('input-focused'));
+});
+// Page transitions
+document.querySelectorAll('a[href]').forEach(link => {
+  if (link.target === '_blank') return;
+  const href = link.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('https://') || href.startsWith('http://')) return;
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.body.classList.add('page-exit');
+    setTimeout(() => { window.location.href = href; }, 300);
+  });
+});
+</script>
+
+</body>
+</html>
