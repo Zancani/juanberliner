@@ -361,10 +361,10 @@
     }
     @media (max-width: 1024px) { .review-card { flex: 0 0 calc((100% - 20px) / 2); } }
     @media (max-width: 768px) {
-      #reviews-carousel-wrapper { overflow: visible; scroll-snap-type: none; }
-      #reviews-grid { flex-direction: column; }
-      .review-card { flex: none; width: 100%; }
-      .carousel-btn { display: none !important; }
+      .review-card { flex: 0 0 100%; }
+      .carousel-btn { width: 36px; height: 36px; }
+      .carousel-btn.prev { left: -10px; }
+      .carousel-btn.next { right: -10px; }
     }
     .carousel-btn {
       position: absolute; top: 50%; transform: translateY(-50%);
@@ -847,16 +847,6 @@
         </div>
       </div>
 
-      <div class="review-card fade-in review-item review-en">
-        <div class="stars text-sm mb-3">★★★★★</div>
-        <p class="text-[15px] text-berlin-muted leading-relaxed mb-4">"Excellent tour with Juan. One of the best I've ever done from Sandemans. A lot of super important information in a didactic way and very well carried out. I never lost attention in the more than 2 hours that the tour lasted."</p>
-        <div class="flex items-center justify-between">
-          <div>
-            <div class="text-sm font-semibold text-white">Virginia Cárcamo</div>
-            <div class="text-xs text-berlin-muted">Google Reviews</div>
-          </div>
-        </div>
-      </div>
 
       <div class="review-card fade-in review-item review-es">
         <div class="stars text-sm mb-3">★★★★★</div>
