@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Lugares en Berlín — Juan Berliner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    :root {
+      --bg: #001219;
+      --surface: #012A36;
+      --surface2: #013747;
+      --border: #003D52;
+      --gold: #EE9B00;
+      --gold-glow: rgba(238,155,0,.12);
+      --text: #E9D8A6;
+      --muted: #7FB5BF;
+      --dim: #4a7a85;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ───────────────────────────────────────────── */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      height: 54px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+      z-index: 500;
+    }
+    .nav-back {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--muted); text-decoration: none; font-size: 13px;
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--gold); text-decoration: none; }
+    .nav-tag { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .nav-flex { flex: 1; }
+    .lang-toggle { display: flex; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+    .lang-btn {
+      padding: 5px 11px; font-size: 11px; font-weight: 600;
+      border: none; background: transparent; color: var(--muted);
+      cursor: pointer; transition: all .2s; font-family: inherit;
+    }
+    .lang-btn.active { background: var(--gold); color: #001219; }
+
+    /* ── FILTER BAR ─────────────────────────────────────── */
+    #filter-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      display: flex; align-items: center; gap: 5px;
+      flex-shrink: 0; overflow-x: auto;
+      -ms-overflow-style: none; scrollbar-width: none;
+    }
+    #filter-bar::-webkit-scrollbar { display: none; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 11px; border-radius: 20px;
+      border: 1px solid var(--border); background: var(--surface2);
+      color: var(--muted); font-size: 11px; font-weight: 500;
+      cursor: pointer; white-space: nowrap; flex-shrink: 0;
+      transition: all .15s; user-select: none; font-family: inherit;
+    }
+    .chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .chip .cnt { opacity: .4; font-size: 10px; margin-left: 1px; }
+    .chip.active { color: #E9D8A6; border-color: #005570; background: var(--surface2); }
+    .chip.all.active { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
+    .chip:hover:not(.active) { color: #E9D8A6; border-color: #005570; }
+    #n-count { margin-left: auto; flex-shrink: 0; font-size: 11px; color: var(--dim); font-weight: 500; }
+
+    /* ── MAIN ───────────────────────────────────────────── */
+    #main { flex: 1; display: flex; overflow: hidden; position: relative; }
+    #map { flex: 1; transition: all .3s; }
+
+    /* ── PANEL ──────────────────────────────────────────── */
+    #panel {
+      width: 360px; background: var(--surface);
+      border-left: 1px solid var(--border);
+      display: flex; flex-direction: column; flex-shrink: 0;
+      overflow: hidden; position: relative;
+      transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1), width .35s cubic-bezier(.4,0,.2,1);
+    }
+    #panel.open { transform: translateX(0); }
+
+    /* Photos */
+    #panel-photos {
+      position: relative; height: 210px; flex-shrink: 0;
+      background: var(--surface2); overflow: hidden;
+    }
+    #panel-photos.empty {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 52px; color: #2a2a2a;
+    }
+    .ph-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0; transition: opacity .55s;
+    }
+    .ph-img.on { opacity: 1; }
+    .ph-nav-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 32px; height: 32px; background: rgba(0,0,0,.55);
+      border: none; border-radius: 50%; color: #fff; font-size: 14px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      z-index: 2; transition: background .2s; font-family: inherit;
+    }
+    .ph-nav-btn:hover { background: rgba(0,0,0,.85); }
+    .ph-prev { left: 9px; }
+    .ph-next { right: 9px; }
+    .ph-dots { position: absolute; bottom: 9px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 2; }
+    .ph-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.3); cursor: pointer; transition: background .2s; }
+    .ph-dot.on { background: #fff; }
+
+    /* Close */
+    #panel-close {
+      position: absolute; top: 10px; right: 10px;
+      width: 30px; height: 30px; background: rgba(0,0,0,.65);
+      border: none; border-radius: 50%; color: #fff; font-size: 14px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      z-index: 20; transition: background .2s; font-family: inherit;
+    }
+    #panel-close:hover { background: rgba(0,0,0,.9); }
+
+    /* Body */
+    #panel-body {
+      padding: 16px 20px 32px; overflow-y: auto; flex: 1;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    #panel-body::-webkit-scrollbar { width: 4px; }
+    #panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .p-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; margin-bottom: 11px;
+    }
+    .p-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; line-height: 1.2; margin-bottom: 5px;
+    }
+    .p-addr { font-size: 12px; color: var(--muted); margin-bottom: 13px; line-height: 1.5; }
+    .p-divider { height: 1px; background: var(--border); margin: 13px 0; }
+    .p-desc { font-size: 13px; line-height: 1.8; color: #ccc; margin-bottom: 14px; }
+    .p-row { display: flex; gap: 10px; margin-bottom: 9px; font-size: 13px; align-items: flex-start; }
+    .p-icon { color: var(--gold); flex-shrink: 0; width: 16px; text-align: center; margin-top: 2px; font-size: 12px; }
+    .p-val { color: var(--text); line-height: 1.5; }
+    .p-val a { color: var(--gold); text-decoration: none; }
+    .p-val a:hover { text-decoration: underline; }
+    .p-gmaps {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 22px; padding: 11px;
+      text-align: center; border: 1px solid var(--gold);
+      border-radius: 6px; color: var(--gold); text-decoration: none;
+      font-size: 13px; font-weight: 600; transition: all .2s;
+    }
+    .p-gmaps:hover { background: var(--gold); color: #000; }
+    .p-gmaps svg { transition: transform .2s; }
+    .p-gmaps:hover svg { transform: translateX(3px); }
+
+    /* ── LEAFLET OVERRIDES ──────────────────────────────── */
+    .leaflet-control-attribution { display: none !important; }
+    .leaflet-control-zoom a {
+      background: var(--surface) !important;
+      border-color: var(--border) !important;
+      color: var(--muted) !important;
+    }
+    .leaflet-control-zoom a:hover { color: var(--gold) !important; background: var(--surface2) !important; }
+    .m-wrap { cursor: pointer; transition: transform .15s; }
+    .m-wrap:hover { transform: scale(1.18) translateY(-3px) !important; }
+    .m-wrap.sel { transform: scale(1.28) translateY(-4px) !important; }
+
+    /* ── MOBILE ─────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0 14px; gap: 10px; }
+      .nav-tag { display: none; }
+      #panel {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        width: 100% !important; height: 60vh;
+        border-left: none; border-top: 1px solid var(--border);
+        border-radius: 16px 16px 0 0;
+        transform: translateY(100%); z-index: 400;
+      }
+      #panel.open { transform: translateY(0); }
+      #panel-photos { height: 155px; }
+      .p-name { font-size: 19px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <span class="l-es">Inicio</span><span class="l-en" style="display:none">Home</span>
+  </a>
+  <div class="nav-sep"></div>
+  <a href="index.html" class="nav-brand">Juan Berliner</a>
+  <span class="nav-tag l-es">· Mis lugares</span>
+  <span class="nav-tag l-en" style="display:none">· My places</span>
+  <div class="nav-flex"></div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-es" onclick="setLang('es')">🇺🇾 ES</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇬🇧 EN</button>
+  </div>
+</nav>
+
+<div id="filter-bar"></div>
+
+<div id="main">
+  <div id="map"></div>
+  <div id="panel">
+    <div id="panel-photos"></div>
+    <button id="panel-close" title="Cerrar">✕</button>
+    <div id="panel-body">
+      <div id="p-badge" class="p-badge"></div>
+      <div id="p-name" class="p-name"></div>
+      <div id="p-addr" class="p-addr"></div>
+      <div class="p-divider"></div>
+      <div id="p-desc" class="p-desc"></div>
+      <div id="p-info"></div>
+      <a id="p-gmaps" class="p-gmaps" target="_blank" rel="noopener">
+        <span class="l-es">Ver en Google Maps</span>
+        <span class="l-en" style="display:none">Open in Google Maps</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── LANG ────────────────────────────────────────────────────────
+let lang = 'es';
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.l-es').forEach(e => e.style.display = l==='es'?'':'none');
+  document.querySelectorAll('.l-en').forEach(e => e.style.display = l==='en'?'':'none');
+  document.getElementById('btn-es').classList.toggle('active', l==='es');
+  document.getElementById('btn-en').classList.toggle('active', l==='en');
+}
+
+// ── CATEGORIES ──────────────────────────────────────────────────
+const CAT = {
+  "Restaurantes":    { color:"#E05C5C", emoji:"🍽️", bg:"rgba(224,92,92,.13)" },
+  "Bares":           { color:"#E0913A", emoji:"🍺", bg:"rgba(224,145,58,.13)" },
+  "Kebabs":          { color:"#D4A017", emoji:"🥙", bg:"rgba(212,160,23,.13)" },
+  "Parques":         { color:"#5CB85C", emoji:"🌳", bg:"rgba(92,184,92,.13)" },
+  "Museos":          { color:"#7B8CDE", emoji:"🏛️", bg:"rgba(123,140,222,.13)" },
+  "Cines":           { color:"#BB88EE", emoji:"🎬", bg:"rgba(187,136,238,.13)" },
+  "Clubes de Tecno": { color:"#C44ECC", emoji:"🎧", bg:"rgba(196,78,204,.13)" },
+  "Monumentos":      { color:"#C8A84B", emoji:"🗿", bg:"rgba(200,168,75,.13)" },
+  "Otros":           { color:"#888",    emoji:"📌", bg:"rgba(136,136,136,.13)" },
+};
+
+// ── PHOTO HELPER ─────────────────────────────────────────────────
+const U = id => `https://images.unsplash.com/photo-${id}?w=720&h=480&fit=crop&auto=format&q=82`;
+
+// ── DATA ─────────────────────────────────────────────────────────
+const PLACES = [
+  // ── RESTAURANTES ─────────────────────────────────────
+  {
+    name: "BURRO UNCHAINED",
+    address: "Allerstraße 11, 12049 Berlin (Neukölln)",
+    lat: 52.4820, lon: 13.4249, category: "Restaurantes",
+    desc: "Hamburguesería argentina de culto en Neukölln, famosa por sus smash burgers jugosos y papas fritas caseras. Ambiente informal, servicio rápido y porciones generosas.",
+    hours: "Lun–Dom 12:00–22:00", phone: null, website: null,
+    photos: [U("1568901346375-23c9450c58cd"), U("1550317138-10000687a72b")],
+    url: "https://maps.google.com/?q=Burro+Unchained+Berlin",
+  },
+  {
+    name: "Malafemmena",
+    address: "Hauptstraße 85, 12159 Berlin (Steglitz)",
+    lat: 52.4691, lon: 13.3533, category: "Restaurantes",
+    desc: "Pizzería napolitana con masa madre fermentada 48 horas y tomates San Marzano importados. Horno de leña siempre encendido. Una de las mejores pizzas de Berlín.",
+    hours: "Mar–Dom 12:00–23:00", phone: null, website: null,
+    photos: [U("1513104890138-7c749659a591"), U("1574071318508-1cdbab80d002")],
+    url: "https://maps.google.com/?q=Malafemmena+Berlin",
+  },
+  {
+    name: "Micheline",
+    address: "Kienitzer Str. 93, 12049 Berlin (Neukölln)",
+    lat: 52.4834, lon: 13.4233, category: "Restaurantes",
+    desc: "Cocina moderna de temporada en Neukölln con carta pequeña que cambia semanalmente. Ambiente íntimo, iluminación de velas y buena selección de vinos naturales.",
+    hours: "Mié–Dom 18:00–23:00", phone: null, website: null,
+    photos: [U("1414235077428-338989a2e8c0"), U("1565299624946-b28f40a0ae38")],
+    url: "https://maps.google.com/?q=Micheline+Berlin",
+  },
+  {
+    name: "La Stella Nera",
+    address: "Leykestraße 18, 12053 Berlin (Neukölln)",
+    lat: 52.4753, lon: 13.4401, category: "Restaurantes",
+    desc: "Ostería italiana familiar con pasta fresca hecha a diario a la vista. La lasaña y el cacio e pepe son imprescindibles. Carta de vinos italianos curada con amor.",
+    hours: "Mar–Dom 18:00–23:00", phone: null, website: null,
+    photos: [U("1595295333158-4742f28fbd85"), U("1555949258-eb67b1ef0ceb")],
+    url: "https://maps.google.com/?q=La+Stella+Nera+Berlin",
+  },
+  {
+    name: "Kuckucksei",
+    address: "Barbarossastraße 5a, 10781 Berlin (Schöneberg)",
+    lat: 52.4897, lon: 13.3470, category: "Restaurantes",
+    desc: "Restaurante vienés clásico, ideal para el brunch del fin de semana. Huevos revueltos con trufa, tostadas de masa madre y café de especialidad. Vale cada minuto de espera.",
+    hours: "Lun–Vie 08:00–18:00 · Sáb–Dom 09:00–17:00", phone: null, website: null,
+    photos: [U("1504630083234-14187a9df0f5"), U("1484723091739-30a097e8f929")],
+    url: "https://maps.google.com/?q=Kuckucksei+Berlin",
+  },
+  {
+    name: "House of Small Wonder",
+    address: "Johannisstraße 20, 10117 Berlin (Mitte)",
+    lat: 52.5258, lon: 13.3965, category: "Restaurantes",
+    desc: "Café japonés-norteamericano en Mitte con desayunos y brunches únicos. Famoso por sus soufflé pancakes y matcha lattes. Decoración de jardín interior tropical.",
+    hours: "Lun–Vie 08:30–17:00 · Sáb–Dom 09:00–18:00", phone: null, website: "https://houseofsmallwonder.de",
+    photos: [U("1567651964733-5e5cf1db2f79"), U("1504630083234-14187a9df0f5")],
+    url: "https://maps.google.com/?q=House+of+Small+Wonder+Berlin",
+  },
+  {
+    name: "Adana Grillhaus Kreuzberg",
+    address: "Urbanstraße 70, 10967 Berlin (Kreuzberg)",
+    lat: 52.4950, lon: 13.4130, category: "Restaurantes",
+    desc: "Restaurante turco especializado en carnes a la brasa al estilo de Adana. El adana kebab y el iskender son imprescindibles. Local sin pretensiones con muy buenos precios.",
+    hours: "Lun–Dom 11:00–23:00", phone: null, website: null,
+    photos: [U("1529042410759-befb1204b468"), U("1603360946369-dc9bb6258143")],
+    url: "https://maps.google.com/?q=Adana+Grillhaus+Kreuzberg+Berlin",
+  },
+  {
+    name: "Mikoto Sushi Kreuzberg",
+    address: "Zossener Str. 8, 10961 Berlin (Kreuzberg)",
+    lat: 52.4960, lon: 13.3950, category: "Restaurantes",
+    desc: "Sushi bar minimalista en Kreuzberg con rolls creativos y sashimi de primer nivel. Ambiente tranquilo, precios honestos y servicio eficiente.",
+    hours: "Lun–Dom 12:00–22:00", phone: null, website: null,
+    photos: [U("1579871494447-9811cf80d66c"), U("1617196034183-421b4040ed20")],
+    url: "https://maps.google.com/?q=Mikoto+Sushi+Kreuzberg+Berlin",
+  },
+  {
+    name: "Panda Meister Berlin",
+    address: "Am Ostbahnhof, 10243 Berlin (Friedrichshain)",
+    lat: 52.5102, lon: 13.4366, category: "Restaurantes",
+    desc: "Hamburguesería premium junto al Ostbahnhof con patties de carne wagyu y salsas artesanales. Calidad superior a un precio razonable para la zona.",
+    hours: "Lun–Dom 11:00–23:00", phone: null, website: null,
+    photos: [U("1561043433-aaf687c4cf04"), U("1550317138-10000687a72b")],
+    url: "https://maps.google.com/?q=Panda+Meister+Berlin+Ostbahnhof",
+  },
+  {
+    name: "Basmah",
+    address: "Weisestraße 37, 12049 Berlin (Neukölln)",
+    lat: 52.4797, lon: 13.4338, category: "Restaurantes",
+    desc: "Cocina levantina casera en Neukölln: hummus cremoso, falafel crujiente y platos sirios con especias auténticas. Local pequeño, siempre lleno y siempre delicioso.",
+    hours: "Mar–Dom 12:00–22:00", phone: null, website: null,
+    photos: [U("1585937421612-70a008356fbe"), U("1496116218417-1a781b1232e7")],
+    url: "https://maps.google.com/?q=Basmah+Berlin",
+  },
+  {
+    name: "Rogacki",
+    address: "Wilmersdorfer Str. 145, 10585 Berlin (Charlottenburg)",
+    lat: 52.5054, lon: 13.3144, category: "Restaurantes",
+    desc: "Delicatessen berlinés desde 1928, una institución en Charlottenburg. Famoso por su ahumado de pescados in situ, embutidos alemanes y ambiente de mercado tradicional intacto.",
+    hours: "Lun–Mié 09:00–18:00 · Jue–Vie 09:00–19:00 · Sáb 08:00–16:00", phone: null, website: "https://rogacki.de",
+    photos: [U("1588166524941-3bf61a9c41db"), U("1546039907-7fa05f864c02")],
+    url: "https://maps.google.com/?q=Rogacki+Berlin",
+  },
+  {
+    name: "Pala Berlin",
+    address: "Lychener Str. 73, 10437 Berlin (Prenzlauer Berg)",
+    lat: 52.5401, lon: 13.4198, category: "Restaurantes",
+    desc: "Cafetería griega informal en Prenzlauer Berg con tostadas de masa madre, bowls mediterráneos y el mejor café de la zona. Terraza soleada en verano.",
+    hours: "Lun–Vie 09:00–17:00 · Sáb–Dom 09:00–18:00", phone: null, website: null,
+    photos: [U("1544025162-d76538ae2e97"), U("1490474418585-ba9bad8fd0ea")],
+    url: "https://maps.google.com/?q=Pala+Berlin+Greek+Cafe",
+  },
+  {
+    name: "Sarajevo Berlin",
+    address: "Schliemannstraße 21, 10437 Berlin (Prenzlauer Berg)",
+    lat: 52.5393, lon: 13.4213, category: "Restaurantes",
+    desc: "Restaurante bosnio auténtico con ćevapi, burek y cordero al horno. Ambiente cálido y servicio familiar que te transporta directamente a los Balcanes.",
+    hours: "Lun–Dom 12:00–23:00", phone: null, website: null,
+    photos: [U("1529042410759-befb1204b468"), U("1414235077428-338989a2e8c0")],
+    url: "https://maps.google.com/?q=Sarajevo+Berlin",
+  },
+  {
+    name: "Mr. Grill Berlin",
+    address: "Linienstraße 226, 10178 Berlin (Mitte)",
+    lat: 52.5253, lon: 13.3968, category: "Restaurantes",
+    desc: "Asador turco en el corazón de Mitte con cortes generosos y presentaciones cuidadas. Popular entre locales y turistas por igual gracias a su consistencia.",
+    hours: "Lun–Dom 11:00–00:00", phone: null, website: null,
+    photos: [U("1603360946369-dc9bb6258143"), U("1529042410759-befb1204b468")],
+    url: "https://maps.google.com/?q=Mr+Grill+Berlin",
+  },
+  {
+    name: "Buya Izakaya Ramen",
+    address: "Kollwitzstraße 57, 10405 Berlin (Prenzlauer Berg)",
+    lat: 52.5359, lon: 13.4209, category: "Restaurantes",
+    desc: "Izakaya japonesa íntima con ramen tonkotsu de caldo cocinado 18 horas y platos para compartir. Carta de sake curada y ambiente auténtico de taberna japonesa.",
+    hours: "Mar–Dom 18:00–23:00", phone: null, website: null,
+    photos: [U("1569050467447-ce54b3bbc37d"), U("1591814468924-caf88d1232e1")],
+    url: "https://maps.google.com/?q=Buya+Izakaya+Ramen+Berlin",
+  },
+
+  // ── BARES ────────────────────────────────────────────
+  {
+    name: "Pool und Cigars",
+    address: "Schönhauser Allee 36, 10435 Berlin (Prenzlauer Berg)",
+    lat: 52.5399, lon: 13.4131, category: "Bares",
+    desc: "Bar de billar y cócteles en Prenzlauer Berg con atmósfera de club nocturno berlinés. Noches temáticas, DJ sets y terraza trasera en verano. Abre hasta tarde.",
+    hours: "Mar–Dom 19:00–03:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Pool+und+Cigars+Berlin",
+  },
+  {
+    name: "Alter Roter Löwe",
+    address: "Richardstraße 31, 12043 Berlin (Neukölln)",
+    lat: 52.4794, lon: 13.4370, category: "Bares",
+    desc: "Kneipe de barrio en Neukölln, oscura y acogedora, con cervezas locales económicas y clientela de artistas y estudiantes. El bar berlinés clásico sin ninguna pretensión.",
+    hours: "Lun–Dom 18:00–03:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Alter+Roter+Löwe+Berlin",
+  },
+  {
+    name: "Ä",
+    address: "Weserstr. 40, 12045 Berlin (Neukölln)",
+    lat: 52.4883, lon: 13.4331, category: "Bares",
+    desc: "Bar minimalista en Neukölln con selección de vinos naturales y cócteles creativos. Favorito de la escena artística local. El nombre dice todo: sin ornamentos, solo calidad.",
+    hours: "Mar–Dom 18:00–02:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Ä+Bar+Neukölln+Berlin",
+  },
+  {
+    name: "Mein Haus am See",
+    address: "Brunnenstraße 197, 10119 Berlin (Mitte)",
+    lat: 52.5318, lon: 13.4018, category: "Bares",
+    desc: "Bar bohemio abierto casi las 24 horas con DJs en vivo, colchonetas en el suelo y una vibra que solo existe en Berlín. Desayunos, almuerzos y noches de fiesta sin interrupción.",
+    hours: "Lun–Dom 09:00–05:00 (casi no cierra)", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Mein+Haus+am+See+Berlin",
+  },
+  {
+    name: "Schwarzes Cafe",
+    address: "Kantstraße 148, 10623 Berlin (Charlottenburg)",
+    lat: 52.5044, lon: 13.3227, category: "Bares",
+    desc: "Histórico café en Charlottenburg abierto desde 1978 con desayunos disponibles las 24 horas. Refugio de noctámbulos, carta amplia y ambiente atemporal de Berlín Oeste.",
+    hours: "Abierto 24h (cierra mar 03:00–11:00)", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Schwarzes+Cafe+Berlin",
+  },
+  {
+    name: "Donau115",
+    address: "Donaustraße 115, 12043 Berlin (Neukölln)",
+    lat: 52.4778, lon: 13.4360, category: "Bares",
+    desc: "Bar Späti de culto en Neukölln con terraza siempre animada y cervezas a precios de barrio. El epicentro de la vida nocturna informal de Reuterstraße.",
+    hours: "Lun–Dom 16:00–04:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Donau115+Berlin",
+  },
+  {
+    name: "Gaststätte Sophieneck",
+    address: "Sophienstraße 15, 10178 Berlin (Mitte)",
+    lat: 52.5249, lon: 13.3987, category: "Bares",
+    desc: "Kneipe berlinesa clásica desde 1902 con cocina alemana tradicional y cervezas tiradas. Un pedazo de historia de la ciudad completamente intacto, sin turistas.",
+    hours: "Lun–Dom 11:00–00:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Gaststätte+Sophieneck+Berlin",
+  },
+  {
+    name: "Arkaoda",
+    address: "Karl-Marx-Platz 18, 12043 Berlin (Neukölln)",
+    lat: 52.4801, lon: 13.4367, category: "Bares",
+    desc: "Bar cultural turco-berlinés en Neukölln con exposiciones, noches de cine y DJ sets. El patio trasero es uno de los secretos mejor guardados del barrio en verano.",
+    hours: "Mar–Dom 18:00–03:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Arkaoda+Berlin",
+  },
+  {
+    name: "Filmkunstbar Fitzcarraldo",
+    address: "Oderberger Str. 32, 10435 Berlin (Prenzlauer Berg)",
+    lat: 52.5379, lon: 13.4133, category: "Bares",
+    desc: "Bar cinematográfico en Prenzlauer Berg dedicado al cine de arte con cócteles temáticos y proyecciones. Ambiente íntimo de terciopelo rojo, carteles vintage y conversación cinéfila.",
+    hours: "Mié–Dom 19:00–03:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Filmkunstbar+Fitzcarraldo+Berlin",
+  },
+  {
+    name: "Bateau Ivre",
+    address: "Oderberger Str. 14, 10435 Berlin (Prenzlauer Berg)",
+    lat: 52.5375, lon: 13.4127, category: "Bares",
+    desc: "Pequeño bar literario en Prenzlauer Berg nombrado tras el poema de Rimbaud. Vinos naturales, ambiente íntimo y conversaciones que duran hasta el amanecer.",
+    hours: "Mar–Dom 19:00–02:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Bateau+Ivre+Berlin",
+  },
+  {
+    name: "Westend Pinte",
+    address: "Westend, 14052 Berlin (Charlottenburg)",
+    lat: 52.5139, lon: 13.2792, category: "Bares",
+    desc: "Kneipe tradicional en Westend con ambiente tranquilo, buenas cervezas tiradas y clientes habituales del barrio. El tipo de bar que ya casi no existe en Berlín.",
+    hours: "Lun–Dom 16:00–00:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Westend+Pinte+Berlin",
+  },
+  {
+    name: "The Hat Bar Berlin",
+    address: "Auguststraße 83, 10117 Berlin (Mitte)",
+    lat: 52.5264, lon: 13.3961, category: "Bares",
+    desc: "Cóctelería sofisticada en el barrio de galerías de Mitte con bartenders creativos y carta de temporada. Elegante sin resultar pretencioso, ideal para una noche especial.",
+    hours: "Mar–Dom 18:00–03:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=The+Hat+Bar+Berlin",
+  },
+  {
+    name: "Suspiria Bar",
+    address: "Flughafenstr. 37, 12053 Berlin (Neukölln)",
+    lat: 52.4756, lon: 13.4406, category: "Bares",
+    desc: "Bar de horror-chic en Neukölln inspirado en el cine de Dario Argento. Cócteles oscuros y creativos, paredes rojas y música post-punk. Una experiencia visual y sensorial.",
+    hours: "Jue–Dom 20:00–04:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Suspiria+Bar+Berlin",
+  },
+  {
+    name: "Herr Lindemann Cocktail Bar",
+    address: "Ritterstraße 12, 10969 Berlin (Kreuzberg)",
+    lat: 52.4980, lon: 13.4091, category: "Bares",
+    desc: "Cóctelería de autor en Kreuzberg con bartenders de primer nivel. Carta curada y rotativa. Reserva recomendada los fines de semana para garantizar sitio.",
+    hours: "Mar–Dom 18:00–02:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Herr+Lindemann+Berlin",
+  },
+  {
+    name: "Cafe Commune",
+    address: "Revaler Str. 99, 10245 Berlin (Friedrichshain)",
+    lat: 52.5071, lon: 13.4563, category: "Bares",
+    desc: "Bar y café cultural dentro del complejo RAW-Gelände, en Friedrichshain. Patio amplio, eventos en vivo, ambiente alternativo y precios accesibles.",
+    hours: "Lun–Dom 12:00–03:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Cafe+Commune+Berlin",
+  },
+  {
+    name: "Grenzplatte",
+    address: "Grenzallee 52, 12057 Berlin (Neukölln)",
+    lat: 52.4718, lon: 13.4473, category: "Bares",
+    desc: "Bar de barrio en el sur de Neukölln, zona menos transitada por turistas. Terraza agradable, buenas cervezas y ese ambiente tranquilo de barrio que cuesta encontrar.",
+    hours: "Mar–Dom 16:00–02:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Grenzplatte+Berlin",
+  },
+
+  // ── KEBABS ───────────────────────────────────────────
+  {
+    name: "Rüyam Gemüse Kebab",
+    address: "Hauptstraße 36, 10827 Berlin (Schöneberg)",
+    lat: 52.4775, lon: 13.3440, category: "Kebabs",
+    desc: "El famoso kebab vegetariano de Schöneberg, una institución local. Cola garantizada pero recompensa garantizada: döner con queso feta, vegetales frescos y salsas propias.",
+    hours: "Lun–Dom 11:00–04:00", phone: null, website: null,
+    photos: [U("1603360946369-dc9bb6258143")],
+    url: "https://maps.google.com/?q=Rüyam+Gemüse+Kebab+Berlin",
+  },
+
+  // ── PARQUES ──────────────────────────────────────────
+  {
+    name: "Körnerpark",
+    address: "Schierker Str., 12051 Berlin (Neukölln)",
+    lat: 52.4769, lon: 13.4383, category: "Parques",
+    desc: "Pequeño paraíso escondido en Neukölln: jardín neoclásico con escalinatas de mármol, fuentes y galería de arte. Uno de los parques más hermosos y menos conocidos de Berlín.",
+    hours: "Abierto siempre", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Körnerpark+Berlin",
+  },
+  {
+    name: "Gardens of the World",
+    address: "Eisenacher Str. 99, 12685 Berlin (Marzahn)",
+    lat: 52.5479, lon: 13.5584, category: "Parques",
+    desc: "Jardines internacionales temáticos en Marzahn: chino, japonés, balinés y más, en 21 hectáreas. El lugar más desconocido y más sorprendente de Berlín.",
+    hours: "Nov–Mar 09:00–18:00 · Abr–Oct 09:00–20:00", phone: null, website: "https://gruen-berlin.de/parks-gaerten/gaerten-der-welt",
+    photos: [], url: "https://maps.google.com/?q=Gardens+of+the+World+Berlin",
+  },
+  {
+    name: "Thielpark",
+    address: "Altensteinstraße, 14195 Berlin (Dahlem)",
+    lat: 52.4530, lon: 13.2944, category: "Parques",
+    desc: "Parque tranquilo en Dahlem con estanques y patos, lejos del turismo. Ideal para un paseo matutino o una tarde de lectura en el sur tranquilo de Berlín.",
+    hours: "Abierto siempre", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Thielpark+Berlin",
+  },
+  {
+    name: "Helmholtzplatz",
+    address: "10437 Berlin (Prenzlauer Berg)",
+    lat: 52.5415, lon: 13.4214, category: "Parques",
+    desc: "Plaza con jardín central en Prenzlauer Berg, corazón del barrio. Mercado de pulgas los domingos, juegos para niños y la vida cotidiana berlinesa en su mejor versión.",
+    hours: "Abierto siempre", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Helmholtzplatz+Berlin",
+  },
+  {
+    name: "Café am Neuen See",
+    address: "Lichtensteinallee 2, 10787 Berlin (Tiergarten)",
+    lat: 52.5126, lon: 13.3504, category: "Parques",
+    desc: "Beer garden dentro del Tiergarten junto a un lago con botes de remo. El lugar perfecto para una cerveza al sol en verano. Ambiente familiar y muy berlinés.",
+    hours: "Mar–Dom 10:00–22:00 (temporada verano)", phone: null, website: "https://cafeamneuensee.de",
+    photos: [], url: "https://maps.google.com/?q=Café+am+Neuen+See+Berlin",
+  },
+  {
+    name: "Rüdesheimer Platz",
+    address: "14197 Berlin (Wilmersdorf)",
+    lat: 52.4740, lon: 13.3150, category: "Parques",
+    desc: "Plaza residencial art-nouveau en Wilmersdorf rodeada de edificios históricos y un jardín central bien cuidado. Absolutamente sin turistas y perfecta para descansar.",
+    hours: "Abierto siempre", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Rüdesheimer+Platz+Berlin",
+  },
+
+  // ── MUSEOS ───────────────────────────────────────────
+  {
+    name: "C/O Berlin",
+    address: "Hardenbergstraße 22, 10623 Berlin (Charlottenburg)",
+    lat: 52.5044, lon: 13.3306, category: "Museos",
+    desc: "Espacio de fotografía contemporánea de primer nivel mundial en Charlottenburg. Exposiciones temporales de los mejores fotógrafos del mundo. Tienda de libros de fotografía excelente.",
+    hours: "Lun–Dom 11:00–20:00", phone: null, website: "https://co-berlin.org",
+    photos: [], url: "https://maps.google.com/?q=C/O+Berlin",
+  },
+  {
+    name: "Stasimuseum",
+    address: "Ruschestraße 103, 10365 Berlin (Lichtenberg)",
+    lat: 52.5097, lon: 13.4883, category: "Museos",
+    desc: "Museo en la antigua sede de la Stasi, la policía secreta de la RDA. Despachos intactos del Ministerio para la Seguridad del Estado. Terrorífico y fascinante a partes iguales.",
+    hours: "Lun–Vie 10:00–18:00 · Sáb–Dom 11:00–18:00", phone: null, website: "https://stasimuseum.de",
+    photos: [], url: "https://maps.google.com/?q=Stasimuseum+Berlin",
+  },
+  {
+    name: "Gedenkstätte Hohenschönhausen",
+    address: "Genslerstraße 66, 13055 Berlin (Hohenschönhausen)",
+    lat: 52.5495, lon: 13.5006, category: "Museos",
+    desc: "Centro de detención secreto de la Stasi: prisión donde eran interrogados y torturados psicológicamente los disidentes de la RDA. Solo visitas guiadas. Impactante e imprescindible.",
+    hours: "Lun–Dom 10:00–18:00 (solo visitas guiadas)", phone: null, website: "https://stiftung-hsh.de",
+    photos: [], url: "https://maps.google.com/?q=Gedenkstätte+Hohenschönhausen",
+  },
+  {
+    name: "Museum für Naturkunde",
+    address: "Invalidenstraße 43, 10115 Berlin (Mitte)",
+    lat: 52.5305, lon: 13.3819, category: "Museos",
+    desc: "Museo de Historia Natural con el Brachiosaurus montado más alto del mundo. Una colección de 30 millones de objetos en un edificio histórico de 1889. Para todas las edades.",
+    hours: "Mar–Vie 09:30–18:00 · Sáb–Dom 10:00–18:00", phone: null, website: "https://www.museumfuernaturkunde.berlin",
+    photos: [], url: "https://maps.google.com/?q=Museum+für+Naturkunde+Berlin",
+  },
+  {
+    name: "Galerie EIGEN + ART",
+    address: "Auguststraße 26, 10117 Berlin (Mitte)",
+    lat: 52.5264, lon: 13.3946, category: "Museos",
+    desc: "Galería contemporánea alemana de referencia en el barrio de galerías de Mitte. Representa artistas como Neo Rauch y Carsten Nicolai. Entrada libre, exposiciones temporales.",
+    hours: "Mar–Sáb 11:00–18:00", phone: null, website: "https://eigen-art.com",
+    photos: [], url: "https://maps.google.com/?q=Galerie+EIGEN+ART+Berlin",
+  },
+  {
+    name: "Arsenal – Film und Videokunst",
+    address: "Potsdamer Str. 2, 10785 Berlin (Tiergarten)",
+    lat: 52.5061, lon: 13.3656, category: "Museos",
+    desc: "Cinemateca independiente de Berlín junto a Potsdamer Platz. Proyecciones de cine clásico, experimental y de autor en versión original. El archivo de la memoria cinematográfica de la ciudad.",
+    hours: "Horario según cartelera semanal", phone: null, website: "https://arsenal-berlin.de",
+    photos: [], url: "https://maps.google.com/?q=Arsenal+Institut+Film+Berlin",
+  },
+
+  // ── CINES ────────────────────────────────────────────
+  {
+    name: "b-ware! Ladenkino",
+    address: "Simon-Dach-Str. 40, 10245 Berlin (Friedrichshain)",
+    lat: 52.5071, lon: 13.4576, category: "Cines",
+    desc: "Cine de barrio en Friedrichshain con programación de autor y películas en versión original. Sala pequeña e íntima con butacas cómodas. Comunidad cinéfila muy activa.",
+    hours: "Según cartelera semanal", phone: null, website: "https://bware-ladenkino.de",
+    photos: [], url: "https://maps.google.com/?q=b-ware+Ladenkino+Berlin",
+  },
+  {
+    name: "Tilsiter Lichtspiele",
+    address: "Richard-Sorge-Str. 25a, 10249 Berlin (Friedrichshain)",
+    lat: 52.5113, lon: 13.4615, category: "Cines",
+    desc: "Cine histórico de 1913 en Friedrichshain con su arquitectura original conservada. Proyectan filmes independientes y ciclos temáticos. Sala única con balcón y todo su encanto intacto.",
+    hours: "Según cartelera semanal", phone: null, website: "https://tilsiter-lichtspiele.de",
+    photos: [], url: "https://maps.google.com/?q=Tilsiter+Lichtspiele+Berlin",
+  },
+  {
+    name: "Kino Intimes",
+    address: "Boxhagener Str. 107, 10245 Berlin (Friedrichshain)",
+    lat: 52.5065, lon: 13.4544, category: "Cines",
+    desc: "El cine más antiguo de Berlín aún en funcionamiento (desde 1913), junto a Boxhagener Platz. Programación de autor en VO y ambiente auténtico de sala de barrio histórica.",
+    hours: "Según cartelera semanal", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Kino+Intimes+Berlin",
+  },
+
+  // ── CLUBES DE TECNO ──────────────────────────────────
+  {
+    name: "Renate",
+    address: "Warschauer Str. 34, 10243 Berlin (Friedrichshain)",
+    lat: 52.5089, lon: 13.4517, category: "Clubes de Tecno",
+    desc: "Club icónico de Friedrichshain en un edificio industrial con múltiples pisos, jardín y decoración kitsch berlinesa. Techno y house profundo. Ambiente de absoluta libertad.",
+    hours: "Vie noche – Lun madrugada (horario extendido)", phone: null, website: "https://renate.cc",
+    photos: [], url: "https://maps.google.com/?q=Renate+Berlin",
+  },
+  {
+    name: "Mensch Meier",
+    address: "Storkower Str. 121, 10407 Berlin (Lichtenberg)",
+    lat: 52.5228, lon: 13.4547, category: "Clubes de Tecno",
+    desc: "Club alternativo en Lichtenberg con múltiples salas, jardín grande y programación ecléctica. Precio accesible, comunidad muy abierta e inclusiva. Una de las mejores opciones de Berlín.",
+    hours: "Vie–Dom 23:00–tarde", phone: null, website: "https://menschmeier.berlin",
+    photos: [], url: "https://maps.google.com/?q=Mensch+Meier+Berlin",
+  },
+  {
+    name: "Sowieso",
+    address: "Weisestraße 24, 12049 Berlin (Neukölln)",
+    lat: 52.4799, lon: 13.4358, category: "Clubes de Tecno",
+    desc: "Club de jazz, impro y electrónica en Neukölln, en un sótano acogedor. Noches de improvisación, residencias de artistas locales y eventos experimentales. Muy de barrio.",
+    hours: "Jue–Dom 21:00–tarde", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Sowieso+Berlin",
+  },
+  {
+    name: "∄",
+    address: "Weserstraße 42, 12045 Berlin (Neukölln)",
+    lat: 52.4882, lon: 13.4333, category: "Clubes de Tecno",
+    desc: "Club pequeño e íntimo en Neukölln con sonido excepcional y programación de techno industrial y experimental. Dirección discreta, selección de puerta estricta. Para entendidos.",
+    hours: "Sáb–Dom 23:00–tarde", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=∄+Club+Berlin",
+  },
+  {
+    name: "Anomalie Art Club",
+    address: "Storkower Str. 121, 10407 Berlin (Lichtenberg)",
+    lat: 52.5232, lon: 13.4555, category: "Clubes de Tecno",
+    desc: "Club de arte en Lichtenberg con instalaciones visuales inmersivas, jardín tropical y música electrónica experimental. Uno de los espacios más creativos y bellos de Berlín.",
+    hours: "Vie–Dom 23:00–tarde", phone: null, website: "https://anomalie.club",
+    photos: [], url: "https://maps.google.com/?q=Anomalie+Art+Club+Berlin",
+  },
+  {
+    name: "Sameheads",
+    address: "Richardstraße 10, 12043 Berlin (Neukölln)",
+    lat: 52.4816, lon: 13.4378, category: "Clubes de Tecno",
+    desc: "Club y galería en Neukölln con fiestas queer-friendly y programación artística. Ambiente relajado, puertas abiertas y sin dresscode. Un espacio genuinamente libre.",
+    hours: "Vie–Dom 22:00–tarde", phone: null, website: "https://sameheads.com",
+    photos: [], url: "https://maps.google.com/?q=Sameheads+Berlin",
+  },
+
+  // ── MONUMENTOS ───────────────────────────────────────
+  {
+    name: "Brandenburger Tor",
+    address: "Pariser Platz, 10117 Berlin (Mitte)",
+    lat: 52.5163, lon: 13.3777, category: "Monumentos",
+    desc: "La Puerta de Brandenburgo es el símbolo de Berlín y de la reunificación alemana. Construida en 1791, fue durante 28 años el único paso entre Berlín Este y Oeste bajo el Muro.",
+    hours: "Abierto siempre (exterior)", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Brandenburger+Tor+Berlin",
+  },
+  {
+    name: "Apartamento de David Bowie",
+    address: "Hauptstraße 155, 10827 Berlin (Schöneberg)",
+    lat: 52.4774, lon: 13.3473, category: "Monumentos",
+    desc: "Departamento donde vivió David Bowie junto a Iggy Pop entre 1976 y 1978. Aquí grabó la Trilogía de Berlín: Low, Heroes y Lodger. Solo visible desde la calle.",
+    hours: "Solo exterior visible", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=David+Bowie+Apartment+Berlin",
+  },
+  {
+    name: "Hochbunker Pallasstraße",
+    address: "Pallasstraße 5, 10781 Berlin (Schöneberg)",
+    lat: 52.4988, lon: 13.3545, category: "Monumentos",
+    desc: "Búnker antiaéreo de la Segunda Guerra Mundial integrado en un bloque de departamentos de los años 70. Símbolo de la Berlín de capas históricas superpuestas. Arquitectura brutal e inquietante.",
+    hours: "Solo exterior visible", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Hochbunker+Pallasstraße+Berlin",
+  },
+  {
+    name: "Denkmal Rosenstraße",
+    address: "Rosenstraße, 10178 Berlin (Mitte)",
+    lat: 52.5237, lon: 13.4022, category: "Monumentos",
+    desc: "Memorial a las mujeres que en 1943 protestaron pacíficamente para liberar a sus esposos judíos detenidos por los nazis. Un acto de resistencia civil extraordinario y poco conocido.",
+    hours: "Abierto siempre", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Denkmal+Rosenstraße+Berlin",
+  },
+  {
+    name: "Böhmisches Dorf Neukölln",
+    address: "Karl-Marx-Str. 147, 12043 Berlin (Neukölln)",
+    lat: 52.4782, lon: 13.4465, category: "Monumentos",
+    desc: "Asentamiento fundado en 1737 por refugiados bohemios protestantes. Sus casas de piedra, la iglesia y el cementerio son un anacronismo encantador en pleno Neukölln moderno.",
+    hours: "Exterior siempre abierto", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Böhmisches+Dorf+Berlin+Neukölln",
+  },
+
+  // ── OTROS ────────────────────────────────────────────
+  {
+    name: "EastSeven Berlin Hostel",
+    address: "Schwedter Str. 7, 10119 Berlin (Prenzlauer Berg)",
+    lat: 52.5357, lon: 13.4083, category: "Otros",
+    desc: "Hostel pequeño y muy bien valorado en Prenzlauer Berg, ideal para viajeros solitarios. Ambiente social, personal amable y ubicación excelente para explorar el barrio.",
+    hours: "Recepción 24h", phone: null, website: "https://eastseven.de",
+    photos: [], url: "https://maps.google.com/?q=EastSeven+Berlin+Hostel",
+  },
+  {
+    name: "andenbuch – Librería Espacio Cultural",
+    address: "Bergmannstr. 59, 10961 Berlin (Kreuzberg)",
+    lat: 52.4902, lon: 13.3966, category: "Otros",
+    desc: "Librería y espacio cultural latinoamericano en Bergmannstraße. Libros en español, eventos culturales y punto de encuentro de la comunidad hispana de Berlín.",
+    hours: "Mar–Vie 14:00–19:00 · Sáb 11:00–17:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=andenbuch+Berlin",
+  },
+  {
+    name: "Hard Wax",
+    address: "Köpenicker Str. 70, 10179 Berlin (Mitte)",
+    lat: 52.5059, lon: 13.4278, category: "Otros",
+    desc: "Tienda de vinilos de referencia mundial para techno y electrónica, fundada en 1989. Distribuidora de los sellos Basic Channel y Chain Reaction. Imprescindible para cualquier amante del vinilo.",
+    hours: "Lun–Sáb 12:00–20:00", phone: null, website: "https://hardwax.com",
+    photos: [], url: "https://maps.google.com/?q=Hard+Wax+Berlin",
+  },
+  {
+    name: "Heckmann-Höfe",
+    address: "Oranienburger Str. 32, 10117 Berlin (Mitte)",
+    lat: 52.5253, lon: 13.3985, category: "Otros",
+    desc: "Complejo de patios histórico del siglo XIX en Oranienburger Straße con galerías de arte, cafés y talleres artesanales. Una joya arquitectónica entre los edificios del barrio judío.",
+    hours: "Abierto en horario de negocios", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Heckmann-Höfe+Berlin",
+  },
+  {
+    name: "SpaceHall",
+    address: "Zossener Str. 33, 10961 Berlin (Kreuzberg)",
+    lat: 52.4958, lon: 13.3917, category: "Otros",
+    desc: "Megatienda de vinilos en Kreuzberg con más de 100.000 discos de todos los géneros. Paraíso para coleccionistas de toda Europa. Personal experto y secciones meticulosamente organizadas.",
+    hours: "Lun–Sáb 11:00–20:00", phone: null, website: "https://spacehall.de",
+    photos: [], url: "https://maps.google.com/?q=SpaceHall+Berlin",
+  },
+  {
+    name: "Sound Vinyl Store Berlin",
+    address: "Weichselstraße 7, 12045 Berlin (Neukölln)",
+    lat: 52.4872, lon: 13.4340, category: "Otros",
+    desc: "Tienda de vinilos de culto en Neukölln especializada en música electrónica, jazz y soul. Selección muy curada y personal con buen criterio. Descubrimientos garantizados.",
+    hours: "Mar–Sáb 12:00–20:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=Sound+Vinyl+Store+Berlin",
+  },
+  {
+    name: "recordsale & musicberlin",
+    address: "Weichselstraße 35, 12045 Berlin (Neukölln)",
+    lat: 52.4861, lon: 13.4350, category: "Otros",
+    desc: "Dos tiendas de vinilos en la misma calle en Neukölln con énfasis en soul, funk, hip-hop y electrónica vintage. Colecciones rotan con frecuencia. Ideal para rebuscar.",
+    hours: "Lun–Sáb 11:00–19:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=recordsale+musicberlin",
+  },
+  {
+    name: "BuchHafen Berlin",
+    address: "Glogauer Str. 2, 10999 Berlin (Kreuzberg)",
+    lat: 52.4988, lon: 13.4205, category: "Otros",
+    desc: "Librería independiente en Kreuzberg con una selección ecléctica de títulos nuevos y segunda mano. Eventos literarios regulares y ese ambiente que solo tienen los buenos libreros.",
+    hours: "Lun–Vie 10:00–19:00 · Sáb 10:00–16:00", phone: null, website: null,
+    photos: [], url: "https://maps.google.com/?q=BuchHafen+Berlin",
+  },
+  {
+    name: "WINDOBONA Indoor Skydiving",
+    address: "Wilhelminenhofstr. 9, 12459 Berlin (Schöneweide)",
+    lat: 52.4669, lon: 13.5375, category: "Otros",
+    desc: "Túnel de viento para vuelo libre indoor en Schöneweide. Experiencia de caída libre sin necesidad de saltar en paracaídas. Cursos para principiantes disponibles.",
+    hours: "Lun–Dom 10:00–22:00", phone: null, website: "https://windobona.com/berlin",
+    photos: [], url: "https://maps.google.com/?q=WINDOBONA+Indoor+Skydiving+Berlin",
+  },
+];
+
+// ── MAP SETUP ────────────────────────────────────────────────────
+const map = L.map('map', { center:[52.499,13.400], zoom:12, zoomControl:true });
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+  subdomains:'abcd', maxZoom:19
+}).addTo(map);
+
+// ── ICONS ────────────────────────────────────────────────────────
+function mkIcon(color, selected=false) {
+  const s = selected ? 32 : 26;
+  const h = Math.round(s * 1.32);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${h}" viewBox="0 0 26 34">
+    <defs>
+      <filter id="ds" x="-30%" y="-20%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="2" stdDeviation="${selected?3:2}" flood-color="rgba(0,0,0,.7)"/>
+      </filter>
+    </defs>
+    <path d="M13 0C5.82 0 0 5.82 0 13c0 8.8 13 21 13 21S26 21.8 26 13C26 5.82 20.18 0 13 0z"
+          fill="${color}" filter="url(#ds)" opacity="${selected?.97:.88}"/>
+    <circle cx="13" cy="13" r="5.5" fill="white" opacity=".95"/>
+  </svg>`;
+  return L.divIcon({
+    html:`<div class="m-wrap${selected?' sel':''}">${svg}</div>`,
+    iconSize:[s,h], iconAnchor:[s/2,h], popupAnchor:[0,-h], className:''
+  });
+}
+
+// ── STATE ────────────────────────────────────────────────────────
+let activeFilters = new Set(Object.keys(CAT));
+let markers = [];
+let selectedMarker = null;
+let photoIdx = 0;
+let curPhotos = [];
+
+// ── PHOTO CAROUSEL ───────────────────────────────────────────────
+function buildPhotos(photos, emoji) {
+  const el = document.getElementById('panel-photos');
+  el.innerHTML = '';
+  el.className = '';
+  curPhotos = photos;
+  photoIdx = 0;
+
+  if (!photos || photos.length === 0) {
+    el.classList.add('empty');
+    el.textContent = emoji;
+    return;
+  }
+
+  photos.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.className = 'ph-img' + (i===0?' on':'');
+    img.src = src;
+    img.alt = '';
+    img.loading = 'lazy';
+    el.appendChild(img);
+  });
+
+  if (photos.length > 1) {
+    const prev = document.createElement('button');
+    prev.className = 'ph-nav-btn ph-prev';
+    prev.innerHTML = '&#8249;';
+    prev.onclick = () => movePhoto(-1);
+    const next = document.createElement('button');
+    next.className = 'ph-nav-btn ph-next';
+    next.innerHTML = '&#8250;';
+    next.onclick = () => movePhoto(1);
+    const dots = document.createElement('div');
+    dots.className = 'ph-dots';
+    photos.forEach((_,i) => {
+      const d = document.createElement('div');
+      d.className = 'ph-dot' + (i===0?' on':'');
+      d.onclick = () => goPhoto(i);
+      dots.appendChild(d);
+    });
+    el.appendChild(prev);
+    el.appendChild(next);
+    el.appendChild(dots);
+  }
+}
+
+function movePhoto(dir) {
+  goPhoto((photoIdx + dir + curPhotos.length) % curPhotos.length);
+}
+function goPhoto(i) {
+  const el = document.getElementById('panel-photos');
+  el.querySelectorAll('.ph-img').forEach((img,j) => img.classList.toggle('on', j===i));
+  el.querySelectorAll('.ph-dot').forEach((d,j) => d.classList.toggle('on', j===i));
+  photoIdx = i;
+}
+
+// ── PANEL ────────────────────────────────────────────────────────
+function openPanel(place) {
+  const cat = CAT[place.category];
+
+  buildPhotos(place.photos, cat.emoji);
+
+  const badge = document.getElementById('p-badge');
+  badge.style.background = cat.bg;
+  badge.style.color = cat.color;
+  badge.textContent = cat.emoji + ' ' + place.category;
+
+  document.getElementById('p-name').textContent = place.name;
+  document.getElementById('p-addr').textContent = '📍 ' + place.address;
+  document.getElementById('p-desc').textContent = place.desc;
+  document.getElementById('p-gmaps').href = place.url;
+
+  // Info rows
+  const info = document.getElementById('p-info');
+  info.innerHTML = '';
+  if (place.hours) {
+    info.innerHTML += `<div class="p-row"><span class="p-icon">🕐</span><span class="p-val">${place.hours}</span></div>`;
+  }
+  if (place.phone) {
+    info.innerHTML += `<div class="p-row"><span class="p-icon">📞</span><span class="p-val"><a href="tel:${place.phone}">${place.phone}</a></span></div>`;
+  }
+  if (place.website) {
+    const domain = new URL(place.website).hostname.replace('www.','');
+    info.innerHTML += `<div class="p-row"><span class="p-icon">🌐</span><span class="p-val"><a href="${place.website}" target="_blank" rel="noopener">${domain}</a></span></div>`;
+  }
+
+  document.getElementById('panel').classList.add('open');
+  setTimeout(() => map.invalidateSize(), 350);
+}
+
+function closePanel() {
+  document.getElementById('panel').classList.remove('open');
+  if (selectedMarker) {
+    const place = selectedMarker._place;
+    const cat = CAT[place.category];
+    selectedMarker.setIcon(mkIcon(cat.color, false));
+    selectedMarker._el && selectedMarker._el.classList.remove('sel');
+    selectedMarker = null;
+  }
+  setTimeout(() => map.invalidateSize(), 350);
+}
+
+document.getElementById('panel-close').addEventListener('click', closePanel);
+
+// ── RENDER MARKERS ───────────────────────────────────────────────
+function renderMarkers() {
+  markers.forEach(m => map.removeLayer(m));
+  markers = [];
+  let count = 0;
+
+  PLACES.forEach(place => {
+    if (!activeFilters.has(place.category)) return;
+    const cat = CAT[place.category];
+    const m = L.marker([place.lat, place.lon], { icon: mkIcon(cat.color) });
+    m._place = place;
+    m.addTo(map);
+
+    m.on('click', () => {
+      if (selectedMarker && selectedMarker !== m) {
+        const prev = selectedMarker._place;
+        selectedMarker.setIcon(mkIcon(CAT[prev.category].color, false));
+      }
+      m.setIcon(mkIcon(cat.color, true));
+      selectedMarker = m;
+      openPanel(place);
+      map.panTo([place.lat, place.lon], { animate:true, duration:.5 });
+    });
+
+    markers.push(m);
+    count++;
+  });
+
+  document.getElementById('n-count').textContent =
+    count + ' lugar' + (count!==1?'es':'');
+}
+
+// ── FILTER UI ────────────────────────────────────────────────────
+const filterBar = document.getElementById('filter-bar');
+
+// Count per category
+const counts = {};
+PLACES.forEach(p => counts[p.category] = (counts[p.category]||0) + 1);
+
+// All button
+const allChip = document.createElement('button');
+allChip.className = 'chip all active';
+allChip.innerHTML = '<span class="chip-dot" style="background:#C8A84B"></span> Todos';
+allChip.addEventListener('click', () => {
+  activeFilters = new Set(Object.keys(CAT));
+  filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.add('active'));
+  allChip.classList.add('active');
+  renderMarkers();
+  if (document.getElementById('panel').classList.contains('open')) closePanel();
+});
+filterBar.appendChild(allChip);
+
+Object.entries(CAT).forEach(([name, cfg]) => {
+  if (!counts[name]) return;
+  const btn = document.createElement('button');
+  btn.className = 'chip active';
+  btn.dataset.cat = name;
+  btn.innerHTML = `<span class="chip-dot" style="background:${cfg.color}"></span>${cfg.emoji} ${name}<span class="cnt">${counts[name]}</span>`;
+  btn.addEventListener('click', () => {
+    const solo = activeFilters.size === 1 && activeFilters.has(name);
+    if (solo) {
+      // Re-enable all
+      activeFilters = new Set(Object.keys(CAT));
+      filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.add('active'));
+      allChip.classList.add('active');
+    } else {
+      activeFilters = new Set([name]);
+      filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.toggle('active', b.dataset.cat === name));
+      allChip.classList.remove('active');
+    }
+    renderMarkers();
+    if (document.getElementById('panel').classList.contains('open')) closePanel();
+  });
+  filterBar.appendChild(btn);
+});
+
+const countEl = document.createElement('span');
+countEl.id = 'n-count';
+filterBar.appendChild(countEl);
+
+renderMarkers();
+</script>
+</body>
+</html>
