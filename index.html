@@ -1563,17 +1563,8 @@ function handleBookingSubmit(e) {
 // Hero video autoplay fallback
 const heroVideo = document.getElementById('hero-video');
 const heroVideoMobile = document.getElementById('hero-video-mobile');
-if (heroVideo && window.innerWidth > 768) {
-  heroVideo.play().catch(() => { heroVideo.style.display = 'none'; });
-}
-if (heroVideoMobile && window.innerWidth <= 768) {
-  heroVideoMobile.play().catch(() => {
-    heroVideoMobile.style.display = 'none';
-    document.getElementById('hero').style.backgroundImage = "url('Berlin-Skyline-Sunset.jpg')";
-    document.getElementById('hero').style.backgroundSize = 'cover';
-    document.getElementById('hero').style.backgroundPosition = 'center';
-  });
-}
+if (heroVideo) heroVideo.play().catch(() => {});
+if (heroVideoMobile) heroVideoMobile.play().catch(() => {});
 // Hide WA float when keyboard is open on mobile
 const waFloat = document.getElementById('whatsapp-float');
 document.querySelectorAll('input, textarea, select').forEach(el => {
