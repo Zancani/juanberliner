@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis Lugares en Berlín — Juan Berliner</title>
+  <title>Mis Recomendaciones en Berlín — Juan Berliner</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -105,14 +105,16 @@
 
     /* ── PANEL ──────────────────────────────────────────── */
     #panel {
-      width: 360px; background: var(--surface);
-      border-left: 1px solid var(--border);
+      width: 0; background: var(--surface);
+      border-left: none;
       display: flex; flex-direction: column; flex-shrink: 0;
       overflow: hidden; position: relative;
-      transform: translateX(100%);
-      transition: transform .35s cubic-bezier(.4,0,.2,1), width .35s cubic-bezier(.4,0,.2,1);
+      transition: width .35s cubic-bezier(.4,0,.2,1), border-color .35s;
     }
-    #panel.open { transform: translateX(0); }
+    #panel.open {
+      width: 360px;
+      border-left: 1px solid var(--border);
+    }
 
     /* Photos */
     #panel-photos {
@@ -227,8 +229,8 @@
   </a>
   <div class="nav-sep"></div>
   <a href="index.html" class="nav-brand">Juan Berliner</a>
-  <span class="nav-tag l-es">· Mis lugares</span>
-  <span class="nav-tag l-en" style="display:none">· My places</span>
+  <span class="nav-tag l-es">· Mis recomendaciones</span>
+  <span class="nav-tag l-en" style="display:none">· My recommendations</span>
   <div class="nav-flex"></div>
   <div class="lang-toggle">
     <button class="lang-btn active" id="btn-es" onclick="setLang('es')">🇺🇾 ES</button>
