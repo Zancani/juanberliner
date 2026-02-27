@@ -1551,9 +1551,7 @@ function handleBookingSubmit(e) {
 // Hero video — single element, src chosen by viewport
 const heroVideo = document.getElementById('hero-video');
 if (heroVideo) {
-  heroVideo.src = window.matchMedia('(max-width: 768px)').matches
-    ? 'timelapse-mobile.mp4'
-    : 'timelapse.mp4';
+  heroVideo.src = 'timelapse.mp4';
   heroVideo.play().catch(() => {});
 }
 // Hide WA float when keyboard is open on mobile
