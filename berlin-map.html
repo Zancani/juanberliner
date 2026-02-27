@@ -102,12 +102,12 @@
 
     /* Photos */
     #panel-photos {
-      position: relative; height: 210px; flex-shrink: 0;
+      position: relative; height: 120px; flex-shrink: 0;
       background: var(--surface2); overflow: hidden;
     }
     #panel-photos.empty {
       display: flex; align-items: center; justify-content: center;
-      font-size: 52px; color: #2a2a2a;
+      font-size: 48px;
     }
     .ph-img {
       position: absolute; inset: 0; width: 100%; height: 100%;
@@ -259,591 +259,139 @@ function setLang(l) {
 
 // ── CATEGORIES ──────────────────────────────────────────────────
 const CAT = {
-  "Restaurantes":    { color:"#E05C5C", emoji:"🍽️", bg:"rgba(224,92,92,.13)" },
-  "Bares":           { color:"#E0913A", emoji:"🍺", bg:"rgba(224,145,58,.13)" },
-  "Kebabs":          { color:"#D4A017", emoji:"🥙", bg:"rgba(212,160,23,.13)" },
-  "Parques":         { color:"#5CB85C", emoji:"🌳", bg:"rgba(92,184,92,.13)" },
-  "Museos":          { color:"#7B8CDE", emoji:"🏛️", bg:"rgba(123,140,222,.13)" },
-  "Cines":           { color:"#BB88EE", emoji:"🎬", bg:"rgba(187,136,238,.13)" },
-  "Clubes de Tecno": { color:"#C44ECC", emoji:"🎧", bg:"rgba(196,78,204,.13)" },
-  "Monumentos":      { color:"#C8A84B", emoji:"🗿", bg:"rgba(200,168,75,.13)" },
-  "Otros":           { color:"#888",    emoji:"📌", bg:"rgba(136,136,136,.13)" },
+  "Food":                { color:"#0288D1", emoji:"🍽️", bg:"rgba(2,136,209,.13)" },
+  "Bars":                { color:"#9C27B0", emoji:"🍺", bg:"rgba(156,39,176,.13)" },
+  "Museums":             { color:"#D4A800", emoji:"🏛️", bg:"rgba(212,168,0,.13)" },
+  "Green Areas & Lakes": { color:"#2E7D32", emoji:"🌿", bg:"rgba(46,125,50,.13)" },
+  "Clubs":               { color:"#546E7A", emoji:"🎧", bg:"rgba(84,110,122,.13)" },
+  "Cafes/Brunch":        { color:"#C2185B", emoji:"☕", bg:"rgba(194,24,91,.13)" },
+  "Feeling Fancy":       { color:"#757575", emoji:"⭐", bg:"rgba(117,117,117,.13)" },
+  "Squares & Locations": { color:"#FF5252", emoji:"📍", bg:"rgba(255,82,82,.13)" },
 };
 
-// ── PHOTO HELPER ─────────────────────────────────────────────────
-const U = id => `https://images.unsplash.com/photo-${id}?w=720&h=480&fit=crop&auto=format&q=82`;
-
-// ── DATA ─────────────────────────────────────────────────────────
+// ── DATA (source: Google My Maps) ────────────────────────────────
 const PLACES = [
-  // ── RESTAURANTES ─────────────────────────────────────
-  {
-    name: "BURRO UNCHAINED",
-    address: "Allerstraße 11, 12049 Berlin (Neukölln)",
-    lat: 52.4820, lon: 13.4249, category: "Restaurantes",
-    desc: "Hamburguesería argentina de culto en Neukölln, famosa por sus smash burgers jugosos y papas fritas caseras. Ambiente informal, servicio rápido y porciones generosas.",
-    hours: "Lun–Dom 12:00–22:00", phone: null, website: null,
-    photos: [U("1568901346375-23c9450c58cd"), U("1550317138-10000687a72b")],
-    url: "https://maps.google.com/?q=Burro+Unchained+Berlin",
-  },
-  {
-    name: "Malafemmena",
-    address: "Hauptstraße 85, 12159 Berlin (Steglitz)",
-    lat: 52.4691, lon: 13.3533, category: "Restaurantes",
-    desc: "Pizzería napolitana con masa madre fermentada 48 horas y tomates San Marzano importados. Horno de leña siempre encendido. Una de las mejores pizzas de Berlín.",
-    hours: "Mar–Dom 12:00–23:00", phone: null, website: null,
-    photos: [U("1513104890138-7c749659a591"), U("1574071318508-1cdbab80d002")],
-    url: "https://maps.google.com/?q=Malafemmena+Berlin",
-  },
-  {
-    name: "Micheline",
-    address: "Kienitzer Str. 93, 12049 Berlin (Neukölln)",
-    lat: 52.4834, lon: 13.4233, category: "Restaurantes",
-    desc: "Cocina moderna de temporada en Neukölln con carta pequeña que cambia semanalmente. Ambiente íntimo, iluminación de velas y buena selección de vinos naturales.",
-    hours: "Mié–Dom 18:00–23:00", phone: null, website: null,
-    photos: [U("1414235077428-338989a2e8c0"), U("1565299624946-b28f40a0ae38")],
-    url: "https://maps.google.com/?q=Micheline+Berlin",
-  },
-  {
-    name: "La Stella Nera",
-    address: "Leykestraße 18, 12053 Berlin (Neukölln)",
-    lat: 52.4753, lon: 13.4401, category: "Restaurantes",
-    desc: "Ostería italiana familiar con pasta fresca hecha a diario a la vista. La lasaña y el cacio e pepe son imprescindibles. Carta de vinos italianos curada con amor.",
-    hours: "Mar–Dom 18:00–23:00", phone: null, website: null,
-    photos: [U("1595295333158-4742f28fbd85"), U("1555949258-eb67b1ef0ceb")],
-    url: "https://maps.google.com/?q=La+Stella+Nera+Berlin",
-  },
-  {
-    name: "Kuckucksei",
-    address: "Barbarossastraße 5a, 10781 Berlin (Schöneberg)",
-    lat: 52.4897, lon: 13.3470, category: "Restaurantes",
-    desc: "Restaurante vienés clásico, ideal para el brunch del fin de semana. Huevos revueltos con trufa, tostadas de masa madre y café de especialidad. Vale cada minuto de espera.",
-    hours: "Lun–Vie 08:00–18:00 · Sáb–Dom 09:00–17:00", phone: null, website: null,
-    photos: [U("1504630083234-14187a9df0f5"), U("1484723091739-30a097e8f929")],
-    url: "https://maps.google.com/?q=Kuckucksei+Berlin",
-  },
-  {
-    name: "House of Small Wonder",
-    address: "Johannisstraße 20, 10117 Berlin (Mitte)",
-    lat: 52.5258, lon: 13.3965, category: "Restaurantes",
-    desc: "Café japonés-norteamericano en Mitte con desayunos y brunches únicos. Famoso por sus soufflé pancakes y matcha lattes. Decoración de jardín interior tropical.",
-    hours: "Lun–Vie 08:30–17:00 · Sáb–Dom 09:00–18:00", phone: null, website: "https://houseofsmallwonder.de",
-    photos: [U("1567651964733-5e5cf1db2f79"), U("1504630083234-14187a9df0f5")],
-    url: "https://maps.google.com/?q=House+of+Small+Wonder+Berlin",
-  },
-  {
-    name: "Adana Grillhaus Kreuzberg",
-    address: "Urbanstraße 70, 10967 Berlin (Kreuzberg)",
-    lat: 52.4950, lon: 13.4130, category: "Restaurantes",
-    desc: "Restaurante turco especializado en carnes a la brasa al estilo de Adana. El adana kebab y el iskender son imprescindibles. Local sin pretensiones con muy buenos precios.",
-    hours: "Lun–Dom 11:00–23:00", phone: null, website: null,
-    photos: [U("1529042410759-befb1204b468"), U("1603360946369-dc9bb6258143")],
-    url: "https://maps.google.com/?q=Adana+Grillhaus+Kreuzberg+Berlin",
-  },
-  {
-    name: "Mikoto Sushi Kreuzberg",
-    address: "Zossener Str. 8, 10961 Berlin (Kreuzberg)",
-    lat: 52.4960, lon: 13.3950, category: "Restaurantes",
-    desc: "Sushi bar minimalista en Kreuzberg con rolls creativos y sashimi de primer nivel. Ambiente tranquilo, precios honestos y servicio eficiente.",
-    hours: "Lun–Dom 12:00–22:00", phone: null, website: null,
-    photos: [U("1579871494447-9811cf80d66c"), U("1617196034183-421b4040ed20")],
-    url: "https://maps.google.com/?q=Mikoto+Sushi+Kreuzberg+Berlin",
-  },
-  {
-    name: "Panda Meister Berlin",
-    address: "Am Ostbahnhof, 10243 Berlin (Friedrichshain)",
-    lat: 52.5102, lon: 13.4366, category: "Restaurantes",
-    desc: "Hamburguesería premium junto al Ostbahnhof con patties de carne wagyu y salsas artesanales. Calidad superior a un precio razonable para la zona.",
-    hours: "Lun–Dom 11:00–23:00", phone: null, website: null,
-    photos: [U("1561043433-aaf687c4cf04"), U("1550317138-10000687a72b")],
-    url: "https://maps.google.com/?q=Panda+Meister+Berlin+Ostbahnhof",
-  },
-  {
-    name: "Basmah",
-    address: "Weisestraße 37, 12049 Berlin (Neukölln)",
-    lat: 52.4797, lon: 13.4338, category: "Restaurantes",
-    desc: "Cocina levantina casera en Neukölln: hummus cremoso, falafel crujiente y platos sirios con especias auténticas. Local pequeño, siempre lleno y siempre delicioso.",
-    hours: "Mar–Dom 12:00–22:00", phone: null, website: null,
-    photos: [U("1585937421612-70a008356fbe"), U("1496116218417-1a781b1232e7")],
-    url: "https://maps.google.com/?q=Basmah+Berlin",
-  },
-  {
-    name: "Rogacki",
-    address: "Wilmersdorfer Str. 145, 10585 Berlin (Charlottenburg)",
-    lat: 52.5054, lon: 13.3144, category: "Restaurantes",
-    desc: "Delicatessen berlinés desde 1928, una institución en Charlottenburg. Famoso por su ahumado de pescados in situ, embutidos alemanes y ambiente de mercado tradicional intacto.",
-    hours: "Lun–Mié 09:00–18:00 · Jue–Vie 09:00–19:00 · Sáb 08:00–16:00", phone: null, website: "https://rogacki.de",
-    photos: [U("1588166524941-3bf61a9c41db"), U("1546039907-7fa05f864c02")],
-    url: "https://maps.google.com/?q=Rogacki+Berlin",
-  },
-  {
-    name: "Pala Berlin",
-    address: "Lychener Str. 73, 10437 Berlin (Prenzlauer Berg)",
-    lat: 52.5401, lon: 13.4198, category: "Restaurantes",
-    desc: "Cafetería griega informal en Prenzlauer Berg con tostadas de masa madre, bowls mediterráneos y el mejor café de la zona. Terraza soleada en verano.",
-    hours: "Lun–Vie 09:00–17:00 · Sáb–Dom 09:00–18:00", phone: null, website: null,
-    photos: [U("1544025162-d76538ae2e97"), U("1490474418585-ba9bad8fd0ea")],
-    url: "https://maps.google.com/?q=Pala+Berlin+Greek+Cafe",
-  },
-  {
-    name: "Sarajevo Berlin",
-    address: "Schliemannstraße 21, 10437 Berlin (Prenzlauer Berg)",
-    lat: 52.5393, lon: 13.4213, category: "Restaurantes",
-    desc: "Restaurante bosnio auténtico con ćevapi, burek y cordero al horno. Ambiente cálido y servicio familiar que te transporta directamente a los Balcanes.",
-    hours: "Lun–Dom 12:00–23:00", phone: null, website: null,
-    photos: [U("1529042410759-befb1204b468"), U("1414235077428-338989a2e8c0")],
-    url: "https://maps.google.com/?q=Sarajevo+Berlin",
-  },
-  {
-    name: "Mr. Grill Berlin",
-    address: "Linienstraße 226, 10178 Berlin (Mitte)",
-    lat: 52.5253, lon: 13.3968, category: "Restaurantes",
-    desc: "Asador turco en el corazón de Mitte con cortes generosos y presentaciones cuidadas. Popular entre locales y turistas por igual gracias a su consistencia.",
-    hours: "Lun–Dom 11:00–00:00", phone: null, website: null,
-    photos: [U("1603360946369-dc9bb6258143"), U("1529042410759-befb1204b468")],
-    url: "https://maps.google.com/?q=Mr+Grill+Berlin",
-  },
-  {
-    name: "Buya Izakaya Ramen",
-    address: "Kollwitzstraße 57, 10405 Berlin (Prenzlauer Berg)",
-    lat: 52.5359, lon: 13.4209, category: "Restaurantes",
-    desc: "Izakaya japonesa íntima con ramen tonkotsu de caldo cocinado 18 horas y platos para compartir. Carta de sake curada y ambiente auténtico de taberna japonesa.",
-    hours: "Mar–Dom 18:00–23:00", phone: null, website: null,
-    photos: [U("1569050467447-ce54b3bbc37d"), U("1591814468924-caf88d1232e1")],
-    url: "https://maps.google.com/?q=Buya+Izakaya+Ramen+Berlin",
-  },
+  // ── FOOD ─────────────────────────────────────────────
+  { name:"Markthalle Neun", lat:52.5020234, lon:13.4319352, category:"Food", desc:"Food market with everything you can dream of! If you don't know where to go, head here!" },
+  { name:"Kebap with Attitude", lat:52.5272108, lon:13.3990791, category:"Food", desc:"A modern take on the Berlin Kebab, emphasising quality and locality. Keep an eye out for the club-themed toilets." },
+  { name:"Knödelwirtschaft NORD", lat:52.5474016, lon:13.4143086, category:"Food", desc:"German dumplings. Simple, hearty, and delicious." },
+  { name:"Zur letzten Instanz", lat:52.5173623, lon:13.4137991, category:"Food", desc:"You just can't get more 'German' than this. Definitely worth a visit for your German food hit." },
+  { name:"Feel good food by Omar", lat:52.4814108, lon:13.4309226, category:"Food", desc:"The best schawarma and falafel in the city. Everything is home-made, and Omar is a legend." },
+  { name:"Scheers Schnitzel", lat:52.5028152, lon:13.4473839, category:"Food", desc:"" },
+  { name:"Kitten Deli", lat:52.4930051, lon:13.4283684, category:"Food", desc:"Probably one of the coolest spots in Berlin. Stocking some of the best hummus I have ever had. In summer, this feels like the heart of the city with tables scattered all about the cobblestones. The sabbich is definitely one of their most popular dishes!" },
+  { name:"Curry 61", lat:52.523725, lon:13.4007139, category:"Food", desc:"One of my favourite currywurst places!" },
+  { name:"Klinke", lat:52.5013981, lon:13.4163071, category:"Food", desc:"Klinke takes classic German dishes and elevates them so you're not just eating pork and potatoes. It's basically a German tapas bar." },
+  { name:"Best Gemüse Kebap", lat:52.4810743, lon:13.4346183, category:"Food", desc:"I'm convinced these boys have the best kebab in Berlin. Roast vegetables, 3 sauces, goats cheese, fresh salad with dressing, locally sourced chicken — all for 4,50€!" },
+  { name:"Blechbilderbar", lat:52.5099985, lon:13.4565153, category:"Food", desc:"The oldest bar on this street! Famous for its Flammkuchen, a traditional German/French dish. The lady who runs it seems 'Berliner Schnauze' to the naked eye, but she's incredibly kind and funny." },
+  { name:"W Pizza", lat:52.4868346, lon:13.4395688, category:"Food", desc:"My favourite pizza in Berlin. Keep it simple: it's their tomato sauce that makes them so special." },
+  { name:"Altes Europa", lat:52.5267028, lon:13.4010694, category:"Food", desc:"If you're looking for German food, this is definitely on the better end of where to find it in Berlin!" },
+  { name:"Ketels Wurstspezialitäten", lat:52.4952016, lon:13.4204331, category:"Food", desc:"This is my favourite spot for a Currywurst." },
+  { name:"Azzam Restaurant", lat:52.4849592, lon:13.4328283, category:"Food", desc:"Huge portions of Lebanese food. One of the famous names in Berlin for people in the know." },
+  { name:"Burgermeister Schlesisches Tor", lat:52.5010953, lon:13.4424637, category:"Food", desc:"The most famous burger joint in Berlin — in an old toilet!" },
+  { name:"CRAZY BASTARD KITCHEN", lat:52.4835709, lon:13.4407992, category:"Food", desc:"A hot sauce company! They change their menu weekly, fitting their food to their hot sauces!" },
+  { name:"Gazzo", lat:52.4911554, lon:13.4258232, category:"Food", desc:"An insanely popular pizza spot." },
+  { name:"Sahara Imbiss", lat:52.48849, lon:13.42863, category:"Food", desc:"Their peanut sauce wraps are incredibly cheap and incredibly tasty. There are Saharas all over the place, and no wonder." },
+  { name:"Teras", lat:52.5117229, lon:13.3835554, category:"Food", desc:"Angela Merkel's favourite Kebab Shop." },
+  { name:"Mittendrin Restaurant & Café", lat:52.5256803, lon:13.4009374, category:"Food", desc:"German lunch/dinner spot." },
+  { name:"SammyS Berliner Donuts", lat:52.5262949, lon:13.3992381, category:"Food", desc:"A great place to get your classic 'Berliners'." },
+  { name:"1990 Vegan Living", lat:52.5104235, lon:13.4586497, category:"Food", desc:"One of the most popular spots in Berlin. I'm not vegan, but I keep coming back! A dream for fresh, tasty Vietnamese food." },
+  { name:"Saveur de Bánh Mì", lat:52.523583, lon:13.4000107, category:"Food", desc:"Simple, cheap, and delicious Vietnamese sandwiches with a generous size." },
+  { name:"Rüyam Gemüse Kebab (Prenzlauer Berg)", lat:52.5405338, lon:13.4125814, category:"Food", desc:"" },
+  { name:"Rüyam Gemüse Kebab (Schöneberg)", lat:52.484503, lon:13.3523488, category:"Food", desc:"" },
 
-  // ── BARES ────────────────────────────────────────────
-  {
-    name: "Pool und Cigars",
-    address: "Schönhauser Allee 36, 10435 Berlin (Prenzlauer Berg)",
-    lat: 52.5399, lon: 13.4131, category: "Bares",
-    desc: "Bar de billar y cócteles en Prenzlauer Berg con atmósfera de club nocturno berlinés. Noches temáticas, DJ sets y terraza trasera en verano. Abre hasta tarde.",
-    hours: "Mar–Dom 19:00–03:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Pool+und+Cigars+Berlin",
-  },
-  {
-    name: "Alter Roter Löwe",
-    address: "Richardstraße 31, 12043 Berlin (Neukölln)",
-    lat: 52.4794, lon: 13.4370, category: "Bares",
-    desc: "Kneipe de barrio en Neukölln, oscura y acogedora, con cervezas locales económicas y clientela de artistas y estudiantes. El bar berlinés clásico sin ninguna pretensión.",
-    hours: "Lun–Dom 18:00–03:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Alter+Roter+Löwe+Berlin",
-  },
-  {
-    name: "Ä",
-    address: "Weserstr. 40, 12045 Berlin (Neukölln)",
-    lat: 52.4883, lon: 13.4331, category: "Bares",
-    desc: "Bar minimalista en Neukölln con selección de vinos naturales y cócteles creativos. Favorito de la escena artística local. El nombre dice todo: sin ornamentos, solo calidad.",
-    hours: "Mar–Dom 18:00–02:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Ä+Bar+Neukölln+Berlin",
-  },
-  {
-    name: "Mein Haus am See",
-    address: "Brunnenstraße 197, 10119 Berlin (Mitte)",
-    lat: 52.5318, lon: 13.4018, category: "Bares",
-    desc: "Bar bohemio abierto casi las 24 horas con DJs en vivo, colchonetas en el suelo y una vibra que solo existe en Berlín. Desayunos, almuerzos y noches de fiesta sin interrupción.",
-    hours: "Lun–Dom 09:00–05:00 (casi no cierra)", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Mein+Haus+am+See+Berlin",
-  },
-  {
-    name: "Schwarzes Cafe",
-    address: "Kantstraße 148, 10623 Berlin (Charlottenburg)",
-    lat: 52.5044, lon: 13.3227, category: "Bares",
-    desc: "Histórico café en Charlottenburg abierto desde 1978 con desayunos disponibles las 24 horas. Refugio de noctámbulos, carta amplia y ambiente atemporal de Berlín Oeste.",
-    hours: "Abierto 24h (cierra mar 03:00–11:00)", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Schwarzes+Cafe+Berlin",
-  },
-  {
-    name: "Donau115",
-    address: "Donaustraße 115, 12043 Berlin (Neukölln)",
-    lat: 52.4778, lon: 13.4360, category: "Bares",
-    desc: "Bar Späti de culto en Neukölln con terraza siempre animada y cervezas a precios de barrio. El epicentro de la vida nocturna informal de Reuterstraße.",
-    hours: "Lun–Dom 16:00–04:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Donau115+Berlin",
-  },
-  {
-    name: "Gaststätte Sophieneck",
-    address: "Sophienstraße 15, 10178 Berlin (Mitte)",
-    lat: 52.5249, lon: 13.3987, category: "Bares",
-    desc: "Kneipe berlinesa clásica desde 1902 con cocina alemana tradicional y cervezas tiradas. Un pedazo de historia de la ciudad completamente intacto, sin turistas.",
-    hours: "Lun–Dom 11:00–00:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Gaststätte+Sophieneck+Berlin",
-  },
-  {
-    name: "Arkaoda",
-    address: "Karl-Marx-Platz 18, 12043 Berlin (Neukölln)",
-    lat: 52.4801, lon: 13.4367, category: "Bares",
-    desc: "Bar cultural turco-berlinés en Neukölln con exposiciones, noches de cine y DJ sets. El patio trasero es uno de los secretos mejor guardados del barrio en verano.",
-    hours: "Mar–Dom 18:00–03:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Arkaoda+Berlin",
-  },
-  {
-    name: "Filmkunstbar Fitzcarraldo",
-    address: "Oderberger Str. 32, 10435 Berlin (Prenzlauer Berg)",
-    lat: 52.5379, lon: 13.4133, category: "Bares",
-    desc: "Bar cinematográfico en Prenzlauer Berg dedicado al cine de arte con cócteles temáticos y proyecciones. Ambiente íntimo de terciopelo rojo, carteles vintage y conversación cinéfila.",
-    hours: "Mié–Dom 19:00–03:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Filmkunstbar+Fitzcarraldo+Berlin",
-  },
-  {
-    name: "Bateau Ivre",
-    address: "Oderberger Str. 14, 10435 Berlin (Prenzlauer Berg)",
-    lat: 52.5375, lon: 13.4127, category: "Bares",
-    desc: "Pequeño bar literario en Prenzlauer Berg nombrado tras el poema de Rimbaud. Vinos naturales, ambiente íntimo y conversaciones que duran hasta el amanecer.",
-    hours: "Mar–Dom 19:00–02:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Bateau+Ivre+Berlin",
-  },
-  {
-    name: "Westend Pinte",
-    address: "Westend, 14052 Berlin (Charlottenburg)",
-    lat: 52.5139, lon: 13.2792, category: "Bares",
-    desc: "Kneipe tradicional en Westend con ambiente tranquilo, buenas cervezas tiradas y clientes habituales del barrio. El tipo de bar que ya casi no existe en Berlín.",
-    hours: "Lun–Dom 16:00–00:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Westend+Pinte+Berlin",
-  },
-  {
-    name: "The Hat Bar Berlin",
-    address: "Auguststraße 83, 10117 Berlin (Mitte)",
-    lat: 52.5264, lon: 13.3961, category: "Bares",
-    desc: "Cóctelería sofisticada en el barrio de galerías de Mitte con bartenders creativos y carta de temporada. Elegante sin resultar pretencioso, ideal para una noche especial.",
-    hours: "Mar–Dom 18:00–03:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=The+Hat+Bar+Berlin",
-  },
-  {
-    name: "Suspiria Bar",
-    address: "Flughafenstr. 37, 12053 Berlin (Neukölln)",
-    lat: 52.4756, lon: 13.4406, category: "Bares",
-    desc: "Bar de horror-chic en Neukölln inspirado en el cine de Dario Argento. Cócteles oscuros y creativos, paredes rojas y música post-punk. Una experiencia visual y sensorial.",
-    hours: "Jue–Dom 20:00–04:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Suspiria+Bar+Berlin",
-  },
-  {
-    name: "Herr Lindemann Cocktail Bar",
-    address: "Ritterstraße 12, 10969 Berlin (Kreuzberg)",
-    lat: 52.4980, lon: 13.4091, category: "Bares",
-    desc: "Cóctelería de autor en Kreuzberg con bartenders de primer nivel. Carta curada y rotativa. Reserva recomendada los fines de semana para garantizar sitio.",
-    hours: "Mar–Dom 18:00–02:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Herr+Lindemann+Berlin",
-  },
-  {
-    name: "Cafe Commune",
-    address: "Revaler Str. 99, 10245 Berlin (Friedrichshain)",
-    lat: 52.5071, lon: 13.4563, category: "Bares",
-    desc: "Bar y café cultural dentro del complejo RAW-Gelände, en Friedrichshain. Patio amplio, eventos en vivo, ambiente alternativo y precios accesibles.",
-    hours: "Lun–Dom 12:00–03:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Cafe+Commune+Berlin",
-  },
-  {
-    name: "Grenzplatte",
-    address: "Grenzallee 52, 12057 Berlin (Neukölln)",
-    lat: 52.4718, lon: 13.4473, category: "Bares",
-    desc: "Bar de barrio en el sur de Neukölln, zona menos transitada por turistas. Terraza agradable, buenas cervezas y ese ambiente tranquilo de barrio que cuesta encontrar.",
-    hours: "Mar–Dom 16:00–02:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Grenzplatte+Berlin",
-  },
+  // ── BARS ─────────────────────────────────────────────
+  { name:"TiER", lat:52.4847871, lon:13.4376714, category:"Bars", desc:"Fancy cocktails! Get here earlier rather than later if you want a table." },
+  { name:"Blauer Affe", lat:52.4791633, lon:13.423784, category:"Bars", desc:"" },
+  { name:"Ä", lat:52.4850275, lon:13.4371403, category:"Bars", desc:"This, for me, is the absolutely typical Berlin bar. Dark, smoky, and cheap beer — incredibly popular with the Kreuzköllners." },
+  { name:"Ratzeputz", lat:52.4853693, lon:13.4371082, category:"Bars", desc:"Another classic Berlin bar, run by tour guide Rob. Tell him I sent you, and that he owes me free drinks!" },
+  { name:"Hops & Barley", lat:52.5089972, lon:13.4606998, category:"Bars", desc:"If you want a look into the craft beer scene in Berlin, this is the place to go!" },
+  { name:"Dschungel", lat:52.4892459, lon:13.4280289, category:"Bars", desc:"Incredible inside 'jungle' decor, but it's a smoking bar, so keep it in mind!" },
+  { name:"Eschenbräu", lat:52.543739, lon:13.359138, category:"Bars", desc:"A Berliner brewery with great quality and incredibly affordable prices! Head down the steps underground. They also serve Flammkuchen in the true German style!" },
+  { name:"Prater Beer Garden", lat:52.5397629, lon:13.4105365, category:"Bars", desc:"The oldest beer garden in the city, and the default meeting place for us tour guides! Definitely a great stop on a summer's day." },
+  { name:"My Bar ICI", lat:52.5272417, lon:13.3974889, category:"Bars", desc:"The opposite of a Berlin bar — it feels like walking into Paris. Easy wines, smooth jazz, and the most Parisian looking owner you will ever meet in Berlin." },
+  { name:"Lamm", lat:52.5533752, lon:13.4152355, category:"Bars", desc:"One of my favourite cocktail spots in the north. In winter, they're particularly popular for their elevated Glühwein." },
+  { name:"Schneeeule – Berliner Bierkultur", lat:52.5553087, lon:13.3441786, category:"Bars", desc:"Ulrike is the world expert in Berliner Weisse, a traditional sour beer that Napoleon called the 'champagne of the north'. Beer fans from all over the world come here to try the best of the best." },
+  { name:"Café Luzia", lat:52.5016759, lon:13.4182843, category:"Bars", desc:"You want the classic Kreuzberg bar? This is the place to go." },
+  { name:"Ritchie Café & Bar", lat:52.5013347, lon:13.418534, category:"Bars", desc:"If Cafe Luzia is too busy, this is right opposite it and pretty much exactly the same bar." },
+  { name:"Truffle Pig Bar", lat:52.4900529, lon:13.428729, category:"Bars", desc:"Head through the main bar and ring the 'fire alarm'..." },
+  { name:"Café Cinema", lat:52.524261, lon:13.4026214, category:"Bars", desc:"" },
+  { name:"MUTED HORN", lat:52.4806732, lon:13.4262815, category:"Bars", desc:"For those who love craft beer." },
+  { name:"Fitcher's Vogel", lat:52.510388, lon:13.451204, category:"Bars", desc:"" },
+  { name:"James June Biergarten", lat:52.5178184, lon:13.4414425, category:"Bars", desc:"Decent Biergarten." },
+  { name:"Klunkerkranich", lat:52.482195, lon:13.4318524, category:"Bars", desc:"Rooftop bar on top of the Neukölln Arcaden shopping centre." },
+  { name:"BRLO Brwhouse", lat:52.5001966, lon:13.3737, category:"Bars", desc:"" },
 
-  // ── KEBABS ───────────────────────────────────────────
-  {
-    name: "Rüyam Gemüse Kebab",
-    address: "Hauptstraße 36, 10827 Berlin (Schöneberg)",
-    lat: 52.4775, lon: 13.3440, category: "Kebabs",
-    desc: "El famoso kebab vegetariano de Schöneberg, una institución local. Cola garantizada pero recompensa garantizada: döner con queso feta, vegetales frescos y salsas propias.",
-    hours: "Lun–Dom 11:00–04:00", phone: null, website: null,
-    photos: [U("1603360946369-dc9bb6258143")],
-    url: "https://maps.google.com/?q=Rüyam+Gemüse+Kebab+Berlin",
-  },
+  // ── MUSEUMS ──────────────────────────────────────────
+  { name:"Stasi Museum", lat:52.5145001, lon:13.4875157, category:"Museums", desc:"Based in the original Stasi secret police HQ. Documents all the ways East Germans were spied on by their government. The building was occupied by protestors after re-unification to protect the documents from being destroyed. The place even has a floor left exactly as it was in the 80s." },
+  { name:"Jewish Museum Berlin", lat:52.5023115, lon:13.3954469, category:"Museums", desc:"The Jewish museum documents a history of the Jewish community in Germany. Famous for its additional 'spaces' and striking architecture by Daniel Libeskind. Definitely a top recommendation." },
+  { name:"Topography of Terror", lat:52.5066836, lon:13.3837023, category:"Museums", desc:"Definitely a top recommendation in Berlin. On the old site of the SS and Gestapo, this 'place of information' talks about the system of terror of the Third Reich. Free entry." },
+  { name:"Kulturbrauerei – GDR Exhibition", lat:52.5382032, lon:13.4127133, category:"Museums", desc:"While most people go to the DDR Museum, the Kulturbrauerei is a more nuanced and interesting place to look at life in the GDR, based in the old Schultheiss brewery." },
+  { name:"Memorial & Museum Sachsenhausen", lat:52.767081, lon:13.2624754, category:"Museums", desc:"The concentration camp just outside of Berlin in Oranienburg. A little far out, but you can organise a tour trip there. Definitely a whole day event." },
+  { name:"Berlin Wall Memorial", lat:52.5350521, lon:13.3901898, category:"Museums", desc:"The most significant preserved section of the Berlin Wall, with an open-air exhibition along Bernauer Straße. Free entry." },
+  { name:"Ephraim Palace", lat:52.515897, lon:13.407189, category:"Museums", desc:"The 'Berlin Zeit' exhibition is the only open exhibition that does a bit of all of German history." },
+  { name:"Stasi Prison (Hohenschönhausen)", lat:52.5418366, lon:13.5002334, category:"Museums", desc:"Different to the Stasi museum, but steeped in just as much history. Former secret prison where dissidents were interrogated. Guided tours only." },
+  { name:"Deutschlandmuseum", lat:52.5087602, lon:13.3783615, category:"Museums", desc:"An interactive history of Germany. Not the most extensive, but definitely fun if you're looking for something more accessible." },
+  { name:"Berlin Story Bunker", lat:52.5029008, lon:13.3803901, category:"Museums", desc:"If you want a Second World War museum, this is your best bet. Comprehensive history of the war and the Nazis, and a re-constructed Hitler's bunker inside an actual real-world bunker." },
+  { name:"Ethnologisches Museum", lat:52.51724, lon:13.4016456, category:"Museums", desc:"A really interesting museum on German colonial history. If you're interested in how Europe should look at its colonial past, the museum is a mostly good example." },
+  { name:"Märkisches Museum", lat:52.5136027, lon:13.4150118, category:"Museums", desc:"While the German Historical Museum is closed, this is probably one of your better bets for learning more about German history. Kaisers, the Wall, the Nazis — this place covers it all." },
+  { name:"German Spy Museum", lat:52.5087676, lon:13.3792366, category:"Museums", desc:"A fun place to learn about the 'city of spies' of Cold War Berlin. Very interactive, so can be a good day out for families too." },
+  { name:"Urban Nation Street Art Museum", lat:52.498642, lon:13.356607, category:"Museums", desc:"It's a street art museum! It's pretty cool!" },
+  { name:"Berlin Underworld", lat:52.5477911, lon:13.3889929, category:"Museums", desc:"Very cool tours of the underground sites of the city — bunkers, tunnels, and cold war infrastructure." },
+  { name:"Computer Games Museum", lat:52.5176466, lon:13.4420058, category:"Museums", desc:"Not very Berlin, but definitely fun if you want to play some old video games." },
 
-  // ── PARQUES ──────────────────────────────────────────
-  {
-    name: "Körnerpark",
-    address: "Schierker Str., 12051 Berlin (Neukölln)",
-    lat: 52.4769, lon: 13.4383, category: "Parques",
-    desc: "Pequeño paraíso escondido en Neukölln: jardín neoclásico con escalinatas de mármol, fuentes y galería de arte. Uno de los parques más hermosos y menos conocidos de Berlín.",
-    hours: "Abierto siempre", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Körnerpark+Berlin",
-  },
-  {
-    name: "Gardens of the World",
-    address: "Eisenacher Str. 99, 12685 Berlin (Marzahn)",
-    lat: 52.5479, lon: 13.5584, category: "Parques",
-    desc: "Jardines internacionales temáticos en Marzahn: chino, japonés, balinés y más, en 21 hectáreas. El lugar más desconocido y más sorprendente de Berlín.",
-    hours: "Nov–Mar 09:00–18:00 · Abr–Oct 09:00–20:00", phone: null, website: "https://gruen-berlin.de/parks-gaerten/gaerten-der-welt",
-    photos: [], url: "https://maps.google.com/?q=Gardens+of+the+World+Berlin",
-  },
-  {
-    name: "Thielpark",
-    address: "Altensteinstraße, 14195 Berlin (Dahlem)",
-    lat: 52.4530, lon: 13.2944, category: "Parques",
-    desc: "Parque tranquilo en Dahlem con estanques y patos, lejos del turismo. Ideal para un paseo matutino o una tarde de lectura en el sur tranquilo de Berlín.",
-    hours: "Abierto siempre", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Thielpark+Berlin",
-  },
-  {
-    name: "Helmholtzplatz",
-    address: "10437 Berlin (Prenzlauer Berg)",
-    lat: 52.5415, lon: 13.4214, category: "Parques",
-    desc: "Plaza con jardín central en Prenzlauer Berg, corazón del barrio. Mercado de pulgas los domingos, juegos para niños y la vida cotidiana berlinesa en su mejor versión.",
-    hours: "Abierto siempre", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Helmholtzplatz+Berlin",
-  },
-  {
-    name: "Café am Neuen See",
-    address: "Lichtensteinallee 2, 10787 Berlin (Tiergarten)",
-    lat: 52.5126, lon: 13.3504, category: "Parques",
-    desc: "Beer garden dentro del Tiergarten junto a un lago con botes de remo. El lugar perfecto para una cerveza al sol en verano. Ambiente familiar y muy berlinés.",
-    hours: "Mar–Dom 10:00–22:00 (temporada verano)", phone: null, website: "https://cafeamneuensee.de",
-    photos: [], url: "https://maps.google.com/?q=Café+am+Neuen+See+Berlin",
-  },
-  {
-    name: "Rüdesheimer Platz",
-    address: "14197 Berlin (Wilmersdorf)",
-    lat: 52.4740, lon: 13.3150, category: "Parques",
-    desc: "Plaza residencial art-nouveau en Wilmersdorf rodeada de edificios históricos y un jardín central bien cuidado. Absolutamente sin turistas y perfecta para descansar.",
-    hours: "Abierto siempre", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Rüdesheimer+Platz+Berlin",
-  },
+  // ── GREEN AREAS & LAKES ──────────────────────────────
+  { name:"Tempelhofer Feld", lat:52.475391, lon:13.401893, category:"Green Areas & Lakes", desc:"This is your sunny-weather must. Be a true Berliner and head to the now re-purposed Nazi airfield with a few beers in the sun. Watch the skaters, fly a kite, or just sunbathe. Get what you need before you go — it is quite literally an airfield with no shops inside." },
+  { name:"Teufelsberg", lat:52.4972222, lon:13.2411111, category:"Green Areas & Lakes", desc:"Climbing this man-made mountain from WW2 rubble to reach an old abandoned US spy station is probably one of the most classically 'Berlin' experiences you can have. The caretakers charge around 10€ to let you in." },
+  { name:"Maybachufer", lat:52.4927247, lon:13.4303466, category:"Green Areas & Lakes", desc:"This is where I go on a sunny day, just as does the whole of Kreuzkölln. The busy canal feels like the heart of the city when the weather's good." },
+  { name:"Schlachtensee", lat:52.4430741, lon:13.2171377, category:"Green Areas & Lakes", desc:"A beautiful lake in the southwest of the city. Perfect for swimming in summer." },
+  { name:"Krumme Lanke", lat:52.452201, lon:13.232695, category:"Green Areas & Lakes", desc:"Another great swimming lake in the southwest of Berlin." },
+  { name:"Plötzensee", lat:52.5437973, lon:13.3304851, category:"Green Areas & Lakes", desc:"One of the more central lakes in the city. It has a dark history, but now most people go to enjoy the sun. If you're feeling adventurous, you can try the FKK nudist side of the beach." },
+  { name:"Wannsee", lat:52.415113, lon:13.1468678, category:"Green Areas & Lakes", desc:"Probably the most famous lake in Berlin. The Wannsee Conference (1942) was held here — where the Nazis planned the Final Solution." },
+  { name:"Mauerpark", lat:52.5424, lon:13.403352, category:"Green Areas & Lakes", desc:"See the Berlin Wall, join the outdoor karaoke, or go to the Sunday market. Whatever you do, Mauerpark is a staple of living in Berlin." },
+  { name:"Soviet War Memorial Treptow", lat:52.4861394, lon:13.4719577, category:"Green Areas & Lakes", desc:"Probably one of the most absurd spaces in Berlin. You can't get more Soviet than this — a colossal monument to the Red Army soldiers who fell in the Battle of Berlin." },
+  { name:"YAAM", lat:52.5092601, lon:13.4305412, category:"Green Areas & Lakes", desc:"Young African Art Market — a cultural centre on the Spree with a beach, bar, and live music." },
+  { name:"Holzmarkt – Strandbar", lat:52.5114768, lon:13.4263493, category:"Green Areas & Lakes", desc:"A riverside cultural village on the Spree with bars, restaurants, and a beach." },
 
-  // ── MUSEOS ───────────────────────────────────────────
-  {
-    name: "C/O Berlin",
-    address: "Hardenbergstraße 22, 10623 Berlin (Charlottenburg)",
-    lat: 52.5044, lon: 13.3306, category: "Museos",
-    desc: "Espacio de fotografía contemporánea de primer nivel mundial en Charlottenburg. Exposiciones temporales de los mejores fotógrafos del mundo. Tienda de libros de fotografía excelente.",
-    hours: "Lun–Dom 11:00–20:00", phone: null, website: "https://co-berlin.org",
-    photos: [], url: "https://maps.google.com/?q=C/O+Berlin",
-  },
-  {
-    name: "Stasimuseum",
-    address: "Ruschestraße 103, 10365 Berlin (Lichtenberg)",
-    lat: 52.5097, lon: 13.4883, category: "Museos",
-    desc: "Museo en la antigua sede de la Stasi, la policía secreta de la RDA. Despachos intactos del Ministerio para la Seguridad del Estado. Terrorífico y fascinante a partes iguales.",
-    hours: "Lun–Vie 10:00–18:00 · Sáb–Dom 11:00–18:00", phone: null, website: "https://stasimuseum.de",
-    photos: [], url: "https://maps.google.com/?q=Stasimuseum+Berlin",
-  },
-  {
-    name: "Gedenkstätte Hohenschönhausen",
-    address: "Genslerstraße 66, 13055 Berlin (Hohenschönhausen)",
-    lat: 52.5495, lon: 13.5006, category: "Museos",
-    desc: "Centro de detención secreto de la Stasi: prisión donde eran interrogados y torturados psicológicamente los disidentes de la RDA. Solo visitas guiadas. Impactante e imprescindible.",
-    hours: "Lun–Dom 10:00–18:00 (solo visitas guiadas)", phone: null, website: "https://stiftung-hsh.de",
-    photos: [], url: "https://maps.google.com/?q=Gedenkstätte+Hohenschönhausen",
-  },
-  {
-    name: "Museum für Naturkunde",
-    address: "Invalidenstraße 43, 10115 Berlin (Mitte)",
-    lat: 52.5305, lon: 13.3819, category: "Museos",
-    desc: "Museo de Historia Natural con el Brachiosaurus montado más alto del mundo. Una colección de 30 millones de objetos en un edificio histórico de 1889. Para todas las edades.",
-    hours: "Mar–Vie 09:30–18:00 · Sáb–Dom 10:00–18:00", phone: null, website: "https://www.museumfuernaturkunde.berlin",
-    photos: [], url: "https://maps.google.com/?q=Museum+für+Naturkunde+Berlin",
-  },
-  {
-    name: "Galerie EIGEN + ART",
-    address: "Auguststraße 26, 10117 Berlin (Mitte)",
-    lat: 52.5264, lon: 13.3946, category: "Museos",
-    desc: "Galería contemporánea alemana de referencia en el barrio de galerías de Mitte. Representa artistas como Neo Rauch y Carsten Nicolai. Entrada libre, exposiciones temporales.",
-    hours: "Mar–Sáb 11:00–18:00", phone: null, website: "https://eigen-art.com",
-    photos: [], url: "https://maps.google.com/?q=Galerie+EIGEN+ART+Berlin",
-  },
-  {
-    name: "Arsenal – Film und Videokunst",
-    address: "Potsdamer Str. 2, 10785 Berlin (Tiergarten)",
-    lat: 52.5061, lon: 13.3656, category: "Museos",
-    desc: "Cinemateca independiente de Berlín junto a Potsdamer Platz. Proyecciones de cine clásico, experimental y de autor en versión original. El archivo de la memoria cinematográfica de la ciudad.",
-    hours: "Horario según cartelera semanal", phone: null, website: "https://arsenal-berlin.de",
-    photos: [], url: "https://maps.google.com/?q=Arsenal+Institut+Film+Berlin",
-  },
+  // ── CLUBS ────────────────────────────────────────────
+  { name:"Tresor", lat:52.5109975, lon:13.4195219, category:"Clubs", desc:"If you want your traditional 'Berlin' club, this is the place to go. The music is always fantastic, the space is amazing, and it really is the Berlin club." },
+  { name:"Sisyphos Nightclub", lat:52.4929592, lon:13.4912445, category:"Clubs", desc:"A fantastic club loved by all. Part outside, part inside, its rooms cater to nearly everyone. Some say it's an inverted Berghain. Remember the 'camp' theme for the Met Gala? This is Sisy — sequins, colours, fantastic." },
+  { name:"Süss War Gestern", lat:52.5086104, lon:13.4609797, category:"Clubs", desc:"Half bar, half club — a great spot for a night out in Friedrichshain." },
+  { name:"Salon – Zur wilden Renate", lat:52.4973775, lon:13.4653682, category:"Clubs", desc:"" },
+  { name:"Kater Blau", lat:52.5114949, lon:13.4263867, category:"Clubs", desc:"" },
+  { name:"://about blank", lat:52.5023662, lon:13.4662862, category:"Clubs", desc:"" },
+  { name:"Watergate", lat:52.5010558, lon:13.4452521, category:"Clubs", desc:"" },
+  { name:"MS Hoppetosse", lat:52.4975353, lon:13.4546997, category:"Clubs", desc:"" },
+  { name:"RSO.BERLIN", lat:52.45989, lon:13.50548, category:"Clubs", desc:"" },
 
-  // ── CINES ────────────────────────────────────────────
-  {
-    name: "b-ware! Ladenkino",
-    address: "Simon-Dach-Str. 40, 10245 Berlin (Friedrichshain)",
-    lat: 52.5071, lon: 13.4576, category: "Cines",
-    desc: "Cine de barrio en Friedrichshain con programación de autor y películas en versión original. Sala pequeña e íntima con butacas cómodas. Comunidad cinéfila muy activa.",
-    hours: "Según cartelera semanal", phone: null, website: "https://bware-ladenkino.de",
-    photos: [], url: "https://maps.google.com/?q=b-ware+Ladenkino+Berlin",
-  },
-  {
-    name: "Tilsiter Lichtspiele",
-    address: "Richard-Sorge-Str. 25a, 10249 Berlin (Friedrichshain)",
-    lat: 52.5113, lon: 13.4615, category: "Cines",
-    desc: "Cine histórico de 1913 en Friedrichshain con su arquitectura original conservada. Proyectan filmes independientes y ciclos temáticos. Sala única con balcón y todo su encanto intacto.",
-    hours: "Según cartelera semanal", phone: null, website: "https://tilsiter-lichtspiele.de",
-    photos: [], url: "https://maps.google.com/?q=Tilsiter+Lichtspiele+Berlin",
-  },
-  {
-    name: "Kino Intimes",
-    address: "Boxhagener Str. 107, 10245 Berlin (Friedrichshain)",
-    lat: 52.5065, lon: 13.4544, category: "Cines",
-    desc: "El cine más antiguo de Berlín aún en funcionamiento (desde 1913), junto a Boxhagener Platz. Programación de autor en VO y ambiente auténtico de sala de barrio histórica.",
-    hours: "Según cartelera semanal", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Kino+Intimes+Berlin",
-  },
+  // ── CAFES/BRUNCH ─────────────────────────────────────
+  { name:"19grams Alex", lat:52.5227717, lon:13.4075961, category:"Cafes/Brunch", desc:"Decent brunch/coffee in an otherwise bleak area." },
+  { name:"Café Engels", lat:52.4767177, lon:13.4200274, category:"Cafes/Brunch", desc:"" },
+  { name:"The Klub Kitchen", lat:52.5249043, lon:13.4090042, category:"Cafes/Brunch", desc:"An easy spot for lunch in Mitte." },
+  { name:"Wilke", lat:52.4807436, lon:13.4314333, category:"Cafes/Brunch", desc:"Wilke has some of the best brunch in the city until 3pm Wed–Sun. The dishes are seasonal and locally sourced, and the staff are the friendliest in Berlin. The coffee is fantastic, and Carolin, the owner, bakes all of the cakes herself each night." },
+  { name:"annelies", lat:52.4985667, lon:13.4349439, category:"Cafes/Brunch", desc:"One of my favourite brunch spots. The pancakes are something else, but get there early, because Annelies is definitely a hotspot." },
+  { name:"Shakespeare & Sons – Fine Bagels", lat:52.5126813, lon:13.4531308, category:"Cafes/Brunch", desc:"" },
+  { name:"Bricks & Mortar", lat:52.515184, lon:13.4676004, category:"Cafes/Brunch", desc:"" },
+  { name:"Sorrel", lat:52.490121, lon:13.4337898, category:"Cafes/Brunch", desc:"" },
+  { name:"The Barn Café", lat:52.5274383, lon:13.39818, category:"Cafes/Brunch", desc:"Won best coffee in Europe a few years ago, but take the whole experience with a pinch of salt. Not the warmest place." },
+  { name:"Two Trick Pony", lat:52.488942, lon:13.4048412, category:"Cafes/Brunch", desc:"" },
 
-  // ── CLUBES DE TECNO ──────────────────────────────────
-  {
-    name: "Renate",
-    address: "Warschauer Str. 34, 10243 Berlin (Friedrichshain)",
-    lat: 52.5089, lon: 13.4517, category: "Clubes de Tecno",
-    desc: "Club icónico de Friedrichshain en un edificio industrial con múltiples pisos, jardín y decoración kitsch berlinesa. Techno y house profundo. Ambiente de absoluta libertad.",
-    hours: "Vie noche – Lun madrugada (horario extendido)", phone: null, website: "https://renate.cc",
-    photos: [], url: "https://maps.google.com/?q=Renate+Berlin",
-  },
-  {
-    name: "Mensch Meier",
-    address: "Storkower Str. 121, 10407 Berlin (Lichtenberg)",
-    lat: 52.5228, lon: 13.4547, category: "Clubes de Tecno",
-    desc: "Club alternativo en Lichtenberg con múltiples salas, jardín grande y programación ecléctica. Precio accesible, comunidad muy abierta e inclusiva. Una de las mejores opciones de Berlín.",
-    hours: "Vie–Dom 23:00–tarde", phone: null, website: "https://menschmeier.berlin",
-    photos: [], url: "https://maps.google.com/?q=Mensch+Meier+Berlin",
-  },
-  {
-    name: "Sowieso",
-    address: "Weisestraße 24, 12049 Berlin (Neukölln)",
-    lat: 52.4799, lon: 13.4358, category: "Clubes de Tecno",
-    desc: "Club de jazz, impro y electrónica en Neukölln, en un sótano acogedor. Noches de improvisación, residencias de artistas locales y eventos experimentales. Muy de barrio.",
-    hours: "Jue–Dom 21:00–tarde", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Sowieso+Berlin",
-  },
-  {
-    name: "∄",
-    address: "Weserstraße 42, 12045 Berlin (Neukölln)",
-    lat: 52.4882, lon: 13.4333, category: "Clubes de Tecno",
-    desc: "Club pequeño e íntimo en Neukölln con sonido excepcional y programación de techno industrial y experimental. Dirección discreta, selección de puerta estricta. Para entendidos.",
-    hours: "Sáb–Dom 23:00–tarde", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=∄+Club+Berlin",
-  },
-  {
-    name: "Anomalie Art Club",
-    address: "Storkower Str. 121, 10407 Berlin (Lichtenberg)",
-    lat: 52.5232, lon: 13.4555, category: "Clubes de Tecno",
-    desc: "Club de arte en Lichtenberg con instalaciones visuales inmersivas, jardín tropical y música electrónica experimental. Uno de los espacios más creativos y bellos de Berlín.",
-    hours: "Vie–Dom 23:00–tarde", phone: null, website: "https://anomalie.club",
-    photos: [], url: "https://maps.google.com/?q=Anomalie+Art+Club+Berlin",
-  },
-  {
-    name: "Sameheads",
-    address: "Richardstraße 10, 12043 Berlin (Neukölln)",
-    lat: 52.4816, lon: 13.4378, category: "Clubes de Tecno",
-    desc: "Club y galería en Neukölln con fiestas queer-friendly y programación artística. Ambiente relajado, puertas abiertas y sin dresscode. Un espacio genuinamente libre.",
-    hours: "Vie–Dom 22:00–tarde", phone: null, website: "https://sameheads.com",
-    photos: [], url: "https://maps.google.com/?q=Sameheads+Berlin",
-  },
+  // ── FEELING FANCY ────────────────────────────────────
+  { name:"Bar Normal", lat:52.5386515, lon:13.4100706, category:"Feeling Fancy", desc:"Ignore the reviews. The new chef is knocking it out of the park, and their wine selection is incredible. I take every excuse to come here." },
+  { name:"No Bananas", lat:52.4929983, lon:13.4144221, category:"Feeling Fancy", desc:"Nothing outrageously 'fancy', but one of the best food spots in the city if you're willing to spend just a little more than you would on a kebab." },
+  { name:"Velvet", lat:52.4789825, lon:13.4384567, category:"Feeling Fancy", desc:"Won best cocktail bar in Germany a few years ago, and I can see why!" },
+  { name:"Hallmann und Klee", lat:52.4738085, lon:13.449695, category:"Feeling Fancy", desc:"" },
+  { name:"ORA", lat:52.5013586, lon:13.4159237, category:"Feeling Fancy", desc:"Restaurant and cocktail bar in an old pharmacy." },
+  { name:"Clärchens Ballroom", lat:52.5267016, lon:13.3968996, category:"Feeling Fancy", desc:"Is it a bar? Is it a club? Is it a restaurant? I don't really know, but it used to be the central dancehall of Weimar Berlin." },
+  { name:"Freundschaft Wine Bar", lat:52.5182501, lon:13.390308, category:"Feeling Fancy", desc:"A wine bar that's so fancy, it feels like you're in Munich. My friends and I definitely don't fit in here, but that doesn't stop us from getting toasted on some of the best wines in the world." },
+  { name:"Bellboy Bar Berlin", lat:52.5121123, lon:13.3920211, category:"Feeling Fancy", desc:"Mitte isn't the pulsing heart of Berlin's nightlife, but this is one of my preferred cocktail bars here." },
+  { name:"Buck and Breck", lat:52.5321302, lon:13.3989457, category:"Feeling Fancy", desc:"83rd best cocktail bar in the world a few years back." },
+  { name:"theNOname – Restaurant", lat:52.5249533, lon:13.3936914, category:"Feeling Fancy", desc:"I've been recommending the NoName for years, and finally was vindicated when it got a Michelin star! A gorgeous restaurant right next to the New Synagogue." },
+  { name:"Victoria Bar", lat:52.5013916, lon:13.3638416, category:"Feeling Fancy", desc:"A bit more of a classic cocktail bar on the higher end. Not the best in the city, but definitely one of the better stops in the area." },
 
-  // ── MONUMENTOS ───────────────────────────────────────
-  {
-    name: "Brandenburger Tor",
-    address: "Pariser Platz, 10117 Berlin (Mitte)",
-    lat: 52.5163, lon: 13.3777, category: "Monumentos",
-    desc: "La Puerta de Brandenburgo es el símbolo de Berlín y de la reunificación alemana. Construida en 1791, fue durante 28 años el único paso entre Berlín Este y Oeste bajo el Muro.",
-    hours: "Abierto siempre (exterior)", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Brandenburger+Tor+Berlin",
-  },
-  {
-    name: "Apartamento de David Bowie",
-    address: "Hauptstraße 155, 10827 Berlin (Schöneberg)",
-    lat: 52.4774, lon: 13.3473, category: "Monumentos",
-    desc: "Departamento donde vivió David Bowie junto a Iggy Pop entre 1976 y 1978. Aquí grabó la Trilogía de Berlín: Low, Heroes y Lodger. Solo visible desde la calle.",
-    hours: "Solo exterior visible", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=David+Bowie+Apartment+Berlin",
-  },
-  {
-    name: "Hochbunker Pallasstraße",
-    address: "Pallasstraße 5, 10781 Berlin (Schöneberg)",
-    lat: 52.4988, lon: 13.3545, category: "Monumentos",
-    desc: "Búnker antiaéreo de la Segunda Guerra Mundial integrado en un bloque de departamentos de los años 70. Símbolo de la Berlín de capas históricas superpuestas. Arquitectura brutal e inquietante.",
-    hours: "Solo exterior visible", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Hochbunker+Pallasstraße+Berlin",
-  },
-  {
-    name: "Denkmal Rosenstraße",
-    address: "Rosenstraße, 10178 Berlin (Mitte)",
-    lat: 52.5237, lon: 13.4022, category: "Monumentos",
-    desc: "Memorial a las mujeres que en 1943 protestaron pacíficamente para liberar a sus esposos judíos detenidos por los nazis. Un acto de resistencia civil extraordinario y poco conocido.",
-    hours: "Abierto siempre", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Denkmal+Rosenstraße+Berlin",
-  },
-  {
-    name: "Böhmisches Dorf Neukölln",
-    address: "Karl-Marx-Str. 147, 12043 Berlin (Neukölln)",
-    lat: 52.4782, lon: 13.4465, category: "Monumentos",
-    desc: "Asentamiento fundado en 1737 por refugiados bohemios protestantes. Sus casas de piedra, la iglesia y el cementerio son un anacronismo encantador en pleno Neukölln moderno.",
-    hours: "Exterior siempre abierto", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Böhmisches+Dorf+Berlin+Neukölln",
-  },
-
-  // ── OTROS ────────────────────────────────────────────
-  {
-    name: "EastSeven Berlin Hostel",
-    address: "Schwedter Str. 7, 10119 Berlin (Prenzlauer Berg)",
-    lat: 52.5357, lon: 13.4083, category: "Otros",
-    desc: "Hostel pequeño y muy bien valorado en Prenzlauer Berg, ideal para viajeros solitarios. Ambiente social, personal amable y ubicación excelente para explorar el barrio.",
-    hours: "Recepción 24h", phone: null, website: "https://eastseven.de",
-    photos: [], url: "https://maps.google.com/?q=EastSeven+Berlin+Hostel",
-  },
-  {
-    name: "andenbuch – Librería Espacio Cultural",
-    address: "Bergmannstr. 59, 10961 Berlin (Kreuzberg)",
-    lat: 52.4902, lon: 13.3966, category: "Otros",
-    desc: "Librería y espacio cultural latinoamericano en Bergmannstraße. Libros en español, eventos culturales y punto de encuentro de la comunidad hispana de Berlín.",
-    hours: "Mar–Vie 14:00–19:00 · Sáb 11:00–17:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=andenbuch+Berlin",
-  },
-  {
-    name: "Hard Wax",
-    address: "Köpenicker Str. 70, 10179 Berlin (Mitte)",
-    lat: 52.5059, lon: 13.4278, category: "Otros",
-    desc: "Tienda de vinilos de referencia mundial para techno y electrónica, fundada en 1989. Distribuidora de los sellos Basic Channel y Chain Reaction. Imprescindible para cualquier amante del vinilo.",
-    hours: "Lun–Sáb 12:00–20:00", phone: null, website: "https://hardwax.com",
-    photos: [], url: "https://maps.google.com/?q=Hard+Wax+Berlin",
-  },
-  {
-    name: "Heckmann-Höfe",
-    address: "Oranienburger Str. 32, 10117 Berlin (Mitte)",
-    lat: 52.5253, lon: 13.3985, category: "Otros",
-    desc: "Complejo de patios histórico del siglo XIX en Oranienburger Straße con galerías de arte, cafés y talleres artesanales. Una joya arquitectónica entre los edificios del barrio judío.",
-    hours: "Abierto en horario de negocios", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Heckmann-Höfe+Berlin",
-  },
-  {
-    name: "SpaceHall",
-    address: "Zossener Str. 33, 10961 Berlin (Kreuzberg)",
-    lat: 52.4958, lon: 13.3917, category: "Otros",
-    desc: "Megatienda de vinilos en Kreuzberg con más de 100.000 discos de todos los géneros. Paraíso para coleccionistas de toda Europa. Personal experto y secciones meticulosamente organizadas.",
-    hours: "Lun–Sáb 11:00–20:00", phone: null, website: "https://spacehall.de",
-    photos: [], url: "https://maps.google.com/?q=SpaceHall+Berlin",
-  },
-  {
-    name: "Sound Vinyl Store Berlin",
-    address: "Weichselstraße 7, 12045 Berlin (Neukölln)",
-    lat: 52.4872, lon: 13.4340, category: "Otros",
-    desc: "Tienda de vinilos de culto en Neukölln especializada en música electrónica, jazz y soul. Selección muy curada y personal con buen criterio. Descubrimientos garantizados.",
-    hours: "Mar–Sáb 12:00–20:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=Sound+Vinyl+Store+Berlin",
-  },
-  {
-    name: "recordsale & musicberlin",
-    address: "Weichselstraße 35, 12045 Berlin (Neukölln)",
-    lat: 52.4861, lon: 13.4350, category: "Otros",
-    desc: "Dos tiendas de vinilos en la misma calle en Neukölln con énfasis en soul, funk, hip-hop y electrónica vintage. Colecciones rotan con frecuencia. Ideal para rebuscar.",
-    hours: "Lun–Sáb 11:00–19:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=recordsale+musicberlin",
-  },
-  {
-    name: "BuchHafen Berlin",
-    address: "Glogauer Str. 2, 10999 Berlin (Kreuzberg)",
-    lat: 52.4988, lon: 13.4205, category: "Otros",
-    desc: "Librería independiente en Kreuzberg con una selección ecléctica de títulos nuevos y segunda mano. Eventos literarios regulares y ese ambiente que solo tienen los buenos libreros.",
-    hours: "Lun–Vie 10:00–19:00 · Sáb 10:00–16:00", phone: null, website: null,
-    photos: [], url: "https://maps.google.com/?q=BuchHafen+Berlin",
-  },
-  {
-    name: "WINDOBONA Indoor Skydiving",
-    address: "Wilhelminenhofstr. 9, 12459 Berlin (Schöneweide)",
-    lat: 52.4669, lon: 13.5375, category: "Otros",
-    desc: "Túnel de viento para vuelo libre indoor en Schöneweide. Experiencia de caída libre sin necesidad de saltar en paracaídas. Cursos para principiantes disponibles.",
-    hours: "Lun–Dom 10:00–22:00", phone: null, website: "https://windobona.com/berlin",
-    photos: [], url: "https://maps.google.com/?q=WINDOBONA+Indoor+Skydiving+Berlin",
-  },
+  // ── SQUARES & LOCATIONS ──────────────────────────────
+  { name:"Boxhagener Platz", lat:52.5109507, lon:13.4597037, category:"Squares & Locations", desc:"A central square in the city with a market too. If you're struggling for where to go in the evening, this is the easiest decision." },
+  { name:"RAW-Gelände", lat:52.5077339, lon:13.4516618, category:"Squares & Locations", desc:"Definitely worth having a mooch through — bars, clubs, skate park, and street art in an old railway maintenance yard." },
+  { name:"Hackescher Markt", lat:52.5237159, lon:13.4022679, category:"Squares & Locations", desc:"A little touristy for my taste, but there are still some gems dotted about." },
 ];
 
 // ── MAP SETUP ────────────────────────────────────────────────────
@@ -939,7 +487,9 @@ function goPhoto(i) {
 function openPanel(place) {
   const cat = CAT[place.category];
 
-  buildPhotos(place.photos, cat.emoji);
+  buildPhotos([], cat.emoji);
+  const photosEl = document.getElementById('panel-photos');
+  photosEl.style.background = `linear-gradient(135deg, ${cat.color}22, ${cat.color}44)`;
 
   const badge = document.getElementById('p-badge');
   badge.style.background = cat.bg;
@@ -947,23 +497,13 @@ function openPanel(place) {
   badge.textContent = cat.emoji + ' ' + place.category;
 
   document.getElementById('p-name').textContent = place.name;
-  document.getElementById('p-addr').textContent = '📍 ' + place.address;
+  const addrEl = document.getElementById('p-addr');
+  addrEl.textContent = '';
+  addrEl.style.display = 'none';
   document.getElementById('p-desc').textContent = place.desc;
-  document.getElementById('p-gmaps').href = place.url;
+  document.getElementById('p-gmaps').href = `https://maps.google.com/?q=${place.lat},${place.lon}`;
 
-  // Info rows
-  const info = document.getElementById('p-info');
-  info.innerHTML = '';
-  if (place.hours) {
-    info.innerHTML += `<div class="p-row"><span class="p-icon">🕐</span><span class="p-val">${place.hours}</span></div>`;
-  }
-  if (place.phone) {
-    info.innerHTML += `<div class="p-row"><span class="p-icon">📞</span><span class="p-val"><a href="tel:${place.phone}">${place.phone}</a></span></div>`;
-  }
-  if (place.website) {
-    const domain = new URL(place.website).hostname.replace('www.','');
-    info.innerHTML += `<div class="p-row"><span class="p-icon">🌐</span><span class="p-val"><a href="${place.website}" target="_blank" rel="noopener">${domain}</a></span></div>`;
-  }
+  document.getElementById('p-info').innerHTML = '';
 
   document.getElementById('panel').classList.add('open');
   setTimeout(() => map.invalidateSize(), 350);
