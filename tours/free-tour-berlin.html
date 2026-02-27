@@ -59,11 +59,11 @@
       .gallery-grid img { height:160px; }
       .gallery-main { grid-column:span 3; height:300px !important; }
     }
-    #navbar { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(0,18,25,0.75); backdrop-filter:blur(6px); border-bottom:1px solid rgba(255,255,255,0.06); transition:background 0.4s,backdrop-filter 0.4s,box-shadow 0.4s; }
+    #navbar { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(0,18,25,0.75); backdrop-filter:blur(6px); border-bottom:1px solid rgba(255,255,255,0.06); transition:background 0.4s,backdrop-filter 0.4s,box-shadow 0.4s; transform:translate3d(0,0,0); }
     #navbar.scrolled { background:rgba(0,18,25,0.92); backdrop-filter:blur(16px); box-shadow:0 2px 24px rgba(0,0,0,0.5); }
     #mobile-menu { display:none; }
     #mobile-menu.open { display:block; }
-     pageFadeIn { from { opacity:0; } to { opacity:1; } }
+     @keyframes pageFadeIn { from { opacity:0; } to { opacity:1; } }
     body { animation: pageFadeIn 0.45s ease forwards; }
     body.page-exit { opacity:0 !important; transition:opacity 0.3s ease !important; pointer-events:none; }
   </style>
@@ -432,6 +432,12 @@ document.querySelectorAll('a[href]').forEach(link => {
     setTimeout(() => { window.location.href = href; }, 300);
   });
 });
+function toggleMobileMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
 if (localStorage.getItem('lang') === 'en') toggleLang();
 </script>
 </body>
