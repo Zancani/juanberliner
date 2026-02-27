@@ -102,7 +102,7 @@
 
     /* Photos */
     #panel-photos {
-      position: relative; height: 120px; flex-shrink: 0;
+      position: relative; height: 200px; flex-shrink: 0;
       background: var(--surface2); overflow: hidden;
     }
     #panel-photos.empty {
@@ -199,7 +199,7 @@
         transform: translateY(100%); z-index: 400;
       }
       #panel.open { transform: translateY(0); }
-      #panel-photos { height: 155px; }
+      #panel-photos { height: 200px; }
       .p-name { font-size: 19px; }
     }
   </style>
@@ -255,6 +255,10 @@ function setLang(l) {
   document.querySelectorAll('.l-en').forEach(e => e.style.display = l==='en'?'':'none');
   document.getElementById('btn-es').classList.toggle('active', l==='es');
   document.getElementById('btn-en').classList.toggle('active', l==='en');
+  if (selectedMarker) {
+    const p = selectedMarker._place;
+    document.getElementById('p-desc').textContent = l === 'es' ? (DESC_ES[p.name] || p.desc) : p.desc;
+  }
 }
 
 // ── CATEGORIES ──────────────────────────────────────────────────
@@ -268,6 +272,120 @@ const CAT = {
   "Feeling Fancy":       { color:"#757575", emoji:"⭐", bg:"rgba(117,117,117,.13)" },
   "Squares & Locations": { color:"#FF5252", emoji:"📍", bg:"rgba(255,82,82,.13)" },
 };
+
+// ── SPANISH DESCRIPTIONS ─────────────────────────────────────────
+const DESC_ES = {
+  // FOOD
+  "Markthalle Neun": "¡Un mercado gastronómico con todo lo que puedas imaginar! Si no sabés adónde ir, ¡este es el lugar!",
+  "Kebap with Attitude": "Una versión moderna del kebab berlinés con énfasis en la calidad y los ingredientes locales. No te pierdas los baños temáticos.",
+  "Knödelwirtschaft NORD": "Albóndigas alemanas. Simples, contundentes y deliciosas.",
+  "Zur letzten Instanz": "No podés ponerte más 'alemán' que esto. Definitivamente vale la pena para tu dosis de comida alemana.",
+  "Feel good food by Omar": "El mejor shawarma y falafel de la ciudad. Todo es casero y Omar es un personaje.",
+  "Kitten Deli": "Probablemente uno de los lugares más cool de Berlín. Tienen uno de los mejores hummus que probé en mi vida. En verano se siente como el corazón de la ciudad con mesas por los adoquines. ¡El sabbich es definitivamente uno de sus platos más populares!",
+  "Curry 61": "¡Uno de mis lugares favoritos para comer currywurst!",
+  "Klinke": "Klinke toma los platos clásicos alemanes y los eleva para que no estés comiendo solo cerdo y papas. Es básicamente un bar de tapas alemán.",
+  "Best Gemüse Kebap": "Estoy convencido de que estos chicos tienen el mejor kebab de Berlín. Verduras asadas, 3 salsas, queso de cabra, ensalada fresca con aderezo, pollo de origen local — ¡todo por 4,50€!",
+  "Blechbilderbar": "¡El bar más antiguo de esta calle! Famoso por su Flammkuchen, un plato tradicional alemán/francés. La señora que lo dirige parece 'Berliner Schnauze' a primera vista, pero es increíblemente amable y divertida.",
+  "W Pizza": "Mi pizza favorita en Berlín. Pedí algo simple: su salsa de tomate es lo que las hace tan especiales.",
+  "Altes Europa": "¡Si buscás comida alemana, este es definitivamente uno de los mejores lugares para encontrarla en Berlín!",
+  "Ketels Wurstspezialitäten": "Este es mi lugar favorito para comer una Currywurst.",
+  "Azzam Restaurant": "Porciones enormes de comida libanesa. Uno de los nombres famosos en Berlín entre los que saben.",
+  "Burgermeister Schlesisches Tor": "El local de hamburguesas más famoso de Berlín, ¡en un baño público reconvertido!",
+  "CRAZY BASTARD KITCHEN": "¡Una empresa de salsas picantes! Cambian su menú semanalmente adaptando la comida a sus salsas.",
+  "Gazzo": "Un lugar de pizza increíblemente popular.",
+  "Sahara Imbiss": "Sus wraps con salsa de maní son increíblemente baratos y deliciosos. Hay Saharas por todos lados, y no es de extrañar.",
+  "Teras": "El local de kebab favorito de Angela Merkel.",
+  "Mittendrin Restaurant & Café": "Restaurante alemán para almuerzo y cena.",
+  "SammyS Berliner Donuts": "Un gran lugar para conseguir los clásicos 'Berliners'.",
+  "1990 Vegan Living": "Uno de los lugares más populares de Berlín. No soy vegano, ¡pero sigo volviendo! Un sueño para comida vietnamita fresca y sabrosa.",
+  "Saveur de Bánh Mì": "Sándwiches vietnamitas simples, baratos y deliciosos, con un tamaño generoso.",
+  // BARS
+  "TiER": "¡Cócteles de primera! Llegá temprano si querés conseguir mesa.",
+  "Ä": "Para mí, este es el bar típicamente berlinés. Oscuro, con humo y cerveza barata — increíblemente popular entre los kreuzköllners.",
+  "Ratzeputz": "Otro bar clásico berlinés, dirigido por el guía turístico Rob. ¡Decile que te envié yo y que me debe bebidas gratis!",
+  "Hops & Barley": "¡Si querés conocer la escena de la cerveza artesanal en Berlín, este es el lugar!",
+  "Dschungel": "¡Decoración tipo 'jungla' increíble, pero es un bar de fumadores, tenelo en cuenta!",
+  "Eschenbräu": "¡Una cervecería berlinesa con excelente calidad y precios muy accesibles! Bajá las escaleras al subsuelo. También sirven Flammkuchen al verdadero estilo alemán.",
+  "Prater Beer Garden": "El jardín de cerveza más antiguo de la ciudad, ¡y el punto de encuentro habitual para nosotros los guías! Definitivamente una gran parada en un día de verano.",
+  "My Bar ICI": "El opuesto a un bar berlinés — se siente como entrar a París. Vinos tranquilos, jazz suave, y el dueño más parisino que vas a encontrar en Berlín.",
+  "Lamm": "Uno de mis bares de cócteles favoritos en el norte. En invierno son especialmente populares por su Glühwein especial.",
+  "Schneeeule – Berliner Bierkultur": "Ulrike es la experta mundial en Berliner Weisse, una cerveza ácida tradicional que Napoleón llamó 'el champagne del norte'. Fanáticos de la cerveza de todo el mundo vienen a probar lo mejor de lo mejor.",
+  "Café Luzia": "¿Querés el bar clásico de Kreuzberg? Este es el lugar.",
+  "Ritchie Café & Bar": "Si Cafe Luzia está muy lleno, este está justo enfrente y es prácticamente el mismo bar.",
+  "Truffle Pig Bar": "Entrá por el bar principal y tocá la 'alarma de incendio'...",
+  "Klunkerkranich": "Bar en la terraza del centro comercial Neukölln Arcaden.",
+  // MUSEUMS
+  "Stasi Museum": "Ubicado en el cuartel general original de la policía secreta Stasi. Documenta todas las formas en que el gobierno espiaba a los ciudadanos de la Alemania Oriental. El edificio fue ocupado por manifestantes tras la reunificación para proteger los documentos. El lugar incluso tiene un piso conservado exactamente como era en los años 80.",
+  "Jewish Museum Berlin": "El Museo Judío documenta la historia de la comunidad judía en Alemania. Famoso por sus espacios adicionales y la llamativa arquitectura de Daniel Libeskind. Definitivamente una visita imperdible.",
+  "Topography of Terror": "Definitivamente una visita imperdible en Berlín. En el antiguo sitio de las SS y la Gestapo, este lugar habla sobre el sistema de terror del Tercer Reich. Entrada gratuita.",
+  "Kulturbrauerei – GDR Exhibition": "Mientras la mayoría va al Museo DDR, la Kulturbrauerei es un lugar más matizado e interesante para explorar la vida en la RDA, ubicado en la antigua cervecería Schultheiss.",
+  "Memorial & Museum Sachsenhausen": "El campo de concentración a las afueras de Berlín, en Oranienburg. Un poco lejos, pero podés organizar un tour. Definitivamente un evento de día completo.",
+  "Berlin Wall Memorial": "La sección conservada más significativa del Muro de Berlín, con una exposición al aire libre a lo largo de la Bernauer Straße. Entrada gratuita.",
+  "Ephraim Palace": "La exposición 'Berlin Zeit' es la única exposición abierta que repasa un poco de toda la historia alemana.",
+  "Stasi Prison (Hohenschönhausen)": "Diferente al Museo de la Stasi pero igual de cargado de historia. Antigua prisión secreta donde se interrogaba a los disidentes. Solo con visitas guiadas.",
+  "Deutschlandmuseum": "Una historia interactiva de Alemania. No es el más extenso, pero definitivamente es divertido si buscás algo más accesible.",
+  "Berlin Story Bunker": "Si querés un museo de la Segunda Guerra Mundial, esta es tu mejor apuesta. Historia completa de la guerra y los nazis, con un búnker de Hitler reconstruido dentro de un búnker real.",
+  "Ethnologisches Museum": "Un museo muy interesante sobre la historia colonial alemana. Si te interesa cómo Europa debería afrontar su pasado colonial, el museo es en su mayoría un buen ejemplo.",
+  "Märkisches Museum": "Mientras el Museo Histórico Alemán está cerrado, esta es probablemente una de tus mejores opciones para aprender sobre la historia alemana. Kaisers, el Muro, los nazis — este lugar lo cubre todo.",
+  "German Spy Museum": "Un lugar divertido para aprender sobre la 'ciudad de espías' del Berlín de la Guerra Fría. Muy interactivo, puede ser una buena salida para familias también.",
+  "Urban Nation Street Art Museum": "¡Es un museo de arte urbano! ¡Está bastante bien!",
+  "Berlin Underworld": "Tours muy interesantes de los sitios subterráneos de la ciudad — búnkeres, túneles e infraestructura de la Guerra Fría.",
+  "Computer Games Museum": "No es muy berlinés, pero definitivamente es divertido si querés jugar algunos videojuegos clásicos.",
+  // GREEN AREAS & LAKES
+  "Tempelhofer Feld": "Este es tu imprescindible cuando hace sol. Sé un verdadero berlinés y dirigite al antiguo aeródromo nazi reconvertido con unas cervezas bajo el sol. Mirá los patinadores, volá un barrilete o simplemente tomá sol. Llevá todo lo que necesitás — es literalmente un aeródromo sin tiendas adentro.",
+  "Teufelsberg": "Subir esta montaña artificial hecha de escombros de la Segunda Guerra Mundial para llegar a una antigua estación de espionaje estadounidense abandonada es probablemente una de las experiencias más clásicamente 'berlinesas' que podés tener. Los cuidadores cobran alrededor de 10€.",
+  "Maybachufer": "Aquí es donde voy en un día soleado, igual que toda Kreuzköllern. El animado canal se siente como el corazón de la ciudad cuando el tiempo acompaña.",
+  "Schlachtensee": "Un hermoso lago en el suroeste de la ciudad. Perfecto para nadar en verano.",
+  "Krumme Lanke": "Otro lago estupendo para nadar en el suroeste de Berlín.",
+  "Plötzensee": "Uno de los lagos más céntricos de la ciudad. Tiene una historia oscura, pero hoy la mayoría de la gente va a disfrutar del sol. Si te sentís aventurero, podés probar el lado nudista FKK de la playa.",
+  "Wannsee": "Probablemente el lago más famoso de Berlín. La Conferencia de Wannsee (1942) se celebró aquí — donde los nazis planificaron la Solución Final.",
+  "Mauerpark": "Ves el Muro de Berlín, sumate al karaoke al aire libre o andá al mercado del domingo. Hagas lo que hagas, el Mauerpark es un pilar de la vida en Berlín.",
+  "Soviet War Memorial Treptow": "Probablemente uno de los espacios más increíbles de Berlín. No podés ponerte más soviético que esto — un monumento colosal a los soldados del Ejército Rojo caídos en la Batalla de Berlín.",
+  "YAAM": "Young African Art Market — un centro cultural a orillas del Spree con playa, bar y música en vivo.",
+  "Holzmarkt – Strandbar": "Un pueblo cultural a orillas del Spree con bares, restaurantes y una playa.",
+  // CLUBS
+  "Tresor": "Si querés tu club típico 'berlinés', este es el lugar. La música siempre es fantástica, el espacio es increíble, y realmente es el club de Berlín.",
+  "Sisyphos Nightclub": "Un club fantástico amado por todos. Parte al aire libre, parte adentro, sus salas le dan cabida a casi todos. Algunos dicen que es un Berghain invertido. ¿Recordás el tema 'camp' del Met Gala? Eso es Sisy — lentejuelas, colores, fantástico.",
+  "Süss War Gestern": "Mitad bar, mitad club — un gran lugar para una noche en Friedrichshain.",
+  // CAFES/BRUNCH
+  "19grams Alex": "Brunch y café decente en una zona bastante gris.",
+  "The Klub Kitchen": "Un lugar fácil para almorzar en Mitte.",
+  "Wilke": "Wilke tiene uno de los mejores brunches de la ciudad hasta las 15h de miércoles a domingo. Los platos son estacionales y de origen local, y el personal es el más amable de Berlín. El café es fantástico, y Carolin, la dueña, hornea todos los pasteles ella misma cada noche.",
+  "annelies": "Uno de mis lugares de brunch favoritos. Los pancakes son algo especial, pero llegá temprano porque Annelies es definitivamente un punto muy concurrido.",
+  "The Barn Café": "Ganó el título de mejor café de Europa hace unos años, pero tomá la experiencia completa con un grano de sal. No es el lugar más cálido.",
+  // FEELING FANCY
+  "Bar Normal": "Ignorá las reseñas. El nuevo chef está haciendo maravillas y su selección de vinos es increíble. No pierdo ninguna excusa para venir.",
+  "No Bananas": "Nada exageradamente sofisticado, pero uno de los mejores lugares para comer en la ciudad si estás dispuesto a gastar un poco más que en un kebab.",
+  "Velvet": "Ganó el título de mejor bar de cócteles en Alemania hace unos años, ¡y entiendo por qué!",
+  "ORA": "Restaurante y bar de cócteles en una antigua farmacia.",
+  "Clärchens Ballroom": "¿Es un bar? ¿Es un club? ¿Es un restaurante? La verdad no sé, pero fue el salón de baile central del Berlín de Weimar.",
+  "Freundschaft Wine Bar": "Un bar de vinos tan sofisticado que parece estar en Múnich. Mis amigos y yo claramente no encajamos aquí, pero eso no nos impide tomar algunos de los mejores vinos del mundo.",
+  "Bellboy Bar Berlin": "Mitte no es el corazón palpitante de la vida nocturna berlinesa, pero este es uno de mis bares de cócteles preferidos en el barrio.",
+  "Buck and Breck": "El 83er mejor bar de cócteles del mundo hace unos años.",
+  "theNOname – Restaurant": "Estuve recomendando el NoName durante años, ¡y finalmente fui reivindicado cuando obtuvo una estrella Michelin! Un restaurante precioso justo al lado de la Nueva Sinagoga.",
+  "Victoria Bar": "Un clásico bar de cócteles en la gama alta. No el mejor de la ciudad, pero definitivamente una de las mejores paradas de la zona.",
+  // SQUARES & LOCATIONS
+  "Boxhagener Platz": "Una plaza central con mercado incluido. Si no sabés adónde ir por las noches, esta es la decisión más fácil.",
+  "RAW-Gelände": "Definitivamente vale la pena curiosear — bares, clubes, skate park y arte urbano en un antiguo taller de mantenimiento ferroviario.",
+  "Hackescher Markt": "Un poco turístico para mi gusto, pero todavía hay algunas joyas escondidas por ahí.",
+};
+
+// ── PHOTO URL (source.unsplash.com, free, no key needed) ─────────
+function getPhotoUrl(place) {
+  const catKw = {
+    'Food':                'food,restaurant',
+    'Bars':                'bar,beer,pub',
+    'Museums':             'museum,exhibition',
+    'Green Areas & Lakes': 'park,lake,nature',
+    'Clubs':               'nightclub,music',
+    'Cafes/Brunch':        'coffee,cafe,brunch',
+    'Feeling Fancy':       'cocktail,fine+dining',
+    'Squares & Locations': 'city,plaza,street',
+  };
+  const name = place.name.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().split(/\s+/).slice(0, 2).join('+');
+  const cat = catKw[place.category] || 'berlin';
+  return `https://source.unsplash.com/800x500/?berlin,${cat},${name}`;
+}
 
 // ── DATA (source: Google My Maps) ────────────────────────────────
 const PLACES = [
@@ -446,7 +564,8 @@ function buildPhotos(photos, emoji) {
     img.className = 'ph-img' + (i===0?' on':'');
     img.src = src;
     img.alt = '';
-    img.loading = 'lazy';
+    img.loading = 'eager';
+    img.onerror = () => { if (!el.querySelector('.ph-img.on') || el.querySelector('.ph-img.on') === img) { el.innerHTML=''; el.classList.add('empty'); el.textContent = emoji; } };
     el.appendChild(img);
   });
 
@@ -487,9 +606,7 @@ function goPhoto(i) {
 function openPanel(place) {
   const cat = CAT[place.category];
 
-  buildPhotos([], cat.emoji);
-  const photosEl = document.getElementById('panel-photos');
-  photosEl.style.background = `linear-gradient(135deg, ${cat.color}22, ${cat.color}44)`;
+  buildPhotos([getPhotoUrl(place)], cat.emoji);
 
   const badge = document.getElementById('p-badge');
   badge.style.background = cat.bg;
@@ -500,7 +617,7 @@ function openPanel(place) {
   const addrEl = document.getElementById('p-addr');
   addrEl.textContent = '';
   addrEl.style.display = 'none';
-  document.getElementById('p-desc').textContent = place.desc;
+  document.getElementById('p-desc').textContent = lang === 'es' ? (DESC_ES[place.name] || place.desc) : place.desc;
   document.getElementById('p-gmaps').href = `https://maps.google.com/?q=${place.lat},${place.lon}`;
 
   document.getElementById('p-info').innerHTML = '';
