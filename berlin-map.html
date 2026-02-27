@@ -64,26 +64,40 @@
     #filter-bar {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 8px 16px;
+      padding: 0 16px;
+      height: 46px;
       display: flex; align-items: center; gap: 5px;
       flex-shrink: 0; overflow-x: auto;
       -ms-overflow-style: none; scrollbar-width: none;
     }
     #filter-bar::-webkit-scrollbar { display: none; }
     .chip {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 4px 11px; border-radius: 20px;
-      border: 1px solid var(--border); background: var(--surface2);
-      color: var(--muted); font-size: 11px; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 13px; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.04);
+      color: var(--muted); font-size: 10.5px; font-weight: 600;
+      letter-spacing: .05em; text-transform: uppercase;
       cursor: pointer; white-space: nowrap; flex-shrink: 0;
-      transition: all .15s; user-select: none; font-family: inherit;
+      transition: all .18s; user-select: none; font-family: inherit;
     }
-    .chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .chip .cnt { opacity: .4; font-size: 10px; margin-left: 1px; }
-    .chip.active { color: #E9D8A6; border-color: #005570; background: var(--surface2); }
-    .chip.all.active { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
-    .chip:hover:not(.active) { color: #E9D8A6; border-color: #005570; }
-    #n-count { margin-left: auto; flex-shrink: 0; font-size: 11px; color: var(--dim); font-weight: 500; }
+    .chip-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; opacity: .75; }
+    .chip .cnt {
+      background: rgba(255,255,255,.08); border-radius: 4px;
+      padding: 1px 5px; font-size: 9.5px; font-weight: 700; opacity: .65; letter-spacing: 0;
+    }
+    .chip.active {
+      background: color-mix(in srgb, var(--chip-color, #C8A84B) 14%, transparent);
+      border-color: color-mix(in srgb, var(--chip-color, #C8A84B) 40%, transparent);
+      color: var(--chip-color, #C8A84B);
+    }
+    .chip.active .cnt { opacity: .75; }
+    .chip:hover:not(.active) {
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.14);
+      color: var(--text);
+    }
+    #n-count { margin-left: auto; flex-shrink: 0; font-size: 11px; color: var(--dim); font-weight: 500; padding-left: 8px; }
 
     /* ── MAIN ───────────────────────────────────────────── */
     #main { flex: 1; display: flex; overflow: hidden; position: relative; }
@@ -257,20 +271,29 @@ function setLang(l) {
   document.getElementById('btn-en').classList.toggle('active', l==='en');
   if (selectedMarker) {
     const p = selectedMarker._place;
+    const cat = CAT[p.category];
     document.getElementById('p-desc').textContent = l === 'es' ? (DESC_ES[p.name] || p.desc) : p.desc;
+    document.getElementById('p-badge').textContent = cat.emoji + ' ' + (l === 'es' ? cat.label_es : cat.label_en);
+    if (p.hours) document.getElementById('p-hours').textContent = p.hours;
+  }
+  // Refresh place count label
+  const nc = document.getElementById('n-count');
+  if (nc) {
+    const c = parseInt(nc.dataset.count || '0');
+    nc.textContent = l === 'es' ? c + ' lugar' + (c!==1?'es':'') : c + ' place' + (c!==1?'s':'');
   }
 }
 
 // ── CATEGORIES ──────────────────────────────────────────────────
 const CAT = {
-  "Food":                { color:"#0288D1", emoji:"🍽️", bg:"rgba(2,136,209,.13)" },
-  "Bars":                { color:"#9C27B0", emoji:"🍺", bg:"rgba(156,39,176,.13)" },
-  "Museums":             { color:"#D4A800", emoji:"🏛️", bg:"rgba(212,168,0,.13)" },
-  "Green Areas & Lakes": { color:"#2E7D32", emoji:"🌿", bg:"rgba(46,125,50,.13)" },
-  "Clubs":               { color:"#546E7A", emoji:"🎧", bg:"rgba(84,110,122,.13)" },
-  "Cafes/Brunch":        { color:"#C2185B", emoji:"☕", bg:"rgba(194,24,91,.13)" },
-  "Feeling Fancy":       { color:"#757575", emoji:"⭐", bg:"rgba(117,117,117,.13)" },
-  "Squares & Locations": { color:"#FF5252", emoji:"📍", bg:"rgba(255,82,82,.13)" },
+  "Food":                { color:"#0288D1", emoji:"🍽️", bg:"rgba(2,136,209,.13)",   label_es:"Comida",          label_en:"Food"             },
+  "Bars":                { color:"#9C27B0", emoji:"🍺", bg:"rgba(156,39,176,.13)",  label_es:"Bares",           label_en:"Bars"             },
+  "Museums":             { color:"#D4A800", emoji:"🏛️", bg:"rgba(212,168,0,.13)",   label_es:"Museos",          label_en:"Museums"          },
+  "Green Areas & Lakes": { color:"#2E7D32", emoji:"🌿", bg:"rgba(46,125,50,.13)",   label_es:"Parques y Lagos", label_en:"Parks & Lakes"    },
+  "Clubs":               { color:"#546E7A", emoji:"🎧", bg:"rgba(84,110,122,.13)",  label_es:"Clubes",          label_en:"Clubs"            },
+  "Cafes/Brunch":        { color:"#C2185B", emoji:"☕", bg:"rgba(194,24,91,.13)",   label_es:"Cafés",           label_en:"Cafés"            },
+  "Feeling Fancy":       { color:"#757575", emoji:"⭐", bg:"rgba(117,117,117,.13)", label_es:"Para darse un gusto", label_en:"Feeling Fancy"},
+  "Squares & Locations": { color:"#FF5252", emoji:"📍", bg:"rgba(255,82,82,.13)",   label_es:"Plazas",          label_en:"Squares"          },
 };
 
 // ── SPANISH DESCRIPTIONS ─────────────────────────────────────────
@@ -722,7 +745,7 @@ function openPanel(place) {
   const badge = document.getElementById('p-badge');
   badge.style.background = cat.bg;
   badge.style.color = cat.color;
-  badge.textContent = cat.emoji + ' ' + place.category;
+  badge.textContent = cat.emoji + ' ' + (lang === 'es' ? cat.label_es : cat.label_en);
 
   document.getElementById('p-name').textContent = place.name;
   const addrEl = document.getElementById('p-addr');
@@ -779,8 +802,9 @@ function renderMarkers() {
     count++;
   });
 
-  document.getElementById('n-count').textContent =
-    count + ' lugar' + (count!==1?'es':'');
+  const nc = document.getElementById('n-count');
+  nc.dataset.count = count;
+  nc.textContent = lang === 'es' ? count + ' lugar' + (count!==1?'es':'') : count + ' place' + (count!==1?'s':'');
 }
 
 // ── FILTER UI ────────────────────────────────────────────────────
@@ -793,7 +817,8 @@ PLACES.forEach(p => counts[p.category] = (counts[p.category]||0) + 1);
 // All button
 const allChip = document.createElement('button');
 allChip.className = 'chip all active';
-allChip.innerHTML = '<span class="chip-dot" style="background:#C8A84B"></span> Todos';
+allChip.style.setProperty('--chip-color', '#C8A84B');
+allChip.innerHTML = `<span class="chip-dot" style="background:#C8A84B"></span><span class="l-es">Todos</span><span class="l-en" style="display:none">All</span>`;
 allChip.addEventListener('click', () => {
   activeFilters = new Set(Object.keys(CAT));
   filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.add('active'));
@@ -808,7 +833,8 @@ Object.entries(CAT).forEach(([name, cfg]) => {
   const btn = document.createElement('button');
   btn.className = 'chip active';
   btn.dataset.cat = name;
-  btn.innerHTML = `<span class="chip-dot" style="background:${cfg.color}"></span>${cfg.emoji} ${name}<span class="cnt">${counts[name]}</span>`;
+  btn.style.setProperty('--chip-color', cfg.color);
+  btn.innerHTML = `<span class="chip-dot" style="background:${cfg.color}"></span><span class="l-es">${cfg.label_es}</span><span class="l-en" style="display:none">${cfg.label_en}</span><span class="cnt">${counts[name]}</span>`;
   btn.addEventListener('click', () => {
     const solo = activeFilters.size === 1 && activeFilters.has(name);
     if (solo) {
