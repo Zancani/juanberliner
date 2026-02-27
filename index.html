@@ -1409,6 +1409,7 @@ let currentLang = 'es';
 
 function toggleLang() {
   currentLang = currentLang === 'es' ? 'en' : 'es';
+  localStorage.setItem('lang', currentLang);
   const body = document.body;
   const flag = document.getElementById('lang-flag');
   const label = document.getElementById('lang-label');
@@ -1592,6 +1593,9 @@ document.querySelectorAll('a[href]').forEach(link => {
     setTimeout(() => { window.location.href = href; }, 300);
   });
 });
+
+// ── Restore saved language ──────────────────────────────────────────
+if (localStorage.getItem('lang') === 'en') toggleLang();
 </script>
 
 </body>

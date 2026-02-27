@@ -387,6 +387,7 @@
 let currentLang = 'es';
 function toggleLang() {
   currentLang = currentLang === 'es' ? 'en' : 'es';
+  localStorage.setItem('lang', currentLang);
   document.body.classList.toggle('lang-en', currentLang === 'en');
   document.getElementById('lang-flag').textContent = currentLang === 'en' ? '🇬🇧' : '🇪🇸';
   document.getElementById('lang-label').textContent = currentLang === 'en' ? 'EN' : 'ES';
@@ -409,6 +410,7 @@ document.querySelectorAll('a[href]').forEach(link => {
     setTimeout(() => { window.location.href = href; }, 300);
   });
 });
+if (localStorage.getItem('lang') === 'en') toggleLang();
 </script>
 </body>
 </html>

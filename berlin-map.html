@@ -342,6 +342,7 @@ let lang = 'es';
 let currentCategory = null;
 function setLang(l) {
   lang = l;
+  localStorage.setItem('lang', l);
   document.querySelectorAll('.l-es').forEach(e => e.style.display = l==='es'?'':'none');
   document.querySelectorAll('.l-en').forEach(e => e.style.display = l==='en'?'':'none');
   document.getElementById('btn-es').classList.toggle('active', l==='es');
@@ -1148,6 +1149,7 @@ countEl.id = 'n-count';
 filterBar.appendChild(countEl);
 
 renderMarkers();
+if (localStorage.getItem('lang') === 'en') setLang('en');
 </script>
 </body>
 </html>
