@@ -1560,22 +1560,11 @@ function handleBookingSubmit(e) {
       setTimeout(() => btns.forEach(b => { b.textContent = currentLang === 'es' ? 'Enviar solicitud de reserva' : 'Send booking request'; }), 3000);
     });
 }
-// Hero video autoplay fallback
+// Hero video autoplay — never hide on failure (poster handles fallback)
 const heroVideo = document.getElementById('hero-video');
 const heroVideoMobile = document.getElementById('hero-video-mobile');
-if (heroVideo) {
-  heroVideo.play().catch(() => { heroVideo.style.display = 'none'; });
-}
-if (heroVideoMobile) {
-  heroVideoMobile.play().catch(() => {
-    heroVideoMobile.style.display = 'none';
-    if (window.innerWidth <= 768) {
-      document.getElementById('hero').style.backgroundImage = "url('Berlin-Skyline-Sunset.jpg')";
-      document.getElementById('hero').style.backgroundSize = 'cover';
-      document.getElementById('hero').style.backgroundPosition = 'center';
-    }
-  });
-}
+if (heroVideo) heroVideo.play().catch(() => {});
+if (heroVideoMobile) heroVideoMobile.play().catch(() => {});
 // Hide WA float when keyboard is open on mobile
 const waFloat = document.getElementById('whatsapp-float');
 document.querySelectorAll('input, textarea, select').forEach(el => {
