@@ -209,12 +209,16 @@
       .nav-tag { display: none; }
       #panel {
         position: absolute; bottom: 0; left: 0; right: 0;
-        width: 100% !important; height: 60vh;
-        border-left: none; border-top: 1px solid var(--border);
+        width: 100% !important; height: 0;
+        border: none;
         border-radius: 16px 16px 0 0;
-        transform: translateY(100%); z-index: 400;
+        z-index: 400;
+        transition: height .35s cubic-bezier(.4,0,.2,1);
       }
-      #panel.open { transform: translateY(0); }
+      #panel.open {
+        height: 60vh;
+        border-top: 1px solid var(--border);
+      }
       #panel-photos { height: 200px; }
       .p-name { font-size: 19px; }
     }
