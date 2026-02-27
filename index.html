@@ -1563,17 +1563,15 @@ function handleBookingSubmit(e) {
 // Hero video autoplay fallback
 const heroVideo = document.getElementById('hero-video');
 const heroVideoMobile = document.getElementById('hero-video-mobile');
-if (heroVideo) {
+if (heroVideo && window.innerWidth > 768) {
   heroVideo.play().catch(() => { heroVideo.style.display = 'none'; });
 }
-if (heroVideoMobile) {
+if (heroVideoMobile && window.innerWidth <= 768) {
   heroVideoMobile.play().catch(() => {
     heroVideoMobile.style.display = 'none';
-    if (window.innerWidth <= 768) {
-      document.getElementById('hero').style.backgroundImage = "url('Berlin-Skyline-Sunset.jpg')";
-      document.getElementById('hero').style.backgroundSize = 'cover';
-      document.getElementById('hero').style.backgroundPosition = 'center';
-    }
+    document.getElementById('hero').style.backgroundImage = "url('Berlin-Skyline-Sunset.jpg')";
+    document.getElementById('hero').style.backgroundSize = 'cover';
+    document.getElementById('hero').style.backgroundPosition = 'center';
   });
 }
 // Hide WA float when keyboard is open on mobile
