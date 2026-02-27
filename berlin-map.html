@@ -191,6 +191,55 @@
     .p-gmaps svg { transition: transform .2s; }
     .p-gmaps:hover svg { transform: translateX(3px); }
 
+    /* ── LIST PANEL ─────────────────────────────────────── */
+    #list-panel {
+      width: 0; background: var(--surface);
+      border-right: none;
+      display: flex; flex-direction: column; flex-shrink: 0;
+      overflow: hidden; position: relative;
+      transition: width .35s cubic-bezier(.4,0,.2,1);
+    }
+    #list-panel.open { width: 280px; border-right: 1px solid var(--border); }
+
+    #list-header {
+      padding: 12px 15px 11px; border-bottom: 1px solid var(--border);
+      flex-shrink: 0; display: flex; align-items: center; gap: 7px;
+    }
+    #list-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    #list-title {
+      font-size: 11px; font-weight: 700; letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    #list-cnt { margin-left: auto; font-size: 11px; color: var(--dim); font-weight: 500; }
+
+    #list-body {
+      overflow-y: auto; flex: 1;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    #list-body::-webkit-scrollbar { width: 4px; }
+    #list-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .list-item {
+      display: flex; align-items: center; gap: 11px;
+      padding: 11px 15px; border-bottom: 1px solid rgba(255,255,255,.04);
+      cursor: pointer; transition: background .14s;
+    }
+    .list-item:hover, .list-item.sel { background: var(--surface2); }
+    .li-photo {
+      width: 50px; height: 50px; border-radius: 6px;
+      object-fit: cover; flex-shrink: 0; background: var(--surface2);
+    }
+    .li-body { flex: 1; min-width: 0; }
+    .li-name {
+      font-size: 13px; font-weight: 600; color: var(--text);
+      margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .li-desc {
+      font-size: 11.5px; color: var(--muted); line-height: 1.45;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .li-chev { color: var(--dim); flex-shrink: 0; }
+
     /* ── LEAFLET OVERRIDES ──────────────────────────────── */
     .leaflet-control-attribution { display: none !important; }
     .leaflet-control-zoom a {
@@ -207,6 +256,18 @@
     @media (max-width: 768px) {
       nav { padding: 0 14px; gap: 10px; }
       .nav-tag { display: none; }
+      #list-panel {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        width: 100% !important; height: 0;
+        border: none; border-radius: 16px 16px 0 0;
+        z-index: 398;
+        transition: height .35s cubic-bezier(.4,0,.2,1);
+      }
+      #list-panel.open {
+        height: 52vh;
+        border-top: 1px solid var(--border);
+      }
+      #list-header { padding: 14px 18px 12px; }
       #panel {
         position: absolute; bottom: 0; left: 0; right: 0;
         width: 100% !important; height: 0;
@@ -237,14 +298,22 @@
   <span class="nav-tag l-en" style="display:none">· My recommendations</span>
   <div class="nav-flex"></div>
   <div class="lang-toggle">
-    <button class="lang-btn active" id="btn-es" onclick="setLang('es')">🇺🇾 ES</button>
-    <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇬🇧 EN</button>
+    <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
   </div>
 </nav>
 
 <div id="filter-bar"></div>
 
 <div id="main">
+  <div id="list-panel">
+    <div id="list-header">
+      <span id="list-dot"></span>
+      <span id="list-title"></span>
+      <span id="list-cnt"></span>
+    </div>
+    <div id="list-body"></div>
+  </div>
   <div id="map"></div>
   <div id="panel">
     <div id="panel-photos"></div>
@@ -269,6 +338,7 @@
 <script>
 // ── LANG ────────────────────────────────────────────────────────
 let lang = 'es';
+let currentCategory = null;
 function setLang(l) {
   lang = l;
   document.querySelectorAll('.l-es').forEach(e => e.style.display = l==='es'?'':'none');
@@ -287,6 +357,21 @@ function setLang(l) {
   if (nc) {
     const c = parseInt(nc.dataset.count || '0');
     nc.textContent = l === 'es' ? c + ' lugar' + (c!==1?'es':'') : c + ' place' + (c!==1?'s':'');
+  }
+  // Refresh list panel if open
+  if (currentCategory) {
+    const cat = CAT[currentCategory];
+    const titleEl = document.getElementById('list-title');
+    titleEl.textContent = l === 'es' ? cat.label_es : cat.label_en;
+    const items = document.querySelectorAll('.list-item');
+    const cnt = items.length;
+    document.getElementById('list-cnt').textContent =
+      l === 'es' ? cnt + ' lugar' + (cnt !== 1 ? 'es' : '') : cnt + ' place' + (cnt !== 1 ? 's' : '');
+    items.forEach(item => {
+      const p = item._place;
+      if (p) item.querySelector('.li-desc').textContent =
+        l === 'es' ? (DESC_ES[p.name] || p.desc) : p.desc;
+    });
   }
 }
 
@@ -899,11 +984,18 @@ function openPanel(place) {
   }
 
   document.getElementById('panel').classList.add('open');
+  // Sync list selection when marker is clicked directly
+  if (currentCategory) {
+    document.querySelectorAll('.list-item').forEach(item => {
+      item.classList.toggle('sel', item._place === place);
+    });
+  }
   setTimeout(() => map.invalidateSize(), 350);
 }
 
 function closePanel() {
   document.getElementById('panel').classList.remove('open');
+  document.querySelectorAll('.list-item').forEach(i => i.classList.remove('sel'));
   if (selectedMarker) {
     const place = selectedMarker._place;
     const cat = CAT[place.category];
@@ -915,6 +1007,74 @@ function closePanel() {
 }
 
 document.getElementById('panel-close').addEventListener('click', closePanel);
+
+// ── LIST PANEL ────────────────────────────────────────────────────
+function openList(categoryName) {
+  const cat = CAT[categoryName];
+  currentCategory = categoryName;
+  const places = PLACES.filter(p => p.category === categoryName);
+
+  const dot = document.getElementById('list-dot');
+  dot.style.background = cat.color;
+  const titleEl = document.getElementById('list-title');
+  titleEl.textContent = lang === 'es' ? cat.label_es : cat.label_en;
+  titleEl.style.color = cat.color;
+  document.getElementById('list-cnt').textContent =
+    lang === 'es' ? places.length + ' lugar' + (places.length !== 1 ? 'es' : '')
+                  : places.length + ' place' + (places.length !== 1 ? 's' : '');
+
+  const listBody = document.getElementById('list-body');
+  listBody.innerHTML = '';
+  listBody.scrollTop = 0;
+
+  places.forEach(place => {
+    const item = document.createElement('div');
+    item.className = 'list-item';
+    item._place = place;
+    item.innerHTML = `
+      <img class="li-photo" src="" alt="" loading="lazy">
+      <div class="li-body">
+        <div class="li-name"></div>
+        <div class="li-desc"></div>
+      </div>
+      <svg class="li-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+    `;
+    const img = item.querySelector('.li-photo');
+    img.src = PHOTO_URLS[place.name] || '';
+    img.onerror = function() { this.style.display = 'none'; };
+    item.querySelector('.li-name').textContent = place.name;
+    item.querySelector('.li-desc').textContent =
+      lang === 'es' ? (DESC_ES[place.name] || place.desc) : place.desc;
+
+    item.addEventListener('click', () => {
+      listBody.querySelectorAll('.list-item').forEach(i => i.classList.remove('sel'));
+      item.classList.add('sel');
+      const m = markers.find(mk => mk._place === place);
+      if (m) {
+        if (selectedMarker && selectedMarker !== m) {
+          const prev = selectedMarker._place;
+          selectedMarker.setIcon(mkIcon(CAT[prev.category].color, false));
+          selectedMarker._el && selectedMarker._el.classList.remove('sel');
+        }
+        m.setIcon(mkIcon(cat.color, true));
+        selectedMarker = m;
+        map.panTo([place.lat, place.lon], { animate: true, duration: .5 });
+      }
+      openPanel(place);
+    });
+
+    listBody.appendChild(item);
+  });
+
+  document.getElementById('list-panel').classList.add('open');
+  setTimeout(() => map.invalidateSize(), 350);
+}
+
+function closeList() {
+  currentCategory = null;
+  document.getElementById('list-panel').classList.remove('open');
+  setTimeout(() => map.invalidateSize(), 350);
+}
 
 // ── RENDER MARKERS ───────────────────────────────────────────────
 function renderMarkers() {
@@ -966,6 +1126,7 @@ allChip.addEventListener('click', () => {
   filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.add('active'));
   allChip.classList.add('active');
   renderMarkers();
+  closeList();
   if (document.getElementById('panel').classList.contains('open')) closePanel();
 });
 filterBar.appendChild(allChip);
@@ -984,10 +1145,12 @@ Object.entries(CAT).forEach(([name, cfg]) => {
       activeFilters = new Set(Object.keys(CAT));
       filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.add('active'));
       allChip.classList.add('active');
+      closeList();
     } else {
       activeFilters = new Set([name]);
       filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.toggle('active', b.dataset.cat === name));
       allChip.classList.remove('active');
+      openList(name);
     }
     renderMarkers();
     if (document.getElementById('panel').classList.contains('open')) closePanel();
