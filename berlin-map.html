@@ -61,42 +61,64 @@
     .lang-btn.active { background: var(--gold); color: #001219; }
 
     /* ── FILTER BAR ─────────────────────────────────────── */
-    #filter-bar {
+    #filter-bar-wrap {
+      position: relative;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    #filter-bar-wrap::after {
+      content: '';
+      position: absolute; top: 0; right: 0; bottom: 0; width: 48px;
+      background: linear-gradient(to left, var(--surface) 20%, transparent);
+      pointer-events: none; z-index: 2;
+    }
+    #filter-bar {
       padding: 0 16px;
-      height: 46px;
-      display: flex; align-items: center; gap: 5px;
-      flex-shrink: 0; overflow-x: auto;
+      height: 52px;
+      display: flex; align-items: center; gap: 6px;
+      overflow-x: auto;
       -ms-overflow-style: none; scrollbar-width: none;
     }
     #filter-bar::-webkit-scrollbar { display: none; }
     .chip {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 5px 13px; border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.07);
-      background: rgba(255,255,255,.04);
-      color: var(--muted); font-size: 10.5px; font-weight: 600;
-      letter-spacing: .05em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 13px 6px 10px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.03);
+      color: var(--muted); font-size: 11px; font-weight: 500;
+      letter-spacing: .01em;
       cursor: pointer; white-space: nowrap; flex-shrink: 0;
-      transition: all .18s; user-select: none; font-family: inherit;
+      transition: background .15s, border-color .15s, color .15s, transform .15s, box-shadow .15s;
+      user-select: none; font-family: inherit;
     }
-    .chip-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; opacity: .75; }
+    .chip-emoji { font-size: 14px; line-height: 1; flex-shrink: 0; opacity: .7; transition: opacity .15s, transform .15s; }
+    .chip-label { letter-spacing: .02em; font-size: 11px; }
     .chip .cnt {
-      background: rgba(255,255,255,.08); border-radius: 4px;
-      padding: 1px 5px; font-size: 9.5px; font-weight: 700; opacity: .65; letter-spacing: 0;
+      background: rgba(255,255,255,.07); border-radius: 5px;
+      padding: 1px 6px; font-size: 10px; font-weight: 700;
+      letter-spacing: 0; color: var(--dim);
+      transition: background .15s, color .15s;
     }
     .chip.active {
-      background: color-mix(in srgb, var(--chip-color, #C8A84B) 14%, transparent);
-      border-color: color-mix(in srgb, var(--chip-color, #C8A84B) 40%, transparent);
+      background: color-mix(in srgb, var(--chip-color, #C8A84B) 12%, transparent);
+      border-color: color-mix(in srgb, var(--chip-color, #C8A84B) 30%, transparent);
+      color: var(--chip-color, #C8A84B);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--chip-color, #C8A84B) 10%, transparent) inset;
+    }
+    .chip.active .chip-emoji { opacity: 1; }
+    .chip.active .cnt {
+      background: color-mix(in srgb, var(--chip-color, #C8A84B) 18%, transparent);
       color: var(--chip-color, #C8A84B);
     }
-    .chip.active .cnt { opacity: .75; }
     .chip:hover:not(.active) {
-      background: rgba(255,255,255,.07);
-      border-color: rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.11);
       color: var(--text);
+      transform: translateY(-1px);
     }
+    .chip:hover:not(.active) .chip-emoji { opacity: .9; transform: scale(1.1); }
+    .chip:active { transform: translateY(0) !important; }
     #n-count { margin-left: auto; flex-shrink: 0; font-size: 11px; color: var(--dim); font-weight: 500; padding-left: 8px; }
 
     /* ── MAIN ───────────────────────────────────────────── */
@@ -304,7 +326,7 @@
   </div>
 </nav>
 
-<div id="filter-bar"></div>
+<div id="filter-bar-wrap"><div id="filter-bar"></div></div>
 
 <div id="main">
   <div id="list-panel">
@@ -419,7 +441,6 @@ const DESC_ES = {
   "Rüyam Gemüse Kebab (Prenzlauer Berg)": "La misma fórmula legendaria de kebab de verduras que el original de Neukölln — verduras asadas, múltiples salsas, queso de cabra, todo por pocos euros. Vale la pena visitar cualquier sucursal.",
   "Rüyam Gemüse Kebab (Schöneberg)": "La misma fórmula legendaria de kebab de verduras que el original de Neukölln — verduras asadas, múltiples salsas, queso de cabra, todo por pocos euros. Vale la pena visitar cualquier sucursal.",
   // BARS
-  "TiER": "¡Cócteles de primera! Llegá temprano si querés conseguir mesa.",
   "Ä": "Para mí, este es el bar típicamente berlinés. Oscuro, con humo y cerveza barata — increíblemente popular entre los kreuzköllners.",
   "Hops & Barley": "¡Si querés conocer la escena de la cerveza artesanal en Berlín, este es el lugar!",
   "Dschungel": "¡Decoración tipo 'jungla' increíble, pero es un bar de fumadores, tenelo en cuenta!",
@@ -531,7 +552,6 @@ const HOURS = {
   "Saveur de Bánh Mì": null,
   "Rüyam Gemüse Kebab (Prenzlauer Berg)": null,
   "Rüyam Gemüse Kebab (Schöneberg)": null,
-  "TiER": null,
   "Blauer Affe": null,
   "Ä": null,
   "Hops & Barley": "Mo-Th 17:00-01:00, Sa, Su 14:00+, Fr 16:00+",
@@ -637,7 +657,6 @@ const PHOTO_URLS = {
   "Saveur de Bánh Mì": "https://www.cremeguides.com/wp-content/uploads/2023/04/saveur-de-banh-mi-i-foto-ole-zimmermann-2.1681312878.jpg",
   "Rüyam Gemüse Kebab (Prenzlauer Berg)": "https://joinhalal.com/wp-content/uploads/2024/11/joinhalal_Rueyam_Gemuese_Kebab_Berlin_Prenzlauerberg-1024x768.jpg",
   "Rüyam Gemüse Kebab (Schöneberg)": "https://media-cdn.tripadvisor.com/media/photo-m/1280/16/ab/7c/27/photo7jpg.jpg",
-  "TiER": "https://www.electrive.com/media/2021/09/tier-mobility-2021-05-min.png",
   "Blauer Affe": "https://mappde.com/yer/blauer-affe-920432.jpg",
   "Ä": "https://img.restaurantguru.com/cba7-A-Berlin-view-1.jpg",
   "Hops & Barley": "https://bier-traveller.com/wp-content/uploads/2020/10/Berlin-Hops-Barley-Bier-Traveller-13.jpg",
@@ -764,7 +783,6 @@ const PLACES = [
   { name:"Rüyam Gemüse Kebab (Schöneberg)", lat:52.484503, lon:13.3523488, category:"Food", desc:"Same legendary vegetable kebab formula as the Neukölln original — roasted veg, multiple sauces, goats cheese, all for just a few euros. Worth the trip to either branch." },
 
   // ── BARS ─────────────────────────────────────────────
-  { name:"TiER", lat:52.4847871, lon:13.4376714, category:"Bars", desc:"Fancy cocktails! Get here earlier rather than later if you want a table." },
   { name:"Blauer Affe", lat:52.4791633, lon:13.423784, category:"Bars", desc:"One of Neukölln's most beloved local bars. Unpretentious, cheap, and full of regulars. A great place to settle in for the evening." },
   { name:"Ä", lat:52.4850275, lon:13.4371403, category:"Bars", desc:"This, for me, is the absolutely typical Berlin bar. Dark, smoky, and cheap beer — incredibly popular with the Kreuzköllners." },
   { name:"Hops & Barley", lat:52.5089972, lon:13.4606998, category:"Bars", desc:"If you want a look into the craft beer scene in Berlin, this is the place to go!" },
@@ -1106,7 +1124,7 @@ PLACES.forEach(p => counts[p.category] = (counts[p.category]||0) + 1);
 const allChip = document.createElement('button');
 allChip.className = 'chip all active';
 allChip.style.setProperty('--chip-color', '#C8A84B');
-allChip.innerHTML = `<span class="chip-dot" style="background:#C8A84B"></span><span class="l-es">Todos</span><span class="l-en" style="display:none">All</span>`;
+allChip.innerHTML = `<span class="chip-emoji">✦</span><span class="chip-label"><span class="l-es">Todos</span><span class="l-en" style="display:none">All</span></span>`;
 allChip.addEventListener('click', () => {
   activeFilters = new Set(Object.keys(CAT));
   filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.add('active'));
@@ -1123,7 +1141,7 @@ Object.entries(CAT).forEach(([name, cfg]) => {
   btn.className = 'chip active';
   btn.dataset.cat = name;
   btn.style.setProperty('--chip-color', cfg.color);
-  btn.innerHTML = `<span class="chip-dot" style="background:${cfg.color}"></span><span class="l-es">${cfg.label_es}</span><span class="l-en" style="display:none">${cfg.label_en}</span><span class="cnt">${counts[name]}</span>`;
+  btn.innerHTML = `<span class="chip-emoji">${cfg.emoji}</span><span class="chip-label"><span class="l-es">${cfg.label_es}</span><span class="l-en" style="display:none">${cfg.label_en}</span></span><span class="cnt">${counts[name]}</span>`;
   btn.addEventListener('click', () => {
     const solo = activeFilters.size === 1 && activeFilters.has(name);
     if (solo) {
