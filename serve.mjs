@@ -27,7 +27,7 @@ const MIME = {
 };
 
 http.createServer((req, res) => {
-  let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url.split('?')[0]);
+  let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : decodeURIComponent(req.url.split('?')[0]));
   if (!path.extname(filePath)) filePath += '.html';
 
   fs.stat(filePath, (err, stat) => {

@@ -81,6 +81,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://juanberliner.com/blog/berlin-en-1-dia.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://juanberliner.com/blog/cultura-cerveza-berlin.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
