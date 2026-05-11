@@ -5,6 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Juan Berliner — Guía oficial de turismo en Berlín</title>
   <meta name="description" content="Tours privados y grupales en Berlín con guía certificado. Más de 2000 reseñas. Historia, cultura y autenticidad. Reserva tu tour hoy." />
+  <link rel="canonical" href="https://juanberliner.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://juanberliner.com/" />
+  <meta property="og:title" content="Juan Berliner — Guía oficial de turismo en Berlín" />
+  <meta property="og:description" content="Tours privados y grupales en Berlín con guía certificado. Más de 2000 reseñas. Historia, cultura y autenticidad. Reserva tu tour hoy." />
+  <meta property="og:image" content="https://juanberliner.com/og-image.jpg" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:locale:alternate" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Juan Berliner — Guía oficial de turismo en Berlín" />
+  <meta name="twitter:description" content="Tours privados y grupales en Berlín con guía certificado. Más de 2000 reseñas. Historia, cultura y autenticidad. Reserva tu tour hoy." />
+  <meta name="twitter:image" content="https://juanberliner.com/og-image.jpg" />
+  <link rel="alternate" hreflang="es" href="https://juanberliner.com/" />
+  <link rel="alternate" hreflang="en" href="https://juanberliner.com/?lang=en" />
+  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TourOperator",
+    "name": "Juan Berliner",
+    "url": "https://juanberliner.com",
+    "description": "Tours privados y grupales en Berlín con guía certificado. Más de 2000 reseñas. Historia, cultura y autenticidad.",
+    "image": "https://juanberliner.com/og-image.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Berlín",
+      "addressCountry": "DE"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "2000"
+    }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -14,9 +49,9 @@
       theme: {
         extend: {
           colors: {
-            gold: '#EE9B00',
+            gold: '#B8860B',
             'gold-light': '#E9D8A6',
-            'gold-dark': '#CA6702',
+            'gold-dark': '#8B6508',
             'berlin-dark': '#001219',
             'berlin-surface': '#012A36',
             'berlin-elevated': '#013747',
@@ -37,8 +72,9 @@
   </script>
   <style>
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
+      overflow-x: hidden;
       background-color: #001219;
       color: #E9D8A6;
       font-family: 'Inter', system-ui, sans-serif;
@@ -68,7 +104,7 @@
     /* Scrollbar */
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: #001219; }
-    ::-webkit-scrollbar-thumb { background: #EE9B00; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: #B8860B; border-radius: 3px; }
 
     /* Navbar */
     #navbar {
@@ -81,49 +117,49 @@
     #navbar.scrolled {
       background: rgba(0,18,25,0.92);
       backdrop-filter: blur(16px);
-      box-shadow: 0 2px 32px rgba(0,0,0,0.6), 0 1px 0 rgba(238,155,0,0.15);
+      box-shadow: 0 2px 32px rgba(0,0,0,0.6), 0 1px 0 rgba(184,134,11,0.15);
     }
 
     /* Gold glow button */
     .btn-gold {
-      background: linear-gradient(135deg, #EE9B00 0%, #E9D8A6 50%, #EE9B00 100%);
+      background: #8B6914;
       color: #001219;
       font-weight: 600;
       letter-spacing: 0.02em;
       transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
-      box-shadow: 0 0 0 rgba(238,155,0,0);
+      box-shadow: 0 0 0 rgba(184,134,11,0);
     }
     .btn-gold:hover {
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 4px 24px rgba(238,155,0,0.4), 0 0 0 1px rgba(238,155,0,0.3);
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 2px 12px rgba(184,134,11,0.2);
     }
     .btn-gold:active { transform: translateY(0) scale(0.99); }
-    .btn-gold:focus-visible { outline: 2px solid #EE9B00; outline-offset: 3px; }
+    .btn-gold:focus-visible { outline: 2px solid #B8860B; outline-offset: 3px; }
 
     .btn-outline {
-      border: 1px solid rgba(238,155,0,0.5);
-      color: #EE9B00;
+      border: 1px solid rgba(184,134,11,0.5);
+      color: #B8860B;
       transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.2s, box-shadow 0.2s;
     }
     .btn-outline:hover {
-      background: rgba(238,155,0,0.08);
-      border-color: #EE9B00;
+      background: rgba(184,134,11,0.08);
+      border-color: #B8860B;
       transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(238,155,0,0.15);
+      box-shadow: 0 4px 16px rgba(184,134,11,0.15);
     }
     .btn-outline:active { transform: translateY(0); }
-    .btn-outline:focus-visible { outline: 2px solid #EE9B00; outline-offset: 3px; }
+    .btn-outline:focus-visible { outline: 2px solid #B8860B; outline-offset: 3px; }
 
     .btn-whatsapp {
-      background: #25D366;
+      background: #1a9e4a;
       color: #fff;
-      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
-      box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
     .btn-whatsapp:hover {
-      background: #1ebe5d;
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+      background: #168040;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }
     .btn-whatsapp:active { transform: translateY(0) scale(0.99); }
     .btn-whatsapp:focus-visible { outline: 2px solid #25D366; outline-offset: 3px; }
@@ -156,8 +192,8 @@
     /* Section texture */
     .section-texture {
       background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(238,155,0,0.04) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(238,155,0,0.03) 0%, transparent 50%);
+        radial-gradient(ellipse at 20% 50%, rgba(184,134,11,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(184,134,11,0.03) 0%, transparent 50%);
     }
 
     /* Tour cards */
@@ -180,10 +216,10 @@
     }
     .tour-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(238,155,0,0.25), 0 0 24px rgba(238,155,0,0.08);
-      border-color: rgba(238,155,0,0.3);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(184,134,11,0.25), 0 0 24px rgba(184,134,11,0.08);
+      border-color: rgba(184,134,11,0.3);
     }
-    .tour-card:hover::before { border-color: rgba(238,155,0,0.2); }
+    .tour-card:hover::before { border-color: rgba(184,134,11,0.2); }
     .tour-card-img {
       position: relative;
       overflow: hidden;
@@ -213,7 +249,7 @@
     /* Divider */
     .divider-line {
       height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(238,155,0,0.4) 30%, rgba(238,155,0,0.7) 50%, rgba(238,155,0,0.4) 70%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, rgba(184,134,11,0.4) 30%, rgba(184,134,11,0.7) 50%, rgba(184,134,11,0.4) 70%, transparent 100%);
     }
 
     /* Review cards */
@@ -225,36 +261,31 @@
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .review-card:hover {
-      border-color: rgba(238,155,0,0.2);
+      border-color: rgba(184,134,11,0.2);
       box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
 
     /* Stars */
-    .stars { color: #EE9B00; letter-spacing: 2px; }
+    .stars { color: #B8860B; letter-spacing: 2px; }
 
     /* Floating WhatsApp */
     #whatsapp-float {
       position: fixed; bottom: 24px; right: 24px; z-index: 900;
       width: 56px; height: 56px;
-      background: #25D366;
+      background: #1a9e4a;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 20px rgba(37,211,102,0.5), 0 2px 8px rgba(0,0,0,0.4);
-      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: pointer;
     }
     #whatsapp-float:hover {
-      transform: scale(1.12);
-      box-shadow: 0 6px 28px rgba(37,211,102,0.65), 0 4px 12px rgba(0,0,0,0.5);
+      transform: scale(1.06);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
     }
     #whatsapp-float:active { transform: scale(0.97); }
     #whatsapp-float::before {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      background: rgba(37,211,102,0.2);
-      animation: pulse-whatsapp 2.5s ease-in-out infinite;
+      display: none;
     }
     @keyframes pulse-whatsapp {
       0%, 100% { transform: scale(1); opacity: 0.6; }
@@ -279,8 +310,8 @@
       background: transparent;
       color: #E9D8A6;
     }
-    .lang-toggle:hover { border-color: #EE9B00; background: rgba(238,155,0,0.06); }
-    .lang-toggle:focus-visible { outline: 2px solid #EE9B00; outline-offset: 2px; }
+    .lang-toggle:hover { border-color: #B8860B; background: rgba(184,134,11,0.06); }
+    .lang-toggle:focus-visible { outline: 2px solid #B8860B; outline-offset: 2px; }
 
     /* Mobile menu */
     #mobile-menu { display: none; }
@@ -322,8 +353,8 @@
     }
     .form-input::placeholder { color: #555; }
     .form-input:focus {
-      border-color: rgba(238,155,0,0.5);
-      box-shadow: 0 0 0 3px rgba(238,155,0,0.08);
+      border-color: rgba(184,134,11,0.5);
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.08);
     }
     .form-input:hover { border-color: #3A3A3A; }
     select.form-input option { background: #013747; }
@@ -359,13 +390,13 @@
       position: absolute; top: 50%; transform: translateY(-50%);
       width: 44px; height: 44px;
       background: rgba(0,18,25,0.85);
-      border: 1px solid rgba(238,155,0,0.35);
+      border: 1px solid rgba(184,134,11,0.35);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: #EE9B00; z-index: 10;
+      cursor: pointer; color: #B8860B; z-index: 10;
       transition: background 0.2s, border-color 0.2s;
     }
-    .carousel-btn:hover { background: rgba(238,155,0,0.15); border-color: rgba(238,155,0,0.6); }
+    .carousel-btn:hover { background: rgba(184,134,11,0.15); border-color: rgba(184,134,11,0.6); }
     .carousel-btn.prev { left: -22px; }
     .carousel-btn.next { right: -22px; }
 
@@ -373,18 +404,42 @@
     .texture-concrete {
       background-image:
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
-        radial-gradient(ellipse at 50% 0%, rgba(238,155,0,0.05) 0%, transparent 70%);
+        radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.05) 0%, transparent 70%);
     }
 
-    /* Smooth fade-in on scroll */
+    /* Scroll animations */
     .fade-in {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+    .fade-left {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-left.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-right {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-right.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (min-width: 768px) {
+      .fade-left { transform: translateX(-36px); }
+      .fade-left.visible { transform: translateX(0); }
+      .fade-right { transform: translateX(36px); }
+      .fade-right.visible { transform: translateX(0); }
     }
      pageFadeIn { from { opacity:0; } to { opacity:1; } }
     body { animation: pageFadeIn 0.45s ease forwards; }
@@ -402,8 +457,8 @@
     <!-- Logo -->
     <a href="/" class="flex flex-col leading-none group">
       <span class="font-display font-bold text-2xl text-white tracking-tight group-hover:text-gold transition-colors duration-200">Juan Berliner</span>
-      <span class="text-[12px] text-berlin-muted tracking-widest uppercase mt-0.5 lang-es">Guía oficial de turismo en Berlín</span>
-      <span class="text-[12px] text-berlin-muted tracking-widest uppercase mt-0.5 lang-en">Official Tour Guide in Berlin</span>
+      <span class="hidden sm:block text-[12px] text-berlin-muted tracking-widest uppercase mt-0.5 lang-es">Guía oficial de turismo en Berlín</span>
+      <span class="hidden sm:block text-[12px] text-berlin-muted tracking-widest uppercase mt-0.5 lang-en">Official Tour Guide in Berlin</span>
     </a>
 
     <!-- Desktop Nav -->
@@ -424,6 +479,8 @@
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         My recommendations
       </a>
+      <a href="blog/index.html" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-es">Blog</a>
+      <a href="blog/index.html" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-en">Blog</a>
     </div>
 
     <!-- Right: Lang toggle + CTA -->
@@ -464,6 +521,8 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         My recommendations
       </a>
+      <a href="blog/index.html" onclick="toggleMobileMenu()" class="py-3.5 px-2 text-sm text-berlin-muted hover:text-white border-b border-berlin-border lang-es">Blog</a>
+      <a href="blog/index.html" onclick="toggleMobileMenu()" class="py-3.5 px-2 text-sm text-berlin-muted hover:text-white border-b border-berlin-border lang-en">Blog</a>
       <a href="#booking" onclick="toggleMobileMenu()" class="mt-3 btn-gold text-sm px-4 py-3 rounded-md text-center lang-es">Reservar un tour</a>
       <a href="#booking" onclick="toggleMobileMenu()" class="mt-3 btn-gold text-sm px-4 py-3 rounded-md text-center lang-en">Book a tour</a>
     </div>
@@ -508,7 +567,7 @@
         <!-- Sociedad de Guías -->
         <div class="text-center md:order-3 max-w-[180px]">
           <div class="text-gold mb-1">
-            <svg width="24" height="24" class="md:w-7 md:h-7 mx-auto" viewBox="0 0 24 24" fill="none" stroke="#EE9B00" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+            <svg width="24" height="24" class="md:w-7 md:h-7 mx-auto" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
           </div>
           <div class="text-xs md:text-sm text-white/50 lang-es">Miembro de la Sociedad de Guías de Berlín</div>
           <div class="text-xs md:text-sm text-white/50 lang-en">Member of the Berlin Guides Association</div>
@@ -517,11 +576,11 @@
         <!-- Valoración 5 estrellas -->
         <div class="text-center col-span-2 md:col-span-1 md:order-2 mt-4 md:mt-0">
           <div class="flex justify-center gap-0.5 mb-1 md:pt-[7px]">
-            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#EE9B00"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#B8860B"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#B8860B"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#B8860B"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#B8860B"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg width="18" height="18" class="md:w-[22px] md:h-[22px]" viewBox="0 0 24 24" fill="#B8860B"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
           </div>
           <div class="text-xs md:text-sm text-white/50 lang-es">Valoración 5 / 5</div>
           <div class="text-xs md:text-sm text-white/50 lang-en">Rating 5 / 5</div>
@@ -555,7 +614,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
       <!-- Card 1: Free Tour -->
-      <a href="tours/free-tour-berlin.html" class="tour-card group fade-in">
+      <a href="tours/free-tour-berlin.html" class="tour-card group fade-in" style="transition-delay:0s">
         <div class="tour-card-img">
           <img src="Freetour.jpg.avif" alt="Free Tour Berlín" />
           <div class="tour-badge">
@@ -580,7 +639,7 @@
       </a>
 
       <!-- Card 2: Muro -->
-      <a href="tours/muro-de-berlin.html" class="tour-card group fade-in">
+      <a href="tours/muro-de-berlin.html" class="tour-card group fade-in" style="transition-delay:0.1s">
         <div class="tour-card-img">
           <img src="muro.jpg" alt="Muro de Berlín" />
           <div class="tour-badge">
@@ -605,7 +664,7 @@
       </a>
 
       <!-- Card 3: Berlín Alternativo -->
-      <a href="tours/berlin-alternativo.html" class="tour-card group fade-in">
+      <a href="tours/berlin-alternativo.html" class="tour-card group fade-in" style="transition-delay:0.2s">
         <div class="tour-card-img">
           <img src="kreuzberg-barrio-berlin.jpg.avif" alt="Berlín Alternativo" />
           <div class="tour-badge">
@@ -629,7 +688,7 @@
       </a>
 
       <!-- Card 4: Sachsenhausen -->
-      <a href="tours/sachsenhausen.html" class="tour-card group fade-in">
+      <a href="tours/sachsenhausen.html" class="tour-card group fade-in" style="transition-delay:0.1s">
         <div class="tour-card-img">
           <img src="Sachsen.jpg" alt="Campo de Concentración Sachsenhausen" />
           <div class="tour-badge">
@@ -653,7 +712,7 @@
       </a>
 
       <!-- Card 5: Potsdam -->
-      <a href="tours/potsdam.html" class="tour-card group fade-in">
+      <a href="tours/potsdam.html" class="tour-card group fade-in" style="transition-delay:0.2s">
         <div class="tour-card-img">
           <img src="potsdam.jpeg.avif" alt="Tour de Potsdam" />
           <div class="tour-badge">
@@ -677,7 +736,7 @@
       </a>
 
       <!-- Card 6: Nazismo -->
-      <a href="tours/nazismo-tercer-reich.html" class="tour-card group fade-in">
+      <a href="tours/nazismo-tercer-reich.html" class="tour-card group fade-in" style="transition-delay:0.3s">
         <div class="tour-card-img">
           <img src="naz.jpg" alt="Tour del Nazismo" />
           <div class="tour-badge">
@@ -714,18 +773,18 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-20 items-center">
 
       <!-- Image side -->
-      <div class="relative fade-in order-2 md:order-1">
-        <div class="relative overflow-hidden rounded-lg max-h-[400px] md:max-h-none" style="box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(238,155,0,0.15);">
-          <img src="Perfil copy.jpeg" alt="Juan Berliner" class="w-full object-cover" style="object-position: center 20%; filter: brightness(0.85) saturate(0.75); mix-blend-mode: normal;" />
+      <div class="relative fade-left order-2 md:order-1">
+        <div class="relative overflow-hidden rounded-lg max-h-[400px] md:max-h-none" style="box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(184,134,11,0.15); min-height: 280px;">
+          <img src="Perfil copy.jpeg" alt="Juan Berliner" class="w-full h-full object-cover absolute inset-0" style="object-position: center 20%; filter: brightness(0.85) saturate(0.75); mix-blend-mode: normal;" />
           <div class="absolute inset-0 bg-gradient-to-t from-berlin-dark/70 via-transparent to-transparent"></div>
-          <div class="absolute inset-0" style="background: radial-gradient(ellipse at 70% 30%, rgba(238,155,0,0.07), transparent 60%); mix-blend-mode: multiply;"></div>
+          <div class="absolute inset-0" style="background: radial-gradient(ellipse at 70% 30%, rgba(184,134,11,0.07), transparent 60%); mix-blend-mode: multiply;"></div>
         </div>
         <!-- Decorative corner line -->
         <div class="absolute -top-4 -left-4 w-16 h-16 border-l-2 border-t-2 border-gold/40 rounded-tl-sm"></div>
       </div>
 
       <!-- Text side -->
-      <div class="fade-in order-1 md:order-2">
+      <div class="fade-right order-1 md:order-2" style="transition-delay:0.15s">
         <div class="flex items-center gap-3 mb-5">
           <div class="w-8 h-px bg-gold"></div>
           <span class="text-gold text-xs tracking-widest uppercase font-medium lang-es">Sobre mí</span>
@@ -1487,16 +1546,25 @@ function showMoreReviews() {
 }
 
 // Reviews carousel arrows
+function cardScrollLeft(card, wrapper) {
+  return card.getBoundingClientRect().left - wrapper.getBoundingClientRect().left + wrapper.scrollLeft;
+}
 document.addEventListener('DOMContentLoaded', () => {
   filterReviews('all');
   const wrapper = document.getElementById('reviews-carousel-wrapper');
   document.getElementById('carousel-prev').addEventListener('click', () => {
-    const card = wrapper.querySelector('.review-card');
-    if (card) wrapper.scrollBy({ left: -(card.offsetWidth + 20), behavior: 'smooth' });
+    const cards = Array.from(wrapper.querySelectorAll('.review-card')).filter(c => c.offsetWidth > 0);
+    if (!cards.length) return;
+    const cur = wrapper.scrollLeft;
+    const prev = [...cards].reverse().find(c => cardScrollLeft(c, wrapper) < cur - 10);
+    wrapper.scrollTo({ left: prev ? cardScrollLeft(prev, wrapper) : 0, behavior: 'smooth' });
   });
   document.getElementById('carousel-next').addEventListener('click', () => {
-    const card = wrapper.querySelector('.review-card');
-    if (card) wrapper.scrollBy({ left: card.offsetWidth + 20, behavior: 'smooth' });
+    const cards = Array.from(wrapper.querySelectorAll('.review-card')).filter(c => c.offsetWidth > 0);
+    if (!cards.length) return;
+    const cur = wrapper.scrollLeft;
+    const next = cards.find(c => cardScrollLeft(c, wrapper) > cur + 10);
+    if (next) wrapper.scrollTo({ left: cardScrollLeft(next, wrapper), behavior: 'smooth' });
   });
 });
 
@@ -1510,7 +1578,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+document.querySelectorAll('.fade-in, .fade-left, .fade-right').forEach(el => observer.observe(el));
 
 // Trigger hero fade-ins immediately
 document.querySelectorAll('#hero-content .fade-in').forEach(el => {
@@ -1574,6 +1642,16 @@ document.querySelectorAll('a[href]').forEach(link => {
 
 // ── Restore saved language ──────────────────────────────────────────
 if (localStorage.getItem('lang') === 'en') toggleLang();
+
+// ── DEBUG: find overflowing elements ──────────────────────────────
+(function(){
+  const w = document.documentElement.offsetWidth;
+  document.querySelectorAll('*').forEach(el => {
+    if (el.getBoundingClientRect().right > w) {
+      console.warn('OVERFLOW:', el, el.getBoundingClientRect().right - w, 'px over');
+    }
+  });
+})();
 </script>
 
 </body>

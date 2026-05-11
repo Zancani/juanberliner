@@ -1,0 +1,14 @@
+{
+  "name": "berlin-map-photo-scraper",
+  "version": "1.0.0",
+  "description": "Scrape Google Images for Berlin map places",
+  "scripts": {
+    "scrape": "node scrape-photos.js",
+    "inject": "node inject-photos.js"
+  },
+  "dependencies": {
+    "puppeteer": "^24.37.5",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}
