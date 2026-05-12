@@ -2,9 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-  <link rel="stylesheet" href="./dist/styles.min.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Juan Berliner — Guía oficial de turismo en Berlín</title>
   <meta name="description" content="Tours privados y grupales en Berlín con guía certificado. Más de 2000 reseñas. Historia, cultura y autenticidad. Reserva tu tour hoy." />
   <link rel="canonical" href="https://juanberliner.com/" />
@@ -45,7 +43,409 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  </head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#B8860B',
+            'gold-light': '#E9D8A6',
+            'gold-dark': '#8B6508',
+            'berlin-dark': '#001219',
+            'berlin-surface': '#012A36',
+            'berlin-elevated': '#013747',
+            'berlin-border': '#003D52',
+            'berlin-muted': '#7FB5BF',
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            tight: '-0.03em',
+            widest: '0.15em',
+          },
+        }
+      }
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      overflow-x: hidden;
+      background-color: #001219;
+      color: #E9D8A6;
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.7;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* Lang toggle */
+    body:not(.lang-en) .lang-en  { display: none !important; }
+    body.lang-en       .lang-es  { display: none !important; }
+    body.lang-en       .lang-en-block { display: block !important; }
+    body:not(.lang-en) .lang-en-block { display: none !important; }
+    body.lang-en       .lang-es-block { display: none !important; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #001219; }
+    ::-webkit-scrollbar-thumb { background: #B8860B; border-radius: 3px; }
+
+    /* Navbar */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(0,18,25,0.75);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+    }
+    #navbar.scrolled {
+      background: rgba(0,18,25,0.92);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 2px 32px rgba(0,0,0,0.6), 0 1px 0 rgba(184,134,11,0.15);
+    }
+
+    /* Gold glow button */
+    .btn-gold {
+      background: #8B6914;
+      color: #001219;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+      box-shadow: 0 0 0 rgba(184,134,11,0);
+    }
+    .btn-gold:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 2px 12px rgba(184,134,11,0.2);
+    }
+    .btn-gold:active { transform: translateY(0) scale(0.99); }
+    .btn-gold:focus-visible { outline: 2px solid #B8860B; outline-offset: 3px; }
+
+    .btn-outline {
+      border: 1px solid rgba(184,134,11,0.5);
+      color: #B8860B;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.2s, box-shadow 0.2s;
+    }
+    .btn-outline:hover {
+      background: rgba(184,134,11,0.08);
+      border-color: #B8860B;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(184,134,11,0.15);
+    }
+    .btn-outline:active { transform: translateY(0); }
+    .btn-outline:focus-visible { outline: 2px solid #B8860B; outline-offset: 3px; }
+
+    .btn-whatsapp {
+      background: #1a9e4a;
+      color: #fff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .btn-whatsapp:hover {
+      background: #168040;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .btn-whatsapp:active { transform: translateY(0) scale(0.99); }
+    .btn-whatsapp:focus-visible { outline: 2px solid #25D366; outline-offset: 3px; }
+
+    /* Hero */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; align-items: center;
+      overflow: hidden;
+      background: #001219;
+    }
+    #hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.35) saturate(0.6);
+    }
+    #hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0,18,25,0.15) 0%,
+        rgba(0,18,25,0.35) 40%,
+        rgba(0,18,25,0.75) 100%
+      );
+    }
+    #hero-content { position: relative; z-index: 2; }
+
+    /* Section texture */
+    .section-texture {
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(184,134,11,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(184,134,11,0.03) 0%, transparent 50%);
+    }
+
+    /* Tour cards */
+    .tour-card {
+      background: #012A36;
+      border: 1px solid #003D52;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, border-color 0.3s;
+      position: relative;
+    }
+    .tour-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .tour-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(184,134,11,0.25), 0 0 24px rgba(184,134,11,0.08);
+      border-color: rgba(184,134,11,0.3);
+    }
+    .tour-card:hover::before { border-color: rgba(184,134,11,0.2); }
+    .tour-card-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .tour-card-img img {
+      width: 100%; height: 180px;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
+      filter: brightness(0.75) saturate(0.7);
+    }
+    @media (max-width: 640px) {
+      .tour-card-img img { height: 160px; }
+    }
+    .tour-card:hover .tour-card-img img {
+      transform: scale(1.06);
+      filter: brightness(0.85) saturate(0.8);
+    }
+    .tour-card-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,18,25,0.7) 0%, transparent 50%);
+    }
+    .tour-card-img .tour-badge {
+      position: absolute; top: 12px; left: 12px; z-index: 2;
+    }
+
+    /* Divider */
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(184,134,11,0.4) 30%, rgba(184,134,11,0.7) 50%, rgba(184,134,11,0.4) 70%, transparent 100%);
+    }
+
+    /* Review cards */
+    .review-card {
+      background: #012A36;
+      border: 1px solid #003D52;
+      border-radius: 8px;
+      padding: 24px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .review-card:hover {
+      border-color: rgba(184,134,11,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    /* Stars */
+    .stars { color: #B8860B; letter-spacing: 2px; }
+
+    /* Floating WhatsApp */
+    #whatsapp-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 900;
+      width: 56px; height: 56px;
+      background: #1a9e4a;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+    #whatsapp-float:hover {
+      transform: scale(1.06);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    }
+    #whatsapp-float:active { transform: scale(0.97); }
+    #whatsapp-float::before {
+      display: none;
+    }
+    @keyframes pulse-whatsapp {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.25); opacity: 0; }
+    }
+    @media (max-width: 640px) {
+      #whatsapp-float { bottom: 16px; right: 16px; width: 50px; height: 50px; }
+      #whatsapp-float.input-focused { opacity: 0; pointer-events: none; }
+    }
+
+    /* Lang toggle button */
+    .lang-toggle {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 10px;
+      min-height: 44px;
+      border: 1px solid #003D52;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: transparent;
+      color: #E9D8A6;
+    }
+    .lang-toggle:hover { border-color: #B8860B; background: rgba(184,134,11,0.06); }
+    .lang-toggle:focus-visible { outline: 2px solid #B8860B; outline-offset: 2px; }
+
+    /* Mobile menu */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: block; }
+
+    /* About badges */
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #013747;
+      border: 1px solid #003D52;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+
+    /* Section headings */
+    .section-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    /* Form inputs */
+    .form-input {
+      background: #013747;
+      border: 1px solid #003D52;
+      border-radius: 6px;
+      padding: 12px 16px;
+      min-height: 44px;
+      color: #E9D8A6;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      width: 100%;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input::placeholder { color: #555; }
+    .form-input:focus {
+      border-color: rgba(184,134,11,0.5);
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.08);
+    }
+    .form-input:hover { border-color: #3A3A3A; }
+    select.form-input option { background: #013747; }
+
+    /* Carrusel de reseñas */
+    .reviews-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    /* Reviews carousel */
+    #reviews-carousel { position: relative; }
+    #reviews-carousel-wrapper {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    #reviews-carousel-wrapper::-webkit-scrollbar { display: none; }
+    #reviews-grid { display: flex !important; gap: 20px; }
+    .review-card {
+      flex: 0 0 calc((100% - 40px) / 3);
+      scroll-snap-align: start;
+    }
+    @media (max-width: 1024px) { .review-card { flex: 0 0 calc((100% - 20px) / 2); } }
+    @media (max-width: 768px) {
+      .review-card { flex: 0 0 100%; }
+      .carousel-btn { width: 36px; height: 36px; }
+      .carousel-btn.prev { left: -10px; }
+      .carousel-btn.next { right: -10px; }
+    }
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px;
+      background: rgba(0,18,25,0.85);
+      border: 1px solid rgba(184,134,11,0.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #B8860B; z-index: 10;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .carousel-btn:hover { background: rgba(184,134,11,0.15); border-color: rgba(184,134,11,0.6); }
+    .carousel-btn.prev { left: -22px; }
+    .carousel-btn.next { right: -22px; }
+
+    /* Concrete texture for sections */
+    .texture-concrete {
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.05) 0%, transparent 70%);
+    }
+
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-left {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-left.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-right {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-right.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (min-width: 768px) {
+      .fade-left { transform: translateX(-36px); }
+      .fade-left.visible { transform: translateX(0); }
+      .fade-right { transform: translateX(36px); }
+      .fade-right.visible { transform: translateX(0); }
+    }
+     pageFadeIn { from { opacity:0; } to { opacity:1; } }
+    body { animation: pageFadeIn 0.45s ease forwards; }
+    body.page-exit { opacity:0 !important; transition:opacity 0.3s ease !important; pointer-events:none; }
+  </style>
+</head>
 <body>
 
 <!-- ═══════════════════════════════════════════
@@ -129,6 +529,7 @@
   </div>
 </nav>
 
+
 <!-- ═══════════════════════════════════════════
      HERO
 ════════════════════════════════════════════ -->
@@ -189,6 +590,8 @@
     </div>
   </div>
 </section>
+
+
 
 <!-- ═══════════════════════════════════════════
      TOURS SECTION
@@ -361,6 +764,7 @@
 
 <div class="divider-line max-w-7xl mx-auto"></div>
 
+
 <!-- ═══════════════════════════════════════════
      ABOUT
 ════════════════════════════════════════════ -->
@@ -408,6 +812,7 @@
 </section>
 
 <div class="divider-line max-w-7xl mx-auto"></div>
+
 
 <!-- ═══════════════════════════════════════════
      REVIEWS
@@ -504,6 +909,7 @@
           </div>
         </div>
       </div>
+
 
       <div class="review-card fade-in review-item review-es">
         <div class="stars text-sm mb-3">★★★★★</div>
@@ -660,6 +1066,7 @@
 </section>
 
 <div class="divider-line max-w-7xl mx-auto"></div>
+
 
 <!-- ═══════════════════════════════════════════
      CTA / BOOKING
@@ -959,6 +1366,7 @@
   </div>
 </section>
 
+
 <!-- ═══════════════════════════════════════════
      FOOTER
 ════════════════════════════════════════════ -->
@@ -1030,12 +1438,14 @@
   </div>
 </footer>
 
+
 <!-- ═══════════════════════════════════════════
      FLOATING WHATSAPP
 ════════════════════════════════════════════ -->
 <a id="whatsapp-float" href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Me%20gustaría%20reservar%20un%20tour%20contigo." target="_blank" rel="noopener" aria-label="WhatsApp" title="Escríbeme por WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
+
 
 <!-- ═══════════════════════════════════════════
      JAVASCRIPT
