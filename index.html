@@ -1112,11 +1112,11 @@
             <div>
               <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-es">Nombre</label>
               <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-en">Name</label>
-              <input type="text" name="name" required class="form-input" placeholder="Tu nombre" />
+              <input type="text" name="name" required class="form-input" id="input-name" placeholder="Tu nombre" />
             </div>
             <div>
               <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5">Email</label>
-              <input type="email" name="email" required class="form-input" placeholder="tu@email.com" />
+              <input type="email" name="email" required class="form-input" id="input-email" placeholder="tu@email.com" />
             </div>
           </div>
 
@@ -1355,7 +1355,7 @@
           <div>
             <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-es">Mensaje (opcional)</label>
             <label class="text-xs text-berlin-muted uppercase tracking-wider block mb-1.5 lang-en">Message (optional)</label>
-            <textarea name="message" rows="4" class="form-input resize-none" placeholder="¿Alguna pregunta o petición especial?"></textarea>
+            <textarea name="message" rows="4" class="form-input resize-none" id="input-message" placeholder="¿Alguna pregunta o petición especial?"></textarea>
           </div>
 
           <button type="submit" class="btn-gold w-full py-3.5 rounded-md font-semibold text-sm tracking-wide lang-es">Enviar solicitud de reserva</button>
@@ -1381,7 +1381,7 @@
         <div class="text-xs text-berlin-muted tracking-widest uppercase mb-4 lang-es">Guía oficial de turismo en Berlín</div>
         <div class="text-xs text-berlin-muted tracking-widest uppercase mb-4 lang-en">Official Tour Guide in Berlin</div>
         <p class="text-sm text-berlin-muted leading-relaxed lang-es">Tours en español e inglés. Historia, cultura y autenticidad en cada paso.</p>
-        <p class="text-sm text-berlin-muted leading-relaxed lang-en">Tours in Spanish and English. History, culture and authenticity at every step.</p>
+        <p class="text-sm text-berlin-muted leading-relaxed lang-en">Tours in English and Spanish. History, culture and authenticity at every step.</p>
       </div>
 
       <!-- Quick Links -->
@@ -1478,6 +1478,10 @@ function toggleLang() {
     document.getElementById('wa-booking-text').textContent = 'Message me on WhatsApp';
     document.documentElement.lang = 'en';
     if (phonePrefix) phonePrefix.value = '+1-US';
+    document.getElementById('input-name').placeholder = 'Your name';
+    document.getElementById('input-email').placeholder = 'your@email.com';
+    document.getElementById('input-message').placeholder = 'Any questions or special requests?';
+    waFloat.title = 'Message me on WhatsApp';
   } else {
     body.classList.remove('lang-en');
     flag.textContent = '🇪🇸';
@@ -1489,6 +1493,10 @@ function toggleLang() {
     document.getElementById('wa-booking-text').textContent = 'Escríbeme por WhatsApp';
     document.documentElement.lang = 'es';
     if (phonePrefix) phonePrefix.value = '+34';
+    document.getElementById('input-name').placeholder = 'Tu nombre';
+    document.getElementById('input-email').placeholder = 'tu@email.com';
+    document.getElementById('input-message').placeholder = '¿Alguna pregunta o petición especial?';
+    waFloat.title = 'Escríbeme por WhatsApp';
   }
 }
 
