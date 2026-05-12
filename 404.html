@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Juan Berliner</title>
+  <meta name="description" content="Página no encontrada — Juan Berliner, guía oficial de turismo en Berlín." />
+  <link rel="canonical" href="https://juanberliner.com/404.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://juanberliner.com/404.html" />
+  <meta property="og:title" content="404 — Página no encontrada | Juan Berliner" />
+  <meta property="og:description" content="Esta página ha desaparecido como el Muro de Berlín." />
+  <meta property="og:image" content="https://juanberliner.com/og-image.jpg" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#B8860B',
+            'gold-light': '#E9D8A6',
+            'gold-dark': '#8B6508',
+            'berlin-dark': '#001219',
+            'berlin-surface': '#012A36',
+            'berlin-elevated': '#013747',
+            'berlin-border': '#003D52',
+            'berlin-muted': '#7FB5BF',
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      overflow-x: hidden;
+      background-color: #001219;
+      color: #E9D8A6;
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #001219; }
+    ::-webkit-scrollbar-thumb { background: #B8860B; border-radius: 3px; }
+
+    .btn-gold {
+      background: #8B6914;
+      color: #001219;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+      box-shadow: 0 0 0 rgba(184,134,11,0);
+    }
+    .btn-gold:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 2px 12px rgba(184,134,11,0.2);
+    }
+    .btn-gold:active { transform: translateY(0) scale(0.99); }
+    .btn-gold:focus-visible { outline: 2px solid #B8860B; outline-offset: 3px; }
+
+    .btn-outline {
+      border: 1px solid rgba(184,134,11,0.5);
+      color: #B8860B;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.2s, box-shadow 0.2s;
+    }
+    .btn-outline:hover {
+      background: rgba(184,134,11,0.08);
+      border-color: #B8860B;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(184,134,11,0.15);
+    }
+    .btn-outline:active { transform: translateY(0); }
+    .btn-outline:focus-visible { outline: 2px solid #B8860B; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+
+<main style="position:relative;z-index:1;text-align:center;padding:2rem;max-width:640px;">
+  <p style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(7rem,15vw,12rem);font-weight:900;line-height:1;color:#B8860B;margin:0;letter-spacing:-0.03em;">404</p>
+  <p style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.5rem,3vw,1.75rem);font-weight:700;color:#E9D8A6;margin:0.5rem 0 1.5rem;">Esta página ha desaparecido como el Muro de Berlín</p>
+  <p style="color:#7FB5BF;font-size:1.05rem;margin:0 0 2.5rem;line-height:1.8;">
+    Ni Juan encuentra esta dirección.<br>
+    Quizás se fue de techno a un búnker secreto,<br>
+    o se perdió en el pasillo infinito del Berghain.
+  </p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="/" class="btn-gold" style="display:inline-block;padding:0.75rem 2rem;border-radius:0.5rem;text-decoration:none;font-family:'Inter',system-ui,sans-serif;">Volver al tour</a>
+    <a href="/tours/" class="btn-outline" style="display:inline-block;padding:0.75rem 2rem;border-radius:0.5rem;text-decoration:none;font-family:'Inter',system-ui,sans-serif;">Ver tours</a>
+  </div>
+</main>
+
+</body>
+</html>
