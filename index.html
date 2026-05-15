@@ -446,6 +446,7 @@
     body { animation: pageFadeIn 0.45s ease forwards; }
     body.page-exit { opacity:0 !important; transition:opacity 0.3s ease !important; pointer-events:none; }
   </style>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -739,7 +740,10 @@
       <!-- Card 6: Nazismo -->
       <a href="tours/nazismo-tercer-reich.html" class="tour-card group fade-in" style="transition-delay:0.3s">
         <div class="tour-card-img">
-          <img src="naz.jpg" alt="Tour del Nazismo" />
+          <picture>
+            <source srcset="naz.webp" type="image/webp">
+            <img src="naz.jpg" alt="Tour del Nazismo" />
+          </picture>
           <div class="tour-badge">
             <span class="bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase">€20 <span class="line-through opacity-60 font-normal">€22</span></span>
           </div>

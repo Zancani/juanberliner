@@ -84,6 +84,7 @@
     #whatsapp-float{position:fixed;bottom:24px;right:24px;z-index:900;width:56px;height:56px;background:#1a9e4a;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.3);transition:transform .2s ease,box-shadow .2s ease;cursor:pointer}
     #whatsapp-float:hover{transform:scale(1.06);box-shadow:0 4px 16px rgba(0,0,0,.35)}
   </style>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -140,7 +141,10 @@
 </nav>
 
 <div class="relative h-72 md:h-[420px] overflow-hidden mt-16">
-  <img src="berlin-con-poco-presupuesto-hero.jpg" alt="Berlín barato" class="w-full h-full object-cover" style="filter:brightness(.55) saturate(.8);" />
+  <picture>
+    <source srcset="berlin-con-poco-presupuesto-hero.webp" type="image/webp">
+    <img src="berlin-con-poco-presupuesto-hero.jpg" alt="Berlín barato" class="w-full h-full object-cover" style="filter:brightness(.55) saturate(.8);" />
+  </picture>
   <div class="absolute inset-0 bg-gradient-to-t from-berlin-dark via-berlin-dark/30 to-transparent"></div>
   <div class="absolute bottom-8 left-6 md:left-10 max-w-2xl">
     <span class="tag bg-blue-900/50 text-blue-300 mb-3 inline-block lang-es">Consejos</span>
