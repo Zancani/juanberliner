@@ -1,0 +1,411 @@
+/* ─────────────────────────────────────────────────────────────
+   Juan Berliner — harmony layer
+   Brass on stone: the site's own palette (night teal + brass),
+   set with the restraint of engraved plaques and museum labels.
+   Loaded last on every page; content, colours and JS untouched.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --ink: #001219;
+  --stone: #012A36;
+  --stone-raised: #013747;
+  --line: #003D52;
+  --mist: #7FB5BF;
+  --parchment: #E9D8A6;
+  --brass: #B8860B;
+  --brass-deep: #8B6508;
+  --brass-line: rgba(184, 134, 11, 0.32);
+  --hair: rgba(233, 216, 166, 0.12);
+  --wa: #1a9e4a;
+  --wa-deep: #168040;
+
+  --r: 2px;            /* plaque corners: barely softened */
+  --r-media: 3px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-lift: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+html { -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; }
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern", "liga", "calt";
+}
+::selection { background: rgba(184, 134, 11, 0.85); color: var(--ink); }
+:root { caret-color: var(--brass); accent-color: var(--brass); color-scheme: dark; }
+:focus-visible { outline: 1px solid var(--brass); outline-offset: 3px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 0; border: 2px solid var(--ink); }
+::-webkit-scrollbar-thumb:hover { background: var(--brass-deep); }
+html { scrollbar-color: var(--line) var(--ink); scrollbar-width: thin; }
+html { scroll-padding-top: 96px; }
+
+p, li { text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; }
+a { text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
+
+/* Display type: Playfair at text weights reads as print, not poster */
+:root .section-heading,
+:root .font-display {
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.08;
+  font-variant-numeric: lining-nums;
+}
+:root h1.section-heading { font-weight: 500; letter-spacing: -0.025em; line-height: 1.02; }
+
+/* ── Navigation ───────────────────────────────────────────── */
+:root #navbar {
+  background: rgba(0, 18, 25, 0.55);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  backdrop-filter: blur(10px) saturate(1.1);
+  border-bottom: 1px solid var(--hair);
+  box-shadow: none;
+}
+:root #navbar.scrolled {
+  background: rgba(0, 18, 25, 0.94);
+  border-bottom-color: var(--brass-line);
+  box-shadow: none;
+}
+#navbar a.group > span:first-child { font-weight: 600; letter-spacing: -0.012em; }
+#navbar a.group > span + span { font-size: 10.5px; letter-spacing: 0.2em; margin-top: 4px; }
+#navbar .md\:flex > a { position: relative; letter-spacing: 0.01em; }
+#navbar .md\:flex > a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px;
+  background: var(--brass); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s var(--ease-out);
+}
+#navbar .md\:flex > a:hover::after { transform: scaleX(1); }
+#mobile-menu { border-top-color: var(--hair) !important; }
+
+:root .lang-toggle {
+  border-radius: var(--r);
+  border-color: var(--hair);
+  min-height: 40px;
+  padding: 0 12px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+:root .lang-toggle:hover { border-color: var(--brass); background: transparent; color: var(--brass); }
+#lang-flag { display: none; }
+
+/* ── Buttons ──────────────────────────────────────────────── */
+:root .btn-gold,
+:root .btn-outline,
+:root .btn-whatsapp {
+  border-radius: var(--r);
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  transform: none;
+  box-shadow: none;
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out),
+              border-color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+:root .btn-gold { background: var(--brass); color: var(--ink); }
+:root .btn-gold:hover { background: var(--parchment); color: var(--ink); transform: none; box-shadow: none; }
+:root .btn-gold:active { background: #d8c48e; transform: none; }
+:root .btn-gold:disabled { background: var(--brass-deep); color: rgba(0, 18, 25, 0.75); cursor: progress; }
+
+:root .btn-outline { border: 1px solid var(--brass-line); color: var(--brass); background: transparent; }
+:root .btn-outline:hover { border-color: var(--brass); background: rgba(184, 134, 11, 0.07); transform: none; box-shadow: none; }
+
+:root .btn-whatsapp { background: var(--wa); color: #fff; }
+:root .btn-whatsapp:hover { background: var(--wa-deep); transform: none; box-shadow: none; }
+
+/* Hero WhatsApp sits beside the brass CTA as a quiet secondary */
+:root #wa-hero {
+  background: rgba(0, 18, 25, 0.35);
+  border: 1px solid rgba(233, 216, 166, 0.32);
+  color: var(--parchment);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+:root #wa-hero svg { color: #3fcf74; }
+:root #wa-hero:hover { border-color: var(--parchment); background: rgba(0, 18, 25, 0.55); }
+
+/* Floating WhatsApp: one calm, consistent object on every page */
+:root #whatsapp-float {
+  background: var(--wa);
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.75);
+  transition: transform 0.3s var(--ease-out), background-color 0.25s;
+}
+:root #whatsapp-float::before { display: none; animation: none; }
+:root #whatsapp-float:hover { transform: translateY(-2px); background: var(--wa-deep); box-shadow: 0 14px 28px -12px rgba(0, 0, 0, 0.8); }
+
+/* ── Badges & tags: engraved, single-palette ──────────────── */
+:root .tour-badge span,
+:root span.bg-gold.uppercase,
+:root .tag {
+  background: rgba(0, 18, 25, 0.72) !important;
+  color: var(--parchment) !important;
+  border: 1px solid var(--brass-line);
+  border-radius: var(--r) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.16em !important;
+  font-size: 10px !important;
+  padding: 4px 9px !important;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+:root .tag { background: transparent !important; color: var(--brass) !important; }
+:root .tour-badge span .line-through { color: var(--mist); opacity: 0.85; }
+
+/* ── Section rhythm ───────────────────────────────────────── */
+:root .section-texture,
+:root .texture-concrete { background-image: none; }
+
+:root .divider-line { background: var(--hair); height: 1px; }
+
+/* Section marker: the label reads as a running head on a brass rule */
+.section-mark { display: flex; align-items: center; gap: 14px; margin-bottom: 1.75rem !important; }
+.section-mark > .w-8 { display: none; }
+.section-mark > span { color: var(--brass); font-size: 11px; letter-spacing: 0.22em; font-weight: 600; }
+.section-mark::after { content: ""; flex: 1; height: 1px; background: var(--brass-line); }
+
+/* ── Cards (tours, articles, reviews, info) ───────────────── */
+:root .tour-card,
+:root .article-card {
+  background: var(--stone);
+  border: 1px solid var(--line);
+  border-radius: var(--r-media);
+  transition: border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+:root .tour-card::before { display: none; }
+:root .tour-card:hover,
+:root .article-card:hover {
+  transform: none;
+  border-color: var(--brass-line);
+  box-shadow: var(--shadow-lift);
+}
+:root .tour-card-img img,
+:root .article-card img {
+  height: 230px;
+  filter: brightness(0.9) saturate(0.88) contrast(1.02);
+  transition: transform 1.1s var(--ease-out), filter 0.6s var(--ease-out);
+}
+:root .tour-card:hover .tour-card-img img,
+:root .article-card:hover img { transform: scale(1.035); filter: brightness(1) saturate(0.95); }
+:root .tour-card-img::after { background: linear-gradient(to top, rgba(1, 42, 54, 0.55) 0%, transparent 42%); }
+@media (max-width: 640px) { :root .tour-card-img img, :root .article-card img { height: 200px; } }
+
+.tour-card h3 { font-size: 1.4rem !important; font-weight: 600 !important; line-height: 1.15; }
+.tour-card .p-5 { padding: 1.5rem 1.5rem 1.25rem; }
+.tour-card .p-5 > p { line-height: 1.6; }
+.tour-card .p-5 > .flex { padding-top: 1rem; border-top: 1px solid var(--line); margin-top: auto; }
+.tour-card { display: flex; flex-direction: column; }
+.tour-card .p-5 { display: flex; flex-direction: column; flex: 1; }
+.tour-card .p-5 > .flex .uppercase { letter-spacing: 0.14em; font-size: 11px; }
+
+:root .review-card {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--brass-line);
+  border-radius: 0;
+  padding: 1.75rem 0.25rem 0.5rem 0;
+}
+:root .review-card:hover { box-shadow: none; border-color: var(--brass); }
+.review-card > p { color: rgba(233, 216, 166, 0.88) !important; font-size: 1rem !important; line-height: 1.7 !important; }
+.review-card .stars { font-size: 12px; letter-spacing: 4px; color: var(--brass); margin-bottom: 1rem; }
+
+:root .info-card,
+:root .sidebar-card {
+  background: var(--stone);
+  border: 1px solid var(--line);
+  border-top: 1px solid var(--brass-line);
+  border-radius: var(--r-media);
+  align-items: flex-start;
+  text-align: left;
+}
+:root .info-card-icon {
+  width: auto; height: auto; background: none; border: 0; border-radius: 0;
+  margin-bottom: 10px; justify-content: flex-start;
+}
+:root .info-card-label { font-size: 10px; letter-spacing: 0.2em; color: var(--mist); font-weight: 600; }
+:root .info-card-value { font-size: 15px; font-weight: 500; color: #fff; font-variant-numeric: tabular-nums; }
+
+/* FAQ disclosures: a drawn plus that turns into a minus */
+details.info-card { display: block; padding: 1.15rem 1.25rem; transition: border-color 0.3s; }
+details.info-card:hover { border-color: var(--brass-line); }
+details.info-card summary { cursor: pointer; padding-right: 2rem; }
+details.info-card summary::-webkit-details-marker { display: none; }
+details.info-card summary::after {
+  content: ""; position: absolute; right: 0; top: 50%; width: 12px; height: 12px; margin-top: -6px;
+  background:
+    linear-gradient(var(--brass), var(--brass)) center / 12px 1px no-repeat,
+    linear-gradient(var(--brass), var(--brass)) center / 1px 12px no-repeat;
+  transition: transform 0.35s var(--ease-out);
+}
+details.info-card[open] summary::after { transform: rotate(90deg); background: linear-gradient(var(--brass), var(--brass)) center / 12px 1px no-repeat; }
+details.info-card[open] { border-color: var(--brass-line); }
+
+/* Generic surfaced boxes built from utilities */
+:root .bg-berlin-surface.rounded-lg,
+:root .bg-berlin-surface.rounded-xl { border-radius: var(--r-media); }
+
+/* ── Media ────────────────────────────────────────────────── */
+:root .gallery-grid { gap: 4px; border-radius: var(--r-media); }
+:root .gallery-grid img { filter: brightness(0.92) saturate(0.88); transition: filter 0.6s var(--ease-out); }
+:root .gallery-grid img:hover { transform: none; filter: brightness(1) saturate(0.95); }
+iframe { filter: grayscale(0.35) contrast(0.95); }
+
+/* ── Forms ────────────────────────────────────────────────── */
+:root .form-input {
+  background: var(--stone);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  min-height: 48px;
+  font-size: 15px;
+  color: var(--parchment);
+}
+:root .form-input::placeholder { color: rgba(127, 181, 191, 0.62); }
+:root .form-input:hover { border-color: #0a5670; }
+:root .form-input:focus { border-color: var(--brass); box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.12); }
+:root input[type="date"].form-input::-webkit-calendar-picker-indicator { filter: invert(0.75) sepia(0.6) saturate(3) hue-rotate(5deg); cursor: pointer; }
+form label.uppercase { font-size: 10.5px; letter-spacing: 0.18em; font-weight: 600; }
+
+/* ── Article reading ──────────────────────────────────────── */
+:root .prose { max-width: 68ch; }
+:root .prose p, :root .prose ul li { color: rgba(233, 216, 166, 0.86); font-size: 1.0625rem; line-height: 1.78; }
+:root .prose h2 { font-weight: 600; letter-spacing: -0.015em; margin: 3rem 0 1rem; }
+:root .prose h3 { font-weight: 600; }
+:root .prose a { color: var(--brass); text-decoration: underline; text-decoration-color: var(--brass-line); }
+:root .prose a:hover { text-decoration-color: var(--brass); }
+:root .prose blockquote {
+  border-left: 1px solid var(--brass);
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem;
+  line-height: 1.45;
+  color: var(--parchment);
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+:root footer { background: var(--ink); border-top: 1px solid var(--brass-line); }
+footer .tracking-widest.uppercase.font-semibold { font-size: 10.5px; letter-spacing: 0.22em; }
+footer .w-11.h-11 { border-radius: var(--r); }
+footer .w-11.h-11:hover { border-color: var(--brass-line); }
+
+/* ── Motion: subtle, one-direction reveals; respect reduced motion ── */
+:root .fade-in, :root .fade-left, :root .fade-right {
+  transform: translateY(14px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+:root .fade-in.visible, :root .fade-left.visible, :root .fade-right.visible { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  :root .fade-in, :root .fade-left, :root .fade-right { opacity: 1; transform: none; }
+}
+
+/* ── Page heroes on tours & articles: let the photograph breathe ── */
+:root img.object-cover[style*="filter:brightness(.5"] { filter: brightness(0.64) saturate(0.85) contrast(1.04) !important; }
+:root h1.section-heading.md\:text-5xl { font-size: clamp(2.25rem, 5.2vw, 4.25rem); }
+
+/* ── Home: hero ───────────────────────────────────────────── */
+:root #hero { align-items: flex-end; }
+:root #hero-video { filter: brightness(0.62) saturate(0.85) contrast(1.05); }
+:root #hero-overlay {
+  background:
+    linear-gradient(90deg, rgba(0, 18, 25, 0.82) 0%, rgba(0, 18, 25, 0.45) 48%, rgba(0, 18, 25, 0.05) 100%),
+    linear-gradient(0deg, rgba(0, 18, 25, 0.96) 0%, rgba(0, 18, 25, 0) 50%);
+}
+.hero-stack { max-width: 1100px; }
+.hero-title {
+  font-size: clamp(2.6rem, 7.4vw, 6rem);
+  font-weight: 500 !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.032em !important;
+  max-width: 11ch;
+  margin: 0 0 2.25rem;
+}
+.hero-ctas a { min-height: 52px; padding: 0 1.75rem !important; font-size: 15px !important; display: inline-flex; align-items: center; }
+.hero-ctas a#wa-hero svg { width: 18px; height: 18px; }
+
+.hero-credentials {
+  margin-top: clamp(3.5rem, 11vh, 7rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(233, 216, 166, 0.16);
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 0.9rem 3rem;
+}
+.cred { display: flex; align-items: center; gap: 0.8rem; }
+.cred > div:not(:first-child) { color: rgba(233, 216, 166, 0.66) !important; font-size: 13px !important; line-height: 1.35; letter-spacing: 0.01em; }
+.cred-figure { color: var(--brass); font-size: 1.6rem; font-weight: 500 !important; line-height: 1; letter-spacing: -0.01em; }
+.cred-stars { display: flex; gap: 3px; }
+.cred-stars svg { width: 13px !important; height: 13px !important; }
+.cred-mark svg { width: 20px !important; height: 20px !important; }
+.cred-guild > div:not(:first-child) { max-width: none; }
+@media (max-width: 640px) {
+  .hero-title { margin-bottom: 1.75rem; }
+  .hero-ctas a { min-height: 48px; padding: 0 1.25rem !important; font-size: 14px !important; }
+  .hero-credentials { flex-direction: column; align-items: flex-start; gap: 0.85rem; margin-top: 3rem; }
+}
+
+/* ── Home: sections ───────────────────────────────────────── */
+:root #tours, :root #about, :root #reviews, :root #booking { padding-top: clamp(5rem, 10vw, 8.5rem); padding-bottom: clamp(5rem, 10vw, 8.5rem); }
+#tours > div > .mb-14 { margin-bottom: 3.5rem; }
+#tours .grid { gap: 1.75rem; }
+
+.portrait { border-radius: var(--r-media); box-shadow: var(--shadow-lift); }
+.portrait img { filter: saturate(0.92) contrast(1.02); }
+.about-copy { max-width: 60ch; }
+.about-copy > p:nth-child(-n+2) {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.3rem, 2vw, 1.55rem);
+  line-height: 1.4;
+  color: var(--parchment);
+  margin-bottom: 1.5rem;
+}
+.about-copy > p { font-size: 16px; line-height: 1.75; }
+
+.review-tabs { gap: 1.75rem; border-bottom: 1px solid var(--line); }
+:root .review-tabs .review-tab {
+  background: transparent !important;
+  border-radius: 0;
+  padding: 0.6rem 0;
+  margin-bottom: -1px;
+  border-bottom: 1px solid transparent;
+  letter-spacing: 0.02em;
+}
+:root .review-tabs .review-tab.text-white { color: var(--parchment); border-bottom-color: var(--brass); }
+:root #reviews-grid { gap: 2.5rem; }
+:root .carousel-btn {
+  background: var(--ink);
+  border: 1px solid var(--brass-line);
+  border-radius: 50%;
+  top: 2.25rem; transform: none;
+}
+:root .carousel-btn:hover { border-color: var(--brass); background: var(--ink); }
+:root .carousel-btn.prev { left: auto; right: 56px; top: -4.25rem; }
+:root .carousel-btn.next { right: 0; top: -4.25rem; }
+#reviews-carousel { margin-top: 0.5rem; }
+
+#booking .bg-berlin-surface { background: transparent; border-color: var(--line); border-top-color: var(--brass-line); }
+
+/* refinements after first render */
+:root .review-tabs { gap: 1.75rem; }
+#reviews > div > .flex.mb-12 > div:first-child { flex: 1; }
+#reviews > div > .flex.mb-12 > div:first-child .section-mark { margin-right: 2.5rem; }
+@media (max-width: 767px) { #reviews > div > .flex.mb-12 > div:first-child .section-mark { margin-right: 0; } }
+@media (min-width: 769px) {
+  #reviews-carousel-wrapper {
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 72px), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 72px), transparent 100%);
+  }
+}
+/* the section marks carry the rhythm on the home page; drop the stacked dividers */
+body > .divider-line { display: none; }
+/* page-hero captions align with the content column below them */
+@media (min-width: 768px) {
+  :root .absolute.bottom-8.left-6 { left: max(2.5rem, calc((100vw - 80rem) / 2 + 2.5rem)); bottom: 2.75rem; }
+}
+:root .absolute.bottom-8.left-6 > p { color: rgba(233, 216, 166, 0.75); font-size: 15px; margin-top: 0.75rem; }
+@media (max-width: 639px) {
+  #navbar a.group > span + span { display: none !important; }
+  :root .info-card { padding: 16px 18px; }
+  :root .info-card-icon { margin-bottom: 6px; }
+}
