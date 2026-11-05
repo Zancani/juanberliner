@@ -13,8 +13,6 @@
   <meta property="og:description" content="Artículos sobre Berlín en español: historia, itinerarios, consejos de viaje y más." />
   <meta property="og:image" content="https://juanberliner.com/og-image.webp" />
   <meta property="og:locale" content="es_ES" />
-  <link rel="alternate" hreflang="es" href="https://juanberliner.com/blog/" />
-  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/blog/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Blog — Guía de Berlín en español | Juan Berliner" />
   <meta name="twitter:description" content="Artículos sobre Berlín en español: historia, itinerarios, consejos de viaje y más." />
@@ -87,6 +85,9 @@
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="stylesheet" href="../assets/harmony.css" />
+<link rel="alternate" hreflang="es" href="https://juanberliner.com/blog/" />
+  <link rel="alternate" hreflang="en" href="https://juanberliner.com/en/blog/" />
+  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/blog/" />
 </head>
 <body>
 
@@ -124,10 +125,10 @@
       <a href="index.html" class="text-sm text-white transition-colors duration-200 tracking-wide lang-en">Blog</a>
     </div>
     <div class="flex items-center gap-3">
-      <button class="lang-toggle" onclick="toggleLang()" aria-label="Cambiar idioma">
+      <a class="lang-toggle" href="../en/blog/index.html" hreflang="en" aria-label="Switch language" title="Switch language">
         <span id="lang-flag">🇪🇸</span>
         <span id="lang-label">ES</span>
-      </button>
+      </a>
       <a href="../index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-es">Reservar un tour</a>
       <a href="../index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-en">Book a tour</a>
       <button id="hamburger" onclick="toggleMobileMenu()" class="md:hidden p-3 text-white" aria-label="Menú">
@@ -519,8 +520,7 @@ function toggleLang() {
   document.body.classList.toggle('lang-en', currentLang === 'en');
   document.getElementById('lang-flag').textContent = currentLang === 'en' ? '🇬🇧' : '🇪🇸';
   document.getElementById('lang-label').textContent = currentLang === 'en' ? 'EN' : 'ES';
-  localStorage.setItem('lang', currentLang);
-}
+  }
 function toggleMobileMenu() {
   const menu = document.getElementById('mobile-menu');
   menu.classList.toggle('open');
@@ -529,7 +529,7 @@ window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
 });
 (function() {
-  const saved = localStorage.getItem('lang');
+  const saved = document.documentElement.lang;
   if (saved === 'en') { currentLang = 'en'; document.body.classList.add('lang-en'); document.getElementById('lang-flag').textContent = '🇬🇧'; document.getElementById('lang-label').textContent = 'EN'; }
 })();
 document.querySelectorAll('a[href^="../"]').forEach(a => {

@@ -18,9 +18,6 @@
   <meta name="twitter:title" content="Juan Berliner — Guía oficial de turismo en Berlín" />
   <meta name="twitter:description" content="Tours privados y grupales en Berlín con guía certificado. Más de 2000 reseñas. Historia, cultura y autenticidad. Reserva tu tour hoy." />
   <meta name="twitter:image" content="https://juanberliner.com/og-image.webp" />
-  <link rel="alternate" hreflang="es" href="https://juanberliner.com/" />
-  <link rel="alternate" hreflang="en" href="https://juanberliner.com/?lang=en" />
-  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -448,6 +445,9 @@
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="stylesheet" href="assets/harmony.css" />
+<link rel="alternate" hreflang="es" href="https://juanberliner.com/" />
+  <link rel="alternate" hreflang="en" href="https://juanberliner.com/en/" />
+  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/" />
 </head>
 <body>
 
@@ -488,10 +488,10 @@
 
     <!-- Right: Lang toggle + CTA -->
     <div class="flex items-center gap-3">
-      <button class="lang-toggle" onclick="toggleLang()" aria-label="Cambiar idioma" title="Switch language">
+      <a class="lang-toggle" href="en/index.html" hreflang="en" aria-label="Switch language" title="Switch language">
         <span id="lang-flag">🇪🇸</span>
         <span id="lang-label">ES</span>
-      </button>
+      </a>
       <a href="#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-es">Reservar un tour</a>
       <a href="#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-en">Book a tour</a>
       <!-- Hamburger -->
@@ -537,7 +537,7 @@
      HERO
 ════════════════════════════════════════════ -->
 <section id="hero">
-  <video id="hero-video" autoplay muted loop playsinline poster="Berlin-Skyline-Sunset.webp"></video>
+  <video id="hero-video" autoplay muted loop playsinline poster="Berlin-Skyline-Sunset.webp" data-src="timelapse.mp4"></video>
   <div id="hero-overlay"></div>
 
   <div id="hero-content" class="w-full max-w-7xl mx-auto px-6 md:px-10 pt-32 pb-10 md:pt-40 md:pb-14">
@@ -1456,7 +1456,6 @@ let currentLang = 'es';
 
 function toggleLang() {
   currentLang = currentLang === 'es' ? 'en' : 'es';
-  localStorage.setItem('lang', currentLang);
   const body = document.body;
   const flag = document.getElementById('lang-flag');
   const label = document.getElementById('lang-label');
@@ -1627,7 +1626,7 @@ function handleBookingSubmit(e) {
 // Hero video — single element, src chosen by viewport
 const heroVideo = document.getElementById('hero-video');
 if (heroVideo) {
-  heroVideo.src = 'timelapse.mp4';
+  heroVideo.src = heroVideo.dataset.src;
   heroVideo.play().catch(() => {});
 }
 // Hide WA float when keyboard is open on mobile
@@ -1649,7 +1648,7 @@ document.querySelectorAll('a[href]').forEach(link => {
 });
 
 // ── Restore saved language ──────────────────────────────────────────
-if (localStorage.getItem('lang') === 'en') toggleLang();
+if (document.documentElement.lang === 'en') toggleLang();
 
 </script>
 

@@ -37,7 +37,7 @@
     .nav-brand:hover{color:var(--brass)}
     .nav-flex{flex:1}
     .lang-toggle{display:flex;border:1px solid var(--line);border-radius:var(--r)}
-    .lang-btn{min-width:44px;min-height:40px;padding:0 .7rem;font-size:.75rem;font-weight:600;letter-spacing:.1em;color:var(--mist);transition:color .2s,background-color .2s}
+    .lang-btn{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:40px;padding:0 .7rem;font-size:.75rem;font-weight:600;letter-spacing:.1em;color:var(--mist);transition:color .2s,background-color .2s}
     .lang-btn:hover{color:#fff}
     .lang-btn.active{background:var(--brass);color:var(--ink)}
 
@@ -127,6 +127,9 @@
     @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation:none!important}}
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
+<link rel="alternate" hreflang="es" href="https://juanberliner.com/berlin-map.html" />
+  <link rel="alternate" hreflang="en" href="https://juanberliner.com/en/berlin-map.html" />
+  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/berlin-map.html" />
 </head>
 <body>
 
@@ -139,8 +142,8 @@
   <a href="index.html" class="nav-brand">Juan Berliner</a>
   <div class="nav-flex"></div>
   <div class="lang-toggle">
-    <button class="lang-btn active" id="btn-es" onclick="setLang('es')" aria-pressed="true">ES</button>
-    <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">EN</button>
+    <a class="lang-btn active" id="btn-es" href="berlin-map.html" hreflang="es" aria-current="true">ES</a>
+    <a class="lang-btn" id="btn-en" href="en/berlin-map.html" hreflang="en">EN</a>
   </div>
 </nav>
 
@@ -866,7 +869,6 @@ Object.entries(CAT).forEach(([name, c]) => { if (counts[name]) mkChip(name, c.la
 // ── LANG ─────────────────────────────────────────────────────────
 function setLang(l) {
   lang = l;
-  localStorage.setItem('lang', l);
   document.documentElement.lang = l;
   document.querySelectorAll('.l-es').forEach(e => e.style.display = l === 'es' ? '' : 'none');
   document.querySelectorAll('.l-en').forEach(e => e.style.display = l === 'en' ? '' : 'none');
@@ -884,7 +886,7 @@ function setLang(l) {
 }
 
 applyFilter(null);
-setLang(localStorage.getItem('lang') === 'en' ? 'en' : 'es');
+setLang(document.documentElement.lang === 'en' ? 'en' : 'es');
 </script>
 </body>
 </html>

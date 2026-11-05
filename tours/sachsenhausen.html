@@ -16,8 +16,6 @@
   <meta name="twitter:title" content="Tour a Sachsenhausen — Campo de Concentración | Juan Berliner" />
   <meta name="twitter:description" content="Tour guiado al campo de concentración de Sachsenhausen con Juan Berliner. 5h30, salida diaria desde Berlín. Una visita necesaria e impactante." />
   <meta name="twitter:image" content="https://juanberliner.com/og-image.webp" />
-  <link rel="alternate" hreflang="es" href="https://juanberliner.com/tours/sachsenhausen.html" />
-  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/tours/sachsenhausen.html" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -137,6 +135,9 @@
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="stylesheet" href="../assets/harmony.css" />
   <link rel="stylesheet" href="../assets/tours.css" />
+<link rel="alternate" hreflang="es" href="https://juanberliner.com/tours/sachsenhausen.html" />
+  <link rel="alternate" hreflang="en" href="https://juanberliner.com/en/tours/sachsenhausen.html" />
+  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/tours/sachsenhausen.html" />
 </head>
 <body class="body-ruta">
 <nav id="navbar" class="w-full py-4 px-6 md:px-10">
@@ -167,10 +168,10 @@
       <a href="../blog/index.html" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-en">Blog</a>
     </div>
     <div class="flex items-center gap-3">
-      <button class="lang-toggle" onclick="toggleLang()" aria-label="Cambiar idioma" title="Switch language">
+      <a class="lang-toggle" href="../en/tours/sachsenhausen.html" hreflang="en" aria-label="Switch language" title="Switch language">
         <span id="lang-flag">🇪🇸</span>
         <span id="lang-label">ES</span>
-      </button>
+      </a>
       <a href="../index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-es">Reservar un tour</a>
       <a href="../index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-en">Book a tour</a>
       <button id="hamburger" onclick="toggleMobileMenu()" class="md:hidden p-3 text-white" aria-label="Menú">
@@ -286,7 +287,6 @@
 let currentLang = 'es';
 function toggleLang() {
   currentLang = currentLang === 'es' ? 'en' : 'es';
-  localStorage.setItem('lang', currentLang);
   document.body.classList.toggle('lang-en', currentLang === 'en');
   document.getElementById('lang-flag').textContent = currentLang === 'en' ? '🇬🇧' : '🇪🇸';
   document.getElementById('lang-label').textContent = currentLang === 'en' ? 'EN' : 'ES';
@@ -315,7 +315,7 @@ function toggleMobileMenu() {
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
-if (localStorage.getItem('lang') === 'en') toggleLang();
+if (document.documentElement.lang === 'en') toggleLang();
 </script>
 </body>
 </html>

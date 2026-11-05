@@ -13,8 +13,6 @@
   <meta property="og:description" content="La guía definitiva del arte urbano en Berlín: Kreuzberg, Neukölln, East Side Gallery y los mejores murales." />
   <meta property="og:image" content="https://juanberliner.com/blog/arte-urbano-hero.webp" />
   <meta property="og:locale" content="es_ES" />
-  <link rel="alternate" hreflang="es" href="https://juanberliner.com/blog/arte-urbano-berlin.html" />
-  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/blog/arte-urbano-berlin.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Arte Urbano en Berlín: grafiti, murales y cultura callejera" />
   <meta name="twitter:description" content="La guía definitiva del arte urbano en Berlín: Kreuzberg, Neukölln y los mejores murales." />
@@ -65,6 +63,9 @@
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="stylesheet" href="../assets/harmony.css" />
+<link rel="alternate" hreflang="es" href="https://juanberliner.com/blog/arte-urbano-berlin.html" />
+  <link rel="alternate" hreflang="en" href="https://juanberliner.com/en/blog/arte-urbano-berlin.html" />
+  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/blog/arte-urbano-berlin.html" />
 </head>
 <body>
 <a id="whatsapp-float" href="https://wa.me/4915736214462?text=¡Hola%20Juan!" target="_blank" rel="noopener" aria-label="WhatsApp">
@@ -98,7 +99,7 @@
       <a href="index.html" class="text-sm text-white transition-colors duration-200 tracking-wide lang-en">Blog</a>
     </div>
     <div class="flex items-center gap-3">
-      <button class="lang-toggle" onclick="toggleLang()"><span id="lang-flag">🇪🇸</span><span id="lang-label">ES</span></button>
+      <a class="lang-toggle" href="../en/blog/arte-urbano-berlin.html" hreflang="en" aria-label="Switch language" title="Switch language"><span id="lang-flag">🇪🇸</span><span id="lang-label">ES</span></a>
       <a href="../index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-es">Reservar un tour</a>
       <a href="../index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-en">Book a tour</a>
       <button id="hamburger" onclick="toggleMobileMenu()" class="md:hidden p-3 text-white"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 5h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 11h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
@@ -319,10 +320,10 @@
 </footer>
 <script>
 let currentLang='es';
-function toggleLang(){currentLang=currentLang==='es'?'en':'es';document.body.classList.toggle('lang-en',currentLang==='en');document.getElementById('lang-flag').textContent=currentLang==='en'?'🇬🇧':'🇪🇸';document.getElementById('lang-label').textContent=currentLang==='en'?'EN':'ES';localStorage.setItem('lang',currentLang);}
+function toggleLang(){currentLang=currentLang==='es'?'en':'es';document.body.classList.toggle('lang-en',currentLang==='en');document.getElementById('lang-flag').textContent=currentLang==='en'?'🇬🇧':'🇪🇸';document.getElementById('lang-label').textContent=currentLang==='en'?'EN':'ES';}
 function toggleMobileMenu(){document.getElementById('mobile-menu').classList.toggle('open');}
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);});
-(function(){const s=localStorage.getItem('lang');if(s==='en'){currentLang='en';document.body.classList.add('lang-en');document.getElementById('lang-flag').textContent='🇬🇧';document.getElementById('lang-label').textContent='EN';}})();
+(function(){const s=document.documentElement.lang;if(s==='en'){currentLang='en';document.body.classList.add('lang-en');document.getElementById('lang-flag').textContent='🇬🇧';document.getElementById('lang-label').textContent='EN';}})();
 </script>
 </body>
 </html>

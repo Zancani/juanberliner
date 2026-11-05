@@ -81,6 +81,9 @@
     .p-legal a{color:var(--parchment);text-decoration:underline;text-decoration-color:var(--brass)}
     .p-legal a:hover{color:var(--brass)}
   </style>
+<link rel="alternate" hreflang="es" href="https://juanberliner.com/privacy.html" />
+  <link rel="alternate" hreflang="en" href="https://juanberliner.com/en/privacy.html" />
+  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/privacy.html" />
 </head>
 <body class="body-ruta">
 <nav id="navbar" class="w-full py-4 px-6 md:px-10">
@@ -111,10 +114,10 @@
       <a href="blog/index.html" class="text-sm text-berlin-muted hover:text-white transition-colors duration-200 tracking-wide lang-en">Blog</a>
     </div>
     <div class="flex items-center gap-3">
-      <button class="lang-toggle" onclick="toggleLang()" aria-label="Cambiar idioma" title="Switch language">
+      <a class="lang-toggle" href="en/privacy.html" hreflang="en" aria-label="Switch language" title="Switch language">
         <span id="lang-flag">🇪🇸</span>
         <span id="lang-label">ES</span>
-      </button>
+      </a>
       <a href="index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-es">Reservar un tour</a>
       <a href="index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-en">Book a tour</a>
       <button id="hamburger" onclick="toggleMobileMenu()" class="md:hidden p-3 text-white" aria-label="Menú">
@@ -151,7 +154,6 @@
 <section><h2><span class="lang-es">WhatsApp</span><span class="lang-en">WhatsApp</span></h2><div class="lang-es"><p>Los botones de WhatsApp abren esa aplicación con un mensaje ya escrito. A partir de ahí, tu conversación también está sujeta a la política de privacidad de WhatsApp.</p></div><div class="lang-en"><p>The WhatsApp buttons open that app with a pre-written message. From then on, your conversation is also subject to WhatsApp's privacy policy.</p></div></section>
 <section><h2><span class="lang-es">Alojamiento y estadísticas</span><span class="lang-en">Hosting and analytics</span></h2><div class="lang-es"><p>El sitio está alojado en Vercel, que registra datos técnicos de cada visita, como la dirección IP, para servir las páginas y mantenerlas seguras. También uso Vercel Web Analytics para conocer de forma agregada qué páginas se visitan; este servicio no utiliza cookies. La base legal es mi interés legítimo en mantener y mejorar el sitio (art. 6.1.f RGPD).</p></div><div class="lang-en"><p>This site is hosted on Vercel, which logs technical data for each visit, such as the IP address, to serve the pages and keep them secure. I also use Vercel Web Analytics to see in aggregate which pages are visited; this service does not use cookies. The legal basis is my legitimate interest in maintaining and improving the site (Art. 6(1)(f) GDPR).</p></div></section>
 <section><h2><span class="lang-es">Contenido de terceros</span><span class="lang-en">Third-party content</span></h2><div class="lang-es"><p>Algunas páginas cargan recursos de otros servicios, y tu navegador les envía tu dirección IP para poder mostrarlos: Google Fonts (tipografías), Tailwind CDN y unpkg (código de la página), Google Maps (mapas de los puntos de encuentro), OpenFreeMap y OpenStreetMap (mapa de recomendaciones) y otros sitios web que alojan parte de las fotografías. Google Maps puede usar sus propias cookies. Algunos de estos proveedores pueden tratar datos fuera de la Unión Europea.</p></div><div class="lang-en"><p>Some pages load resources from other services, and your browser sends them your IP address so they can be displayed: Google Fonts (typefaces), Tailwind CDN and unpkg (page code), Google Maps (meeting point maps), OpenFreeMap and OpenStreetMap (recommendations map) and other websites that host some of the photos. Google Maps may use its own cookies. Some of these providers may process data outside the European Union.</p></div></section>
-<section><h2><span class="lang-es">Almacenamiento en tu navegador</span><span class="lang-en">Storage in your browser</span></h2><div class="lang-es"><p>El sitio guarda en tu navegador el idioma que eliges, para recordarlo en tu próxima visita. Ese dato no se envía a ningún servidor y puedes borrarlo desde los ajustes del navegador.</p></div><div class="lang-en"><p>The site stores the language you choose in your browser so it can remember it on your next visit. This is not sent to any server and you can delete it in your browser settings.</p></div></section>
 <section><h2><span class="lang-es">Tus derechos</span><span class="lang-en">Your rights</span></h2><div class="lang-es"><p>Puedes pedirme acceder a tus datos, corregirlos o eliminarlos, limitar su uso, oponerte a él y recibirlos en un formato portable. También puedes reclamar ante una autoridad de protección de datos; en Berlín es la Berliner Beauftragte für Datenschutz und Informationsfreiheit.</p></div><div class="lang-en"><p>You can ask me to access, correct or delete your data, restrict its use, object to it and receive it in a portable format. You can also complain to a data protection authority; in Berlin this is the Berliner Beauftragte für Datenschutz und Informationsfreiheit.</p></div></section>
 </main>
 <footer class="bg-berlin-surface border-t border-berlin-border pt-12 pb-8">
@@ -225,7 +227,6 @@
 let currentLang = 'es';
 function toggleLang() {
   currentLang = currentLang === 'es' ? 'en' : 'es';
-  localStorage.setItem('lang', currentLang);
   document.body.classList.toggle('lang-en', currentLang === 'en');
   document.getElementById('lang-flag').textContent = currentLang === 'en' ? '🇬🇧' : '🇪🇸';
   document.getElementById('lang-label').textContent = currentLang === 'en' ? 'EN' : 'ES';
@@ -248,7 +249,7 @@ function toggleMobileMenu() {
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
-if (localStorage.getItem('lang') === 'en') toggleLang();
+if (document.documentElement.lang === 'en') toggleLang();
 </script>
 </body>
 </html>

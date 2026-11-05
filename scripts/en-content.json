@@ -1,0 +1,202 @@
+{
+ "pages": {
+  "index.html": [
+   "Juan Berliner — Official Tour Guide in Berlin",
+   "Private and group tours in Berlin with a certified guide. More than 2000 reviews. History, culture and authenticity. Book your tour today."
+  ],
+  "berlin-map.html": [
+   "My Berlin Recommendations — Juan Berliner",
+   "My 101 recommendations in Berlin: where to eat, bars, museums, parks, clubs and cafés, on an interactive map by Juan Berliner, official tour guide."
+  ],
+  "privacy.html": [
+   "Privacy policy — Juan Berliner",
+   "How Juan Berliner handles the personal data of people who visit this site and request a booking."
+  ],
+  "tours/berlin-alternativo.html": [
+   "Alternative Berlin Tour — Street Art & Culture | Juan Berliner",
+   "Alternative Berlin tour with Juan Berliner. Street art, Kreuzberg, East Side Gallery and the city's most vibrant neighbourhoods. 3h45."
+  ],
+  "tours/free-tour-berlin.html": [
+   "Berlin Free Tour — Juan Berliner, Official Guide",
+   "Free tour of Berlin with certified guide Juan Berliner. 3h30, every day. The city's most important historic landmarks in a single walk."
+  ],
+  "tours/muro-de-berlin.html": [
+   "Berlin Wall & Cold War Free Tour — Juan Berliner, Official Guide",
+   "Free tour of the Berlin Wall and the Cold War with certified guide Juan Berliner. 3h30, Tuesday to Sunday. Bernauer Strasse, ghost stations and more."
+  ],
+  "tours/nazismo-tercer-reich.html": [
+   "Nazism / Third Reich Tour — Juan Berliner",
+   "Nazism and Third Reich tour in Berlin with Juan Berliner. 3h30, Friday and Saturday. The places where one of history's darkest regimes took shape."
+  ],
+  "tours/potsdam.html": [
+   "Potsdam Tour — City of Palaces | Juan Berliner",
+   "Potsdam tour with certified guide Juan Berliner. Sanssouci Palace, UNESCO gardens, the Dutch Quarter and much more. 5h45 from Berlin."
+  ],
+  "tours/sachsenhausen.html": [
+   "Sachsenhausen Tour — Concentration Camp | Juan Berliner",
+   "Guided tour of the Sachsenhausen concentration camp with Juan Berliner. 5h30, daily departure from Berlin. A necessary and powerful visit."
+  ],
+  "blog/index.html": [
+   "Blog — Berlin Travel Guide | Juan Berliner",
+   "Articles about Berlin: history, itineraries, travel tips and more. Your tour guide Juan Berliner shares everything you need to know before you travel."
+  ],
+  "blog/arte-urbano-berlin.html": [
+   "Street Art in Berlin: Graffiti, Murals and Street Culture | Juan Berliner",
+   "The definitive guide to street art in Berlin: Kreuzberg, Neukölln, East Side Gallery, the best murals and how to experience them with a local guide."
+  ],
+  "blog/berlin-con-poco-presupuesto.html": [
+   "Berlin on a Budget: Complete Guide | Juan Berliner",
+   "How to visit Berlin without overspending: where to sleep cheaply, what to eat, how to get around, what to do for free and money-saving tips from a local guide."
+  ],
+  "blog/berlin-en-1-dia.html": [
+   "Berlin in 1 Day: Mission (Almost) Impossible | Juan Berliner",
+   "One day in Berlin? It's like trying to eat an elephant for dinner in 20 minutes. But if you have no choice, here is the most efficient route, with humour and no fluff."
+  ],
+  "blog/cultura-cerveza-berlin.html": [
+   "Berlin's Beer Culture: Biergärten, Kneipen and Craft Beer | Juan Berliner",
+   "The 1516 Reinheitsgebot, Berlin's beer gardens, German beer styles and the craft scene: everything you need to know to drink well in Berlin."
+  ],
+  "blog/free-tours-berlin.html": [
+   "Berlin Free Tours: Complete Guide | Juan Berliner",
+   "Everything about free tours in Berlin: what they are, how they work, what they cover, how much to tip and how to choose the best one."
+  ],
+  "blog/historia-muro-berlin.html": [
+   "History of the Berlin Wall: Construction, Life and Fall | Juan Berliner",
+   "Everything about the Berlin Wall: why it was built in 1961, what divided life was like, the escape attempts and the historic fall on 9 November 1989."
+  ],
+  "blog/que-comer-en-berlin.html": [
+   "What to Eat in Berlin: Complete Food Guide | Juan Berliner",
+   "Döner kebab, currywurst, German breakfast and food markets: everything you have to try in Berlin and where to find it."
+  ],
+  "blog/que-ver-berlin-3-dias.html": [
+   "Berlin in 3 Days: Complete Itinerary | Juan Berliner",
+   "The definitive 3-day Berlin itinerary: what to see, what to eat, how to get around and the essentials you can't miss. Written by a local guide."
+  ],
+  "blog/sachsenhausen-como-llegar.html": [
+   "Sachsenhausen: How to Get There and What to Expect | Juan Berliner",
+   "A practical guide to visiting the Sachsenhausen concentration camp from Berlin: how to get there by train, opening hours, what to see, price and how to prepare emotionally."
+  ],
+  "blog/techno-berlin.html": [
+   "Techno in Berlin: History, Culture and How to Experience It | Juan Berliner",
+   "The history of Berlin techno: how the fall of the Wall gave rise to the world's most influential scene, what Berghain is and how the city lives its music."
+  ],
+  "blog/tours-privados-berlin.html": [
+   "Private Tours in Berlin: Are They Worth It? | Juan Berliner",
+   "Private tours in Berlin with a local guide. No groups of 30, no closed umbrellas or little flags. This is discovering Berlin at your own pace."
+  ]
+ },
+ "alts": {
+  "Free Tour Berlín": "Berlin Free Tour",
+  "Muro de Berlín": "Berlin Wall",
+  "Berlín Alternativo": "Alternative Berlin",
+  "Campo de Concentración Sachsenhausen": "Sachsenhausen Concentration Camp",
+  "Tour de Potsdam": "Potsdam Tour",
+  "Tour del Nazismo": "Nazism Tour",
+  "East Side Gallery — Berlín Alternativo": "East Side Gallery — Alternative Berlin",
+  "Patio art nouveau Berlín": "Art nouveau courtyard in Berlin",
+  "Mural East Side Gallery": "East Side Gallery mural",
+  "Mural de Thierry Noir en la East Side Gallery": "Thierry Noir mural at the East Side Gallery",
+  "Callejones alternativos de Berlín": "Alternative alleyways in Berlin",
+  "Puerta de Brandeburgo — Free Tour Berlín": "Brandenburg Gate — Berlin Free Tour",
+  "Puerta de Brandeburgo": "Brandenburg Gate",
+  "Memorial Judíos Asesinados de Europa": "Memorial to the Murdered Jews of Europe",
+  "Antigua Reichskanzlei": "Former Reich Chancellery",
+  "Ministerio Federal de Finanzas": "Federal Ministry of Finance",
+  "Facultad de Derecho": "Faculty of Law",
+  "Muro de Berlín y Ministerio de Aviación del Reich": "Berlin Wall and Reich Air Ministry",
+  "Memorial del Muro de Berlín — Bernauer Straße": "Berlin Wall Memorial — Bernauer Straße",
+  "Interior del Palacio de las Lágrimas": "Inside the Palace of Tears",
+  "Memorial del Muro de Berlín": "Berlin Wall Memorial",
+  "Iglesia de la Reconciliación": "Church of Reconciliation",
+  "Mural Konrad Schumann": "Conrad Schumann mural",
+  "Cabina fronteriza": "Border booth",
+  "Restos del Muro de Berlín": "Remains of the Berlin Wall",
+  "Tour Nazismo / Tercer Reich — Berlín": "Nazism / Third Reich Tour — Berlin",
+  "Reichstag — Parlamento alemán": "Reichstag — German parliament",
+  "Stolpersteine — Piedras del tropiezo": "Stolpersteine — Stumbling stones",
+  "Detalle del Reichstag": "Reichstag detail",
+  "Palacio de Sanssouci — Potsdam": "Sanssouci Palace — Potsdam",
+  "Palacio de Sanssouci": "Sanssouci Palace",
+  "Iglesia de la Paz": "Church of Peace",
+  "Puerta de Nauen": "Nauen Gate",
+  "Cementerio memorial soviético": "Soviet memorial cemetery",
+  "Casas del barrio holandés": "Houses in the Dutch Quarter",
+  "Fachada dorada Palacio de Sanssouci": "Golden façade of Sanssouci Palace",
+  "Excursión Potsdam": "Potsdam excursion",
+  "Barrio holandés de Potsdam": "Potsdam's Dutch Quarter",
+  "Campo de concentración de Sachsenhausen": "Sachsenhausen concentration camp",
+  "Verjas del campo de Sachsenhausen": "Gates of the Sachsenhausen camp",
+  "Barracón del campo": "Camp barracks",
+  "Hornos crematorios": "Crematorium ovens",
+  "Vista del campo": "View of the camp",
+  "Historia del Muro de Berlín": "History of the Berlin Wall",
+  "Qué ver en Berlín en 3 días": "What to see in Berlin in 3 days",
+  "Tours privados en Berlín": "Private tours in Berlin",
+  "Berlín en 1 día": "Berlin in 1 day",
+  "Free tours en Berlín": "Free tours in Berlin",
+  "Sachsenhausen cómo llegar": "How to get to Sachsenhausen",
+  "Berlín con poco presupuesto": "Berlin on a budget",
+  "Arte urbano en Berlín": "Street art in Berlin",
+  "Techno en Berlín": "Techno in Berlin",
+  "Qué comer en Berlín": "What to eat in Berlin",
+  "Cultura de la cerveza en Berlín": "Beer culture in Berlin",
+  "Berlín barato": "Cheap Berlin",
+  "El Muro de Berlín": "The Berlin Wall",
+  "Memorial Sachsenhausen": "Sachsenhausen Memorial",
+  "Tour privado en Berlín": "Private tour in Berlin"
+ },
+ "aria": {
+  "Cambiar idioma": "Switch language",
+  "Menú": "Menu",
+  "Anterior": "Previous",
+  "Siguiente": "Next",
+  "Punto de encuentro": "Meeting point",
+  "Cerrar": "Close",
+  "Escríbeme por WhatsApp": "Message me on WhatsApp"
+ },
+ "strings": {
+  "Gratis para empezar": "Free to start",
+  "Free Tour Berlín": "Berlin Free Tour",
+  "Sin coste fijo. Dejas la propina que consideres al final. La mejor forma de empezar Berlín con presupuesto ajustado.": "No fixed price. You leave whatever tip you think is fair at the end. The best way to start Berlin on a tight budget.",
+  "Gratis + propina": "Free + tip",
+  "Ver el free tour →": "See the free tour →",
+  "Más artículos": "More articles",
+  "→ Berlín en 3 días: itinerario": "→ Berlin in 3 days: itinerary",
+  "→ Free tours en Berlín": "→ Free tours in Berlin",
+  "→ Historia del Muro": "→ History of the Wall",
+  "El tour perfecto para viajeros con presupuesto ajustado": "The perfect tour for travellers on a tight budget",
+  "Free tour sin coste fijo. Dejas la propina que quieras al final. Todos los días, en español.": "Free tour with no fixed price. You leave whatever tip you like at the end. Every day, in Spanish.",
+  "Ver el free tour": "See the free tour",
+  "Reserva el free tour": "Book the free tour",
+  "Free Tour Berlín con Juan": "Berlin Free Tour with Juan",
+  "3h30 por el centro histórico. Todos los días. Guía certificado, grupos reducidos, en español nativo. +2.000 reseñas de 5 estrellas.": "3h30 through the historic centre. Every day. Certified guide, small groups, in native Spanish. 2,000+ 5-star reviews.",
+  "Todos los días": "Every day",
+  "Reservar por WhatsApp": "Book via WhatsApp",
+  "→ Berlín con poco presupuesto": "→ Berlin on a budget",
+  "→ Sachsenhausen: guía práctica": "→ Sachsenhausen: practical guide",
+  "Tour del Muro de Berlín": "Berlin Wall Tour",
+  "Recorre los puntos clave del Muro con Juan. Historia en profundidad, anécdotas reales y los rincones que no encontrarás en las guías.": "Walk the key sites of the Wall with Juan. In-depth history, real stories and corners you won't find in guidebooks.",
+  "⏱ 3 horas": "⏱ 3 hours",
+  "Ver el tour →": "See the tour →",
+  "Sobre el autor": "About the author",
+  "Juan Berliner es guía oficial de turismo en Berlín con más de 2.000 reseñas. Especializado en historia contemporánea alemana y tours en español.": "Juan Berliner is an official tour guide in Berlin with more than 2,000 reviews. He specialises in contemporary German history and tours in Spanish.",
+  "→ Qué ver en Berlín en 3 días": "→ What to see in Berlin in 3 days",
+  "→ Sachsenhausen: cómo llegar": "→ Sachsenhausen: how to get there",
+  "El tour perfecto para el Día 1": "The perfect tour for Day 1",
+  "Free Tour por Berlín": "Berlin Free Tour",
+  "3h30 recorriendo los grandes hitos del centro histórico: Puerta de Brandeburgo, Holocausto, Checkpoint Charlie y más. El mejor inicio para tu visita.": "3h30 through the great landmarks of the historic centre: Brandenburg Gate, the Holocaust Memorial, Checkpoint Charlie and more. The best start to your visit.",
+  "Gratis": "Free",
+  "Para el Día 3": "For Day 3",
+  "Excursiones de día completo con guía en español. Reserva con antelación, especialmente en temporada alta.": "Full-day excursions with a Spanish-speaking guide. Book ahead, especially in high season.",
+  "→ Historia del Muro de Berlín": "→ History of the Berlin Wall",
+  "Tour con guía en español": "Tour with a Spanish-speaking guide",
+  "Excursión de día completo desde Berlín con guía certificado en español. Contexto histórico, traslado en tren y visita guiada al Memorial.": "Full-day excursion from Berlin with a certified Spanish-speaking guide. Historical context, train transfer and a guided visit to the Memorial.",
+  "⏱ Día completo": "⏱ Full day",
+  "Desde Berlín": "From Berlin",
+  "Consultar por WhatsApp": "Ask on WhatsApp",
+  "Artículos relacionados": "Related articles",
+  "Todos los artículos": "All articles",
+  "Historia del Muro": "History of the Wall",
+  "Berlín con presupuesto": "Berlin on a budget"
+ }
+}
