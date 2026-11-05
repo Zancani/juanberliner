@@ -1,0 +1,899 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Berlin Recommendations — Juan Berliner</title>
+  <meta name="description" content="My 101 recommendations in Berlin: where to eat, bars, museums, parks, clubs and cafés, on an interactive map by Juan Berliner, official tour guide.">
+  <link rel="canonical" href="https://juanberliner.com/en/berlin-map.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://juanberliner.com/en/berlin-map.html">
+  <meta property="og:title" content="My Berlin Recommendations — Juan Berliner">
+  <meta property="og:description" content="My 101 recommendations in Berlin: where to eat, bars, museums, parks, clubs and cafés, on an interactive map by Juan Berliner, official tour guide.">
+  <meta property="og:image" content="https://juanberliner.com/og-image.webp">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <style>
+    :root{--ink:#001219;--stone:#012A36;--raised:#013747;--line:#003D52;--mist:#7FB5BF;--parchment:#E9D8A6;--brass:#B8860B;--brass-line:rgba(184,134,11,.32);--r:2px;--ease:cubic-bezier(.16,1,.3,1);--list:392px;--panel:408px}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;overflow:hidden}
+    body{display:flex;flex-direction:column;height:100dvh;background:var(--ink);color:var(--parchment);font:400 15px/1.6 'Inter',system-ui,sans-serif;font-feature-settings:"tnum" 1,"lnum" 1}
+    ::selection{background:var(--brass);color:var(--ink)}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+    :focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+    *{scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+
+    /* Nav */
+    .m-nav{flex:none;display:flex;align-items:center;gap:1rem;height:64px;padding:0 1.5rem;background:var(--ink);border-bottom:1px solid var(--line);position:relative;z-index:1100}
+    .nav-back{display:flex;align-items:center;gap:.4rem;min-height:44px;font-size:.875rem;color:var(--mist);transition:color .2s}
+    .nav-back:hover{color:#fff}
+    .nav-sep{width:1px;height:20px;background:var(--line)}
+    .nav-brand{font:600 1.375rem/1 'Playfair Display',Georgia,serif;letter-spacing:-.01em;color:#fff;transition:color .2s}
+    .nav-brand:hover{color:var(--brass)}
+    .nav-flex{flex:1}
+    .lang-toggle{display:flex;border:1px solid var(--line);border-radius:var(--r)}
+    .lang-btn{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:40px;padding:0 .7rem;font-size:.75rem;font-weight:600;letter-spacing:.1em;color:var(--mist);transition:color .2s,background-color .2s}
+    .lang-btn:hover{color:#fff}
+    .lang-btn.active{background:var(--brass);color:var(--ink)}
+
+    /* Layout */
+    #main{flex:1;min-height:0;position:relative;overflow:hidden;display:grid;grid-template-columns:var(--list) minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);grid-template-areas:"head map" "filters map" "list map"}
+    #m-head{grid-area:head;display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:1.5rem 1.5rem .25rem;border-right:1px solid var(--line)}
+    #m-head h1{white-space:nowrap;font:500 1.5625rem/1.1 'Playfair Display',Georgia,serif;letter-spacing:-.015em;color:#fff}
+    #n-count{flex:none;font-size:.8125rem;color:var(--mist)}
+    #filters{grid-area:filters;display:flex;flex-wrap:wrap;gap:.25rem .375rem;padding:.875rem 1.5rem 1rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .chip{display:inline-flex;align-items:center;gap:.4rem;min-height:36px;padding:.2rem .6rem;border:1px solid transparent;border-radius:var(--r);font-size:.8125rem;font-weight:500;line-height:1.2;color:var(--mist);white-space:nowrap;transition:color .2s,border-color .2s,background-color .2s}
+    .chip svg{width:14px;height:14px;flex:none}
+    .chip .cnt{font-size:.75rem;opacity:.75}
+    .chip:hover{color:#fff;border-color:var(--line)}
+    .chip.active{background:var(--raised);border-color:var(--brass);color:var(--parchment)}
+    .chip.active svg{color:var(--brass)}
+    #list{grid-area:list;min-height:0;overflow-y:auto;overscroll-behavior:contain;border-right:1px solid var(--line)}
+    .l-group h2{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:.5rem;padding:.8rem 1.5rem .6rem;background:var(--ink);border-bottom:1px solid var(--brass-line);font:600 .75rem/1.3 'Inter',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--parchment)}
+    .l-group h2 svg{width:14px;height:14px;color:var(--brass);flex:none}
+    .l-group h2 span:last-child{margin-left:auto;font-weight:400;letter-spacing:0;text-transform:none;color:var(--mist)}
+    .list-item{display:grid;grid-template-columns:64px minmax(0,1fr);gap:.875rem;align-items:center;width:100%;padding:.75rem 1.5rem;text-align:left;border-bottom:1px solid rgba(0,61,82,.55);transition:background-color .15s}
+    .list-item:hover{background:var(--stone)}
+    .list-item.sel{background:var(--raised);box-shadow:inset 2px 0 0 var(--brass)}
+    .list-item:focus-visible{outline-offset:-2px}
+    .li-thumb{position:relative;display:flex;align-items:center;justify-content:center;width:64px;height:64px;overflow:hidden;border-radius:var(--r);background:var(--stone);color:var(--brass)}
+    .li-thumb svg{width:22px;height:22px}
+    .li-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .li-name{display:block;font:500 1.0625rem/1.25 'Playfair Display',Georgia,serif;color:#fff;overflow-wrap:anywhere}
+    .li-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:.2rem;font-size:.8125rem;line-height:1.45;color:var(--mist)}
+
+    .m-legal{display:flex;gap:1rem;padding:1rem 1.5rem 1.25rem;font-size:.8125rem}
+    .m-legal a{color:var(--mist);text-decoration:underline;text-underline-offset:.2em}
+    .m-legal a:hover{color:#fff}
+
+    /* Map */
+    #map{grid-area:map;min-height:0;background:var(--ink)}
+    .is-raster .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.72) saturate(.5)}
+    .leaflet-container{font-family:inherit;background:var(--ink)}
+    .leaflet-control-zoom{border:1px solid var(--line)!important;border-radius:var(--r)!important;box-shadow:none!important}
+    .leaflet-control-zoom a{width:36px!important;height:36px!important;line-height:34px!important;background:var(--ink)!important;border-color:var(--line)!important;border-radius:0!important;color:var(--parchment)!important;transition:color .2s}
+    .leaflet-control-zoom a:hover{color:var(--brass)!important}
+    .leaflet-control-attribution{background:rgba(0,18,25,.72)!important;color:var(--mist)!important;font-size:10px}
+    .leaflet-control-attribution a{color:var(--parchment)!important}
+    .leaflet-marker-icon.pin-wrap{background:none;border:0;outline:0}
+    .pin{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--ink);border:1px solid var(--brass);color:var(--parchment);box-shadow:0 2px 6px rgba(0,0,0,.45);transition:transform .2s var(--ease),background-color .15s,color .15s}
+    .pin svg{width:13px;height:13px}
+    .pin-wrap:hover .pin,.pin-wrap.is-hot .pin,.pin-wrap:focus-visible .pin{transform:scale(1.25);background:var(--raised);color:#fff}
+    .pin-wrap:focus-visible .pin{outline:2px solid var(--parchment);outline-offset:2px}
+    .pin-wrap.is-sel .pin{transform:scale(1.5);background:var(--brass);border-color:var(--parchment);color:var(--ink)}
+    .leaflet-tooltip.pin-tip{padding:.25rem .55rem;background:var(--ink);border:1px solid var(--brass-line);border-radius:var(--r);box-shadow:0 3px 10px rgba(0,0,0,.4);font:500 .875rem/1.3 'Playfair Display',Georgia,serif;color:#fff}
+    .leaflet-tooltip.pin-tip::before{display:none}
+
+    /* Detail panel */
+    #panel{position:absolute;top:0;right:0;bottom:0;z-index:1000;display:flex;flex-direction:column;width:var(--panel);background:var(--ink);border-left:1px solid var(--brass-line);box-shadow:-12px 0 32px rgba(0,0,0,.35);transform:translateX(102%);visibility:hidden;transition:transform .38s var(--ease),visibility 0s .38s}
+    #panel.open{transform:none;visibility:visible;transition:transform .38s var(--ease),visibility 0s}
+    #panel-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+    #panel-photo{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:3/2;background:var(--stone);color:var(--brass);overflow:hidden}
+    #panel-photo>svg{width:44px;height:44px}
+    #panel-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    #panel-close{position:absolute;top:.75rem;right:.75rem;z-index:3;display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:var(--ink);border:1px solid var(--line);border-radius:var(--r);color:var(--parchment);transition:color .2s,border-color .2s}
+    #panel-close:hover{color:#fff;border-color:var(--brass)}
+    #panel-body{padding:1.5rem}
+    .p-badge{display:flex;align-items:center;gap:.45rem;font-size:.75rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--parchment)}
+    .p-badge svg{width:14px;height:14px;color:var(--brass);flex:none}
+    .p-name{margin-top:.5rem;font:500 2rem/1.12 'Playfair Display',Georgia,serif;letter-spacing:-.015em;color:#fff;text-wrap:balance;overflow-wrap:anywhere}
+    .p-desc{margin-top:1rem;font-size:1rem;line-height:1.65;color:var(--parchment);text-wrap:pretty}
+    .p-row{display:flex;gap:.6rem;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.875rem;line-height:1.55;color:var(--mist)}
+    .p-row svg{width:15px;height:15px;flex:none;margin-top:.2rem;color:var(--brass)}
+    .p-gmaps{display:flex;align-items:center;justify-content:center;gap:.55rem;min-height:48px;margin-top:1.5rem;padding:.6rem 1rem;border:1px solid var(--brass);border-radius:var(--r);font-size:.9375rem;font-weight:600;color:var(--parchment);transition:background-color .2s,color .2s}
+    .p-gmaps:hover{background:var(--brass);color:var(--ink)}
+    .p-gmaps svg{transition:transform .25s var(--ease)}
+    .p-gmaps:hover svg{transform:translateX(3px)}
+
+    @media (max-width:900px){
+      :root{--head:50px;--filters:56px;--map-h:36svh}
+      .m-nav{height:56px;padding:0 1rem;gap:.75rem}
+      .nav-brand{font-size:1.1875rem}
+      #main{grid-template-columns:minmax(0,1fr);grid-template-rows:var(--head) var(--filters) var(--map-h) minmax(0,1fr);grid-template-areas:"head" "filters" "map" "list"}
+      #m-head{align-items:center;padding:0 1rem;border-right:0}
+      #m-head h1{font-size:1.375rem}
+      #filters{flex-wrap:nowrap;overflow-x:auto;align-items:center;gap:.375rem;padding:0 1rem;border-right:0;scrollbar-width:none}
+      #filters::-webkit-scrollbar{display:none}
+      .chip{min-height:40px;flex:none}
+      #list{border-right:0;border-top:1px solid var(--line)}
+      .l-group h2,.list-item{padding-inline:1rem}
+      #panel{top:calc(var(--head) + var(--filters) + var(--map-h));width:100%;border-left:0;border-top:1px solid var(--brass);box-shadow:0 -10px 28px rgba(0,0,0,.4);transform:translateY(102%)}
+      #panel-photo{aspect-ratio:21/9}
+      #panel-body{padding:1.1rem 1rem 1.5rem}
+      .p-name{font-size:1.625rem}
+      #panel-close{top:.5rem;right:.5rem}
+    }
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation:none!important}}
+  </style>
+  <script defer="" src="/_vercel/insights/script.js"></script>
+<link rel="alternate" hreflang="es" href="https://juanberliner.com/berlin-map.html">
+  <link rel="alternate" hreflang="en" href="https://juanberliner.com/en/berlin-map.html">
+  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/berlin-map.html">
+</head>
+<body class="lang-en">
+
+<nav class="m-nav">
+  <a href="index.html" class="nav-back">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    <span>Home</span>
+  </a>
+  <div class="nav-sep"></div>
+  <a href="index.html" class="nav-brand">Juan Berliner</a>
+  <div class="nav-flex"></div>
+  <div class="lang-toggle">
+    <a class="lang-btn active" id="btn-es" href="../berlin-map.html" hreflang="es">ES</a>
+    <a class="lang-btn" id="btn-en" href="berlin-map.html" hreflang="en" aria-current="true">EN</a>
+  </div>
+</nav>
+
+<div id="main">
+  <header id="m-head">
+    <h1><span>My recommendations</span></h1>
+    <span id="n-count" aria-live="polite"></span>
+  </header>
+  <div id="filters" role="group"></div>
+  <div id="list"></div>
+  <div id="map"></div>
+  <aside id="panel">
+    <button id="panel-close" title="Close" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </button>
+    <div id="panel-scroll">
+      <div id="panel-photo"></div>
+      <div id="panel-body">
+        <div id="p-badge" class="p-badge"></div>
+        <h2 id="p-name" class="p-name"></h2>
+        <p id="p-desc" class="p-desc"></p>
+        <div id="p-info"></div>
+        <a id="p-gmaps" class="p-gmaps" target="_blank" rel="noopener">
+          
+          <span>Open in Google Maps</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.22/leaflet-maplibre-gl.js"></script>
+<script>
+// ── STATE ───────────────────────────────────────────────────────
+let lang = 'es';
+let currentCategory = null;
+let selected = null;
+let lastTrigger = null;
+
+// ── CATEGORIES (un solo color: se distinguen por el icono) ──────
+const GLYPH = {
+  "Food":"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
+  "Bars":"M8 22h8M7 10h10M12 15v7M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z",
+  "Museums":"M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 2l8 5H4Z",
+  "Green Areas & Lakes":"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10ZM2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12",
+  "Clubs":"M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3Z",
+  "Cafes/Brunch":"M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4ZM6 2v2M10 2v2M14 2v2",
+  "Feeling Fancy":"M12 3l1.9 5.6a2 2 0 0 0 1.3 1.3L21 12l-5.8 2.1a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.6a2 2 0 0 0-1.3-1.3L3 12l5.8-2.1a2 2 0 0 0 1.3-1.3Z",
+  "Squares & Locations":"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0ZM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
+  "all":"M4 6h16M4 12h16M4 18h16",
+  "clock":"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5l3 2"
+};
+const svg = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${GLYPH[k]}"/></svg>`;
+const CAT = {
+  "Food":                { label_es:"Comida",              label_en:"Food"          },
+  "Bars":                { label_es:"Bares",               label_en:"Bars"          },
+  "Museums":             { label_es:"Museos",              label_en:"Museums"       },
+  "Green Areas & Lakes": { label_es:"Parques y Lagos",     label_en:"Parks & Lakes" },
+  "Clubs":               { label_es:"Clubes",              label_en:"Clubs"         },
+  "Cafes/Brunch":        { label_es:"Cafés",               label_en:"Cafés"         },
+  "Feeling Fancy":       { label_es:"Para darse un gusto", label_en:"Feeling Fancy" },
+  "Squares & Locations": { label_es:"Plazas",              label_en:"Squares"       },
+};
+const label = c => lang === 'es' ? CAT[c].label_es : CAT[c].label_en;
+const places_n = n => lang === 'es' ? n + ' lugar' + (n !== 1 ? 'es' : '') : n + ' place' + (n !== 1 ? 's' : '');
+const descOf = p => lang === 'es' ? (DESC_ES[p.name] || p.desc) : p.desc;
+
+// ── SPANISH DESCRIPTIONS ─────────────────────────────────────────
+const DESC_ES = {
+  // FOOD
+  "Markthalle Neun": "¡Un mercado gastronómico con todo lo que puedas imaginar! Si no sabés adónde ir, ¡este es el lugar!",
+  "Kebap with Attitude": "Una versión moderna del kebab berlinés con énfasis en la calidad y los ingredientes locales. No te pierdas los baños temáticos.",
+  "Knödelwirtschaft NORD": "Albóndigas alemanas. Simples, contundentes y deliciosas.",
+  "Zur letzten Instanz": "No podés ponerte más 'alemán' que esto. Definitivamente vale la pena para tu dosis de comida alemana.",
+  "Feel good food by Omar": "El mejor shawarma y falafel de la ciudad. Todo es casero y Omar es un personaje.",
+  "Kitten Deli": "Probablemente uno de los lugares más cool de Berlín. Tienen uno de los mejores hummus que probé en mi vida. En verano se siente como el corazón de la ciudad con mesas por los adoquines. ¡El sabbich es definitivamente uno de sus platos más populares!",
+  "Curry 61": "¡Uno de mis lugares favoritos para comer currywurst!",
+  "Klinke": "Klinke toma los platos clásicos alemanes y los eleva para que no estés comiendo solo cerdo y papas. Es básicamente un bar de tapas alemán.",
+  "Best Gemüse Kebap": "Estoy convencido de que estos chicos tienen el mejor kebab de Berlín. Verduras asadas, 3 salsas, queso de cabra, ensalada fresca con aderezo, pollo de origen local — ¡todo por 4,50€!",
+  "Blechbilderbar": "¡El bar más antiguo de esta calle! Famoso por su Flammkuchen, un plato tradicional alemán/francés. La señora que lo dirige parece 'Berliner Schnauze' a primera vista, pero es increíblemente amable y divertida.",
+  "W Pizza": "Mi pizza favorita en Berlín. Pedí algo simple: su salsa de tomate es lo que las hace tan especiales.",
+  "Altes Europa": "¡Si buscás comida alemana, este es definitivamente uno de los mejores lugares para encontrarla en Berlín!",
+  "Ketels Wurstspezialitäten": "Este es mi lugar favorito para comer una Currywurst.",
+  "Azzam Restaurant": "Porciones enormes de comida libanesa. Uno de los nombres famosos en Berlín entre los que saben.",
+  "Burgermeister Schlesisches Tor": "El local de hamburguesas más famoso de Berlín, ¡en un baño público reconvertido!",
+  "CRAZY BASTARD KITCHEN": "¡Una empresa de salsas picantes! Cambian su menú semanalmente adaptando la comida a sus salsas.",
+  "Gazzo": "Un lugar de pizza increíblemente popular.",
+  "Sahara Imbiss": "Sus wraps con salsa de maní son increíblemente baratos y deliciosos. Hay Saharas por todos lados, y no es de extrañar.",
+  "Teras": "El local de kebab favorito de Angela Merkel.",
+  "Mittendrin Restaurant & Café": "Restaurante alemán para almuerzo y cena.",
+  "SammyS Berliner Donuts": "Un gran lugar para conseguir los clásicos 'Berliners'.",
+  "1990 Vegan Living": "Uno de los lugares más populares de Berlín. No soy vegano, ¡pero sigo volviendo! Un sueño para comida vietnamita fresca y sabrosa.",
+  "Saveur de Bánh Mì": "Sándwiches vietnamitas simples, baratos y deliciosos, con un tamaño generoso.",
+  "Scheers Schnitzel": "Un clásico berlinés para el schnitzel, servido desde un pequeño puesto a orillas del Spree. Rápido, sin pretensiones y sorprendentemente bueno.",
+  "Rüyam Gemüse Kebab (Prenzlauer Berg)": "La misma fórmula legendaria de kebab de verduras que el original de Neukölln — verduras asadas, múltiples salsas, queso de cabra, todo por pocos euros. Vale la pena visitar cualquier sucursal.",
+  "Rüyam Gemüse Kebab (Schöneberg)": "La misma fórmula legendaria de kebab de verduras que el original de Neukölln — verduras asadas, múltiples salsas, queso de cabra, todo por pocos euros. Vale la pena visitar cualquier sucursal.",
+  // BARS
+  "Ä": "Para mí, este es el bar típicamente berlinés. Oscuro, con humo y cerveza barata — increíblemente popular entre los kreuzköllners.",
+  "Hops & Barley": "¡Si querés conocer la escena de la cerveza artesanal en Berlín, este es el lugar!",
+  "Dschungel": "¡Decoración tipo 'jungla' increíble, pero es un bar de fumadores, tenelo en cuenta!",
+  "Eschenbräu": "¡Una cervecería berlinesa con excelente calidad y precios muy accesibles! Bajá las escaleras al subsuelo. También sirven Flammkuchen al verdadero estilo alemán.",
+  "Prater Beer Garden": "El jardín de cerveza más antiguo de la ciudad, ¡y el punto de encuentro habitual para nosotros los guías! Definitivamente una gran parada en un día de verano.",
+  "My Bar ICI": "El opuesto a un bar berlinés — se siente como entrar a París. Vinos tranquilos, jazz suave, y el dueño más parisino que vas a encontrar en Berlín.",
+  "Lamm": "Uno de mis bares de cócteles favoritos en el norte. En invierno son especialmente populares por su Glühwein especial.",
+  "Schneeeule – Berliner Bierkultur": "Ulrike es la experta mundial en Berliner Weisse, una cerveza ácida tradicional que Napoleón llamó 'el champagne del norte'. Fanáticos de la cerveza de todo el mundo vienen a probar lo mejor de lo mejor.",
+  "Café Luzia": "¿Querés el bar clásico de Kreuzberg? Este es el lugar.",
+  "Ritchie Café & Bar": "Si Cafe Luzia está muy lleno, este está justo enfrente y es prácticamente el mismo bar.",
+  "Blauer Affe": "Uno de los bares locales más queridos de Neukölln. Sin pretensiones, barato y lleno de habituales. Un gran lugar para instalarse por la noche.",
+  "Café Cinema": "Un bar relajado en el corazón de Mitte con una vibra de cine retro. Buenos cócteles, buena compañía y una noche siempre divertida.",
+  "MUTED HORN": "Un apasionado bar de cerveza artesanal en Kreuzköllln con una selección rotativa de cervezas locales e internacionales. Imprescindible para los amantes de la cerveza.",
+  "Fitcher's Vogel": "Un bar maravillosamente oscuro y ecléctico en Friedrichshain, con el nombre de un cuento de los hermanos Grimm. Gran parada antes del club o destino en sí mismo.",
+  "James June Biergarten": "Un Biergarten a orillas del Spree, uno de los lugares más relajados para disfrutar de una tarde soleada en Berlín con una cerveza fría.",
+  "BRLO Brwhouse": "Cervecería artesanal y restaurante en un espacio industrial recuperado en el Parque Gleisdreieck. Excelentes cervezas, buena comida y una gran terraza en verano.",
+  "Klunkerkranich": "Bar en la terraza del centro comercial Neukölln Arcaden.",
+  // MUSEUMS
+  "Stasi Museum": "Ubicado en el cuartel general original de la policía secreta Stasi. Documenta todas las formas en que el gobierno espiaba a los ciudadanos de la Alemania Oriental. El edificio fue ocupado por manifestantes tras la reunificación para proteger los documentos. El lugar incluso tiene un piso conservado exactamente como era en los años 80.",
+  "Topografía del Terror": "Definitivamente una visita imperdible en Berlín. En el antiguo sitio de las SS y la Gestapo, este lugar habla sobre el sistema de terror del Tercer Reich. Entrada gratuita.",
+  "Kulturbrauerei – Exposición RDA": "Mientras la mayoría va al Museo DDR, la Kulturbrauerei es un lugar más matizado e interesante para explorar la vida en la RDA, ubicado en la antigua cervecería Schultheiss.",
+  "Memorial y Museo Sachsenhausen": "El campo de concentración a las afueras de Berlín, en Oranienburg. Un poco lejos, pero podés organizar un tour. Definitivamente un evento de día completo.",
+  "Memorial del Muro de Berlín": "La sección conservada más significativa del Muro de Berlín, con una exposición al aire libre a lo largo de la Bernauer Straße. Entrada gratuita.",
+  "Palacio Ephraim": "La exposición 'Berlin Zeit' es la única exposición abierta que repasa un poco de toda la historia alemana.",
+  "Prisión de la Stasi (Hohenschönhausen)": "Diferente al Museo de la Stasi pero igual de cargado de historia. Antigua prisión secreta donde se interrogaba a los disidentes. Solo con visitas guiadas.",
+  "Deutschlandmuseum": "Una historia interactiva de Alemania. No es el más extenso, pero definitivamente es divertido si buscás algo más accesible.",
+  "Berlin Story Bunker": "Si querés un museo de la Segunda Guerra Mundial, esta es tu mejor apuesta. Historia completa de la guerra y los nazis, con un búnker de Hitler reconstruido dentro de un búnker real.",
+  "Ethnologisches Museum": "Un museo muy interesante sobre la historia colonial alemana. Si te interesa cómo Europa debería afrontar su pasado colonial, el museo es en su mayoría un buen ejemplo.",
+  "Märkisches Museum": "Mientras el Museo Histórico Alemán está cerrado, esta es probablemente una de tus mejores opciones para aprender sobre la historia alemana. Kaisers, el Muro, los nazis — este lugar lo cubre todo.",
+  "Museo del Espionaje": "Un lugar divertido para aprender sobre la 'ciudad de espías' del Berlín de la Guerra Fría. Muy interactivo, puede ser una buena salida para familias también.",
+  "Urban Nation Street Art Museum": "¡Es un museo de arte urbano! ¡Está bastante bien!",
+  "Mundo Subterráneo de Berlín": "Tours muy interesantes de los sitios subterráneos de la ciudad — búnkeres, túneles e infraestructura de la Guerra Fría.",
+  "Museo de Videojuegos": "No es muy berlinés, pero definitivamente es divertido si querés jugar algunos videojuegos clásicos.",
+  // GREEN AREAS & LAKES
+  "Tempelhofer Feld": "Este es tu imprescindible cuando hace sol. Sé un verdadero berlinés y dirigite al antiguo aeródromo nazi reconvertido con unas cervezas bajo el sol. Mirá los patinadores, volá un barrilete o simplemente tomá sol. Llevá todo lo que necesitás — es literalmente un aeródromo sin tiendas adentro.",
+  "Teufelsberg": "Subir esta montaña artificial hecha de escombros de la Segunda Guerra Mundial para llegar a una antigua estación de espionaje estadounidense abandonada es probablemente una de las experiencias más clásicamente 'berlinesas' que podés tener. Los cuidadores cobran alrededor de 10€.",
+  "Maybachufer": "Aquí es donde voy en un día soleado, igual que toda Kreuzköllern. El animado canal se siente como el corazón de la ciudad cuando el tiempo acompaña.",
+  "Schlachtensee": "Un hermoso lago en el suroeste de la ciudad. Perfecto para nadar en verano.",
+  "Krumme Lanke": "Otro lago estupendo para nadar en el suroeste de Berlín.",
+  "Plötzensee": "Uno de los lagos más céntricos de la ciudad. Tiene una historia oscura, pero hoy la mayoría de la gente va a disfrutar del sol. Si te sentís aventurero, podés probar el lado nudista FKK de la playa.",
+  "Wannsee": "Probablemente el lago más famoso de Berlín. La Conferencia de Wannsee (1942) se celebró aquí — donde los nazis planificaron la Solución Final.",
+  "Mauerpark": "Ves el Muro de Berlín, sumate al karaoke al aire libre o andá al mercado del domingo. Hagas lo que hagas, el Mauerpark es un pilar de la vida en Berlín.",
+  "Memorial Soviético de Treptow": "Probablemente uno de los espacios más increíbles de Berlín. No podés ponerte más soviético que esto — un monumento colosal a los soldados del Ejército Rojo caídos en la Batalla de Berlín.",
+  "YAAM": "Young African Art Market — un centro cultural a orillas del Spree con playa, bar y música en vivo.",
+  "Holzmarkt – Strandbar": "Un pueblo cultural a orillas del Spree con bares, restaurantes y una playa.",
+  // CLUBS
+  "Tresor": "Si querés tu club típico 'berlinés', este es el lugar. La música siempre es fantástica, el espacio es increíble, y realmente es el club de Berlín.",
+  "Sisyphos": "Un club fantástico amado por todos. Parte al aire libre, parte adentro, sus salas le dan cabida a casi todos. Algunos dicen que es un Berghain invertido. ¿Recordás el tema 'camp' del Met Gala? Eso es Sisy — lentejuelas, colores, fantástico.",
+  "Süss War Gestern": "Mitad bar, mitad club — un gran lugar para una noche en Friedrichshain.",
+  "Salon – Zur wilden Renate": "Uno de los clubes de tamaño medio más queridos de Berlín, distribuido en varias salas y un patio en una casa reconvertida de Friedrichshain.",
+  "Kater Blau": "Un club a orillas del Spree con un relajado espacio exterior y una pista de baile interior. Un buen punto de entrada a la escena clubera de Berlín.",
+  "://about blank": "Un serio club de techno y música electrónica en Friedrichshain con una gran área al aire libre. Uno de los pilares de la escena berlinesa, conocido por su ambiente inclusivo.",
+  "MS Hoppetosse": "Un club en un barco reconvertido amarrado en el Spree cerca de la East Side Gallery. Gran terraza exterior y enfoque en techno y house.",
+  "RSO.BERLIN": "Un gran club industrial en Schöneweide, una de las incorporaciones más recientes de Berlín a la escena techno. Conocido por sesiones maratónicas y un público fiel.",
+  // CAFES/BRUNCH
+  "19grams Alex": "Brunch y café decente en una zona bastante gris.",
+  "The Klub Kitchen": "Un lugar fácil para almorzar en Mitte.",
+  "Wilke": "Wilke tiene uno de los mejores brunches de la ciudad hasta las 15h de miércoles a domingo. Los platos son estacionales y de origen local, y el personal es el más amable de Berlín. El café es fantástico, y Carolin, la dueña, hornea todos los pasteles ella misma cada noche.",
+  "annelies": "Uno de mis lugares de brunch favoritos. Los pancakes son algo especial, pero llegá temprano porque Annelies es definitivamente un punto muy concurrido.",
+  "Café Engels": "Un clásico café de barrio en el corazón de Neukölln. Nada revolucionario, pero buen café y un gran lugar para leer, trabajar o ponerse al día con un amigo.",
+  "Shakespeare & Sons – Fine Bagels": "Una encantadora combinación de librería independiente y panadería de bagels en Friedrichshain. Bagels de verdad, buen café y grandes libros.",
+  "Bricks & Mortar": "Una cafetería de especialidad en Friedrichshain con una estética limpia y minimalista y un enfoque serio en el café. Una de las mejores tazas del este.",
+  "Sorrel": "Un restaurante de barrio en Neukölln con un menú corto y de temporada y un ambiente acogedor. Uno de esos lugares que simplemente se siente bien.",
+  "Two Trick Pony": "Un café y restaurante de brunch relajado en Schöneberg con una vibra tranquila y porciones generosas. Popular entre los locales los fines de semana.",
+  "The Barn Café": "Ganó el título de mejor café de Europa hace unos años, pero tomá la experiencia completa con un grano de sal. No es el lugar más cálido.",
+  // FEELING FANCY
+  "Bar Normal": "Ignorá las reseñas. El nuevo chef está haciendo maravillas y su selección de vinos es increíble. No pierdo ninguna excusa para venir.",
+  "No Bananas": "Nada exageradamente sofisticado, pero uno de los mejores lugares para comer en la ciudad si estás dispuesto a gastar un poco más que en un kebab.",
+  "Velvet": "Ganó el título de mejor bar de cócteles en Alemania hace unos años, ¡y entiendo por qué!",
+  "Hallmann und Klee": "Un restaurante de barrio refinado en Neukölln con una propuesta de cocina europea de temporada sin pretensiones. Una gran elección para una cena especial.",
+  "ORA": "Restaurante y bar de cócteles en una antigua farmacia.",
+  "Clärchens Ballroom": "¿Es un bar? ¿Es un club? ¿Es un restaurante? La verdad no sé, pero fue el salón de baile central del Berlín de Weimar.",
+  "Freundschaft Wine Bar": "Un bar de vinos tan sofisticado que parece estar en Múnich. Mis amigos y yo claramente no encajamos aquí, pero eso no nos impide tomar algunos de los mejores vinos del mundo.",
+  "Bellboy Bar Berlin": "Mitte no es el corazón palpitante de la vida nocturna berlinesa, pero este es uno de mis bares de cócteles preferidos en el barrio.",
+  "Buck and Breck": "El 83er mejor bar de cócteles del mundo hace unos años.",
+  "theNOname – Restaurant": "Estuve recomendando el NoName durante años, ¡y finalmente fui reivindicado cuando obtuvo una estrella Michelin! Un restaurante precioso justo al lado de la Nueva Sinagoga.",
+  "Victoria Bar": "Un clásico bar de cócteles en la gama alta. No el mejor de la ciudad, pero definitivamente una de las mejores paradas de la zona.",
+  // SQUARES & LOCATIONS
+  "Boxhagener Platz": "Una plaza central con mercado incluido. Si no sabés adónde ir por las noches, esta es la decisión más fácil.",
+  "RAW-Gelände": "Definitivamente vale la pena curiosear — bares, clubes, skate park y arte urbano en un antiguo taller de mantenimiento ferroviario.",
+  "Hackescher Markt": "Un poco turístico para mi gusto, pero todavía hay algunas joyas escondidas por ahí.",
+};
+
+// ── HOURS (scraped) ───────────────────────────────────────────────────
+const HOURS = {
+  "Markthalle Neun": null,
+  "Kebap with Attitude": null,
+  "Knödelwirtschaft NORD": null,
+  "Zur letzten Instanz": null,
+  "Feel good food by Omar": null,
+  "Scheers Schnitzel": null,
+  "Kitten Deli": "Tuesday at 12:00 PM Monday 12:00 PM Tuesday 12:00 PM Wednesday Thursday 12:00 PM Friday 12:00 PM Saturday 10:00 AM Sunday 10:00 AM Loved by 11 members … ·",
+  "Curry 61": null,
+  "Klinke": null,
+  "Best Gemüse Kebap": null,
+  "Blechbilderbar": "Mo-Fr 15:00-24:00+, Sa, Su 10:00-24:00+",
+  "W Pizza": "Tu-Fr 18:00-22:00 · Sa 13:00-22:00 · Su 13:00-21:00",
+  "Altes Europa": null,
+  "Ketels Wurstspezialitäten": null,
+  "Azzam Restaurant": null,
+  "Burgermeister Schlesisches Tor": null,
+  "CRAZY BASTARD KITCHEN": null,
+  "Gazzo": null,
+  "Sahara Imbiss": null,
+  "Teras": null,
+  "Mittendrin Restaurant & Café": null,
+  "SammyS Berliner Donuts": null,
+  "1990 Vegan Living": null,
+  "Saveur de Bánh Mì": null,
+  "Rüyam Gemüse Kebab (Prenzlauer Berg)": null,
+  "Rüyam Gemüse Kebab (Schöneberg)": null,
+  "Blauer Affe": null,
+  "Ä": null,
+  "Hops & Barley": "Mo-Th 17:00-01:00, Sa, Su 14:00+, Fr 16:00+",
+  "Dschungel": null,
+  "Eschenbräu": null,
+  "Prater Beer Garden": null,
+  "My Bar ICI": null,
+  "Lamm": null,
+  "Schneeeule – Berliner Bierkultur": null,
+  "Café Luzia": null,
+  "Ritchie Café & Bar": null,
+  "Café Cinema": null,
+  "MUTED HORN": null,
+  "Fitcher's Vogel": "Mo-Su 18:00+",
+  "James June Biergarten": null,
+  "Klunkerkranich": null,
+  "BRLO Brwhouse": null,
+  "Stasi Museum": null,
+  "Topografía del Terror": null,
+  "Kulturbrauerei – Exposición RDA": null,
+  "Memorial y Museo Sachsenhausen": null,
+  "Memorial del Muro de Berlín": null,
+  "Palacio Ephraim": null,
+  "Prisión de la Stasi (Hohenschönhausen)": null,
+  "Deutschlandmuseum": "Mo-Su 10:00-20:00",
+  "Berlin Story Bunker": null,
+  "Ethnologisches Museum": null,
+  "Märkisches Museum": null,
+  "Museo del Espionaje": null,
+  "Urban Nation Street Art Museum": null,
+  "Mundo Subterráneo de Berlín": null,
+  "Museo de Videojuegos": null,
+  "Tempelhofer Feld": null,
+  "Teufelsberg": null,
+  "Maybachufer": null,
+  "Schlachtensee": null,
+  "Krumme Lanke": null,
+  "Plötzensee": null,
+  "Wannsee": null,
+  "Mauerpark": null,
+  "Memorial Soviético de Treptow": null,
+  "YAAM": "We 16:00-02:00 · Th 16:00-04:00 · Fr 16:00-05:00 · Sa 13:00-05:00 · Su 13:00-01:00",
+  "Holzmarkt – Strandbar": null,
+  "Tresor": null,
+  "Sisyphos": null,
+  "Süss War Gestern": null,
+  "Salon – Zur wilden Renate": null,
+  "Kater Blau": null,
+  "://about blank": null,
+  "MS Hoppetosse": null,
+  "RSO.BERLIN": null,
+  "19grams Alex": "Mo-Fr 09:00-17:00 · Sa-Su 09:00-18:00",
+  "Café Engels": null,
+  "The Klub Kitchen": null,
+  "Wilke": null,
+  "annelies": null,
+  "Shakespeare & Sons – Fine Bagels": null,
+  "Bricks & Mortar": null,
+  "Sorrel": null,
+  "The Barn Café": null,
+  "Two Trick Pony": null,
+  "Bar Normal": null,
+  "No Bananas": null,
+  "Velvet": null,
+  "Hallmann und Klee": null,
+  "ORA": null,
+  "Clärchens Ballroom": null,
+  "Freundschaft Wine Bar": null,
+  "Bellboy Bar Berlin": null,
+  "Buck and Breck": null,
+  "theNOname – Restaurant": null,
+  "Victoria Bar": null,
+  "Boxhagener Platz": null,
+  "RAW-Gelände": null,
+  "Hackescher Markt": null
+};
+
+// ── PHOTO URLS (scraped) ────────────────────────────────────────
+const PHOTO_URLS = {
+  "Markthalle Neun": "https://i0.wp.com/andershusa.com/wp-content/uploads/2019/01/markthalle-neun-kreuzberg-berlin-germany-food-hall-restaurants-review-food-foodie-eat-eating-dining-best-tips-recommendation-guide-travel-2018-13.jpg?ssl=1",
+  "Kebap with Attitude": "https://berlin-ick-liebe-dir.de/wp-content/uploads/2020/01/Kebab-with-attitude-Theke-Neon.jpg",
+  "Knödelwirtschaft NORD": "https://mitvergnuegen.com/wp-content/uploads/2022/06/knoedelwirtschaft-nord-tipp.png",
+  "Zur letzten Instanz": "https://zurletzteninstanz.com/wp-content/uploads/2021/08/image00005-scaled.jpeg",
+  "Feel good food by Omar": "https://img3.restaurantguru.com/cb69-Restaurant-Feel-good-food-by-Omar-design.jpg",
+  "Scheers Schnitzel": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/cc/0a/f8/scheers-schnitzel.jpg?w=1100&h=-1&s=1",
+  "Kitten Deli": "https://mitvergnuegen.com/wp-content/uploads/2020/06/kitten-deli-daliah-hoffmann-24-680x453.jpg",
+  "Curry 61": "https://res.cloudinary.com/the-infatuation/image/upload/c_scale,w_1200,q_auto,f_auto/images/Curry61_Exterior_ZoeSpawton_Berlin_k3mfrq",
+  "Klinke": "https://media-cdn.tripadvisor.com/media/photo-s/23/b2/b8/bc/outdoor.jpg",
+  "Best Gemüse Kebap": "https://production-data.worldofmouth.app/images/4adbc295-c841-4c69-9406-1aa2ca845457-1080x1080.jpg",
+  "Blechbilderbar": "https://cdn4.site-media.eu/images/1903x1264%2C1600x1063%2B0%2B0/903637/_M4B0658.jpg",
+  "W Pizza": "https://www.iheartberlin.de/wp-content/uploads/2018/06/W-Pizza-1410.jpg",
+  "Altes Europa": "https://cdn.offen.net/img/review/2560_7adfbfa54017f64db71c429f97c41996f6a30075.jpg",
+  "Ketels Wurstspezialitäten": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/02/59/3b/ketels-grill.jpg?w=1200&h=-1&s=1",
+  "Azzam Restaurant": "https://media.halaltrip.com/restaurant/coverr_1506407584.jpg",
+  "Burgermeister Schlesisches Tor": "https://burgermeister.com/wp-content/uploads/2021/05/Burgermeister-Schlesisches-Tor.jpg",
+  "CRAZY BASTARD KITCHEN": "https://s3-media0.fl.yelpcdn.com/bphoto/Vk8uj5FR-5U0fQ04V9-FgQ/l.jpg",
+  "Gazzo": "https://static.wixstatic.com/media/c3e429_a55f921320684a4cb3367f16913da6f2~mv2_d_6016_4016_s_4_2.jpg/v1/fill/w_980,h_654,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/c3e429_a55f921320684a4cb3367f16913da6f2~mv2_d_6016_4016_s_4_2.jpg",
+  "Sahara Imbiss": "https://images.happycow.net/venues/1024/63/91/hcmp63915_911072.jpeg",
+  "Teras": "https://joinhalal.com/wp-content/uploads/2024/09/teras-doener-berlin-3.jpg",
+  "Mittendrin Restaurant & Café": "https://www.mittendrin-in-berlin.de/system/getthumb/images/__tn__ecics_6456_7434_600_9999.jpg",
+  "SammyS Berliner Donuts": "https://endoedibles.com/wp-content/uploads/2022/07/PXL_20220703_105654595.jpg",
+  "1990 Vegan Living": "https://www.restaurant-1990.de/wp-content/uploads/2018/12/1990-vegan-restaurant-berlin-startseite-galerie-03-750x750.jpg",
+  "Saveur de Bánh Mì": "https://www.cremeguides.com/wp-content/uploads/2023/04/saveur-de-banh-mi-i-foto-ole-zimmermann-2.1681312878.jpg",
+  "Rüyam Gemüse Kebab (Prenzlauer Berg)": "https://joinhalal.com/wp-content/uploads/2024/11/joinhalal_Rueyam_Gemuese_Kebab_Berlin_Prenzlauerberg-1024x768.jpg",
+  "Rüyam Gemüse Kebab (Schöneberg)": "https://media-cdn.tripadvisor.com/media/photo-m/1280/16/ab/7c/27/photo7jpg.jpg",
+  "Blauer Affe": "https://mappde.com/yer/blauer-affe-920432.jpg",
+  "Ä": "https://img.restaurantguru.com/cba7-A-Berlin-view-1.jpg",
+  "Hops & Barley": "https://bier-traveller.com/wp-content/uploads/2020/10/Berlin-Hops-Barley-Bier-Traveller-13.jpg",
+  "Dschungel": "http://www.dschungelberlin.de/uploads/9/6/0/3/96032180/d1_orig.jpg",
+  "Eschenbräu": "https://eschenbraeu.de/wp-content/uploads/2019/04/gaststaette-bar-r1-1116x837.jpg",
+  "Prater Beer Garden": "https://berlintraveltips.com/wp-content/uploads/2021/02/Berlin-beer-gardens-Prater.jpg",
+  "My Bar ICI": "https://img.restaurantguru.com/ca4d-Pub-and-bar-My-Bar-ICI-bar-counter.jpg",
+  "Lamm": "https://loff.it/wp-content/uploads/2019/10/loffit-lamm-un-nuevo-bar-en-berlin-en-el-que-catar-los-cocteles-mas-sugerentes-de-la-ciudad-07.jpg",
+  "Schneeeule – Berliner Bierkultur": "https://media-cdn.tripadvisor.com/media/photo-s/26/d8/18/81/schneeeule-salon-ofener.jpg",
+  "Café Luzia": "https://www.fast-and-wide.com/images/stories/News/2018_q3/genelec-Luzia.jpg",
+  "Ritchie Café & Bar": "https://img3.restaurantguru.com/w550/h367/r911-Ritchie-Cafe-and-Bar-interior-2025-08-4.jpg",
+  "Café Cinema": "https://c8.alamy.com/comp/E9T2KX/the-cafe-cinema-in-hackescher-in-berlin-E9T2KX.jpg",
+  "MUTED HORN": "https://www.hopfenhelden.de/wp-content/uploads/2017/03/muted-horn-berlin-aussen.jpg",
+  "Fitcher's Vogel": "https://res.cloudinary.com/the-infatuation/image/upload/c_scale,w_1200,q_auto,f_auto/images/Fitcher_s_Vogel_Exterior_FlorianKroll_Berlin-4_f5vojz",
+  "James June Biergarten": "https://www.top10berlin.de/wp-content/uploads/2024/01/sommergarten-james-june_biergaerten-top10berlin_foto_james-june_1400x750_3.jpg",
+  "Klunkerkranich": "https://i.pinimg.com/originals/d6/c7/fd/d6c7fdb2aff0f718aa3257105ddc8635.jpg",
+  "BRLO Brwhouse": "https://www.deutschlandgourmet.info/bilder/gross/51534-restaurant-brlo-brwhouse-berlin.jpg",
+  "Stasi Museum": "https://assets.deutschlandfunk.de/FILE_99379e902d5c0546f2ffea74bfee030a/1920x1080.jpg?t=1597585820060",
+  "Topografía del Terror": "https://withberlinlove.com/wp-content/uploads/2012/06/berlin-wall-monument-at-topographie-des-terrors.jpg",
+  "Kulturbrauerei – Exposición RDA": "https://l450v.alamy.com/450v/fbwrbr/berlin-germany-permanent-exhibition-everyday-life-in-the-gdr-at-museum-fbwrbr.jpg",
+  "Memorial y Museo Sachsenhausen": "https://www.berlin.de/binaries/asset/image_assets/3574460/source/1649329367/1000x500/",
+  "Memorial del Muro de Berlín": "https://www.nuberlin.com/wp-content/uploads/2017/02/berlin-wall-memorial.jpg",
+  "Palacio Ephraim": "https://thumbs.dreamstime.com/z/ephraim-palace-berlin-germany-may-was-built-th-century-preserved-as-museum-situated-51775623.jpg?w=576",
+  "Prisión de la Stasi (Hohenschönhausen)": "https://www.stiftung-hsh.de/fileadmin/_processed_/8/0/csm_2022_Neubau_CR_DirkVogel_d680d7abd3.jpg",
+  "Deutschlandmuseum": "https://kulturnews.de/wp-content/uploads/2024/02/deutschlandmuseum-1280x853.jpg",
+  "Berlin Story Bunker": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/1c/36/6e/der-berlin-story-bunker.jpg?w=1200&h=1200&s=1",
+  "Ethnologisches Museum": "https://citytripwith.us/media/ContentGenerator/en_US/etmus_(1).jpg",
+  "Märkisches Museum": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/27/84/1a/markisches-museum-vom.jpg?w=1200&h=1200&s=1",
+  "Museo del Espionaje": "https://iconic-berlin.com/wp-content/uploads/2016/02/spymuseumberlin-front.jpg",
+  "Urban Nation Street Art Museum": "https://www.out-the-box.fr/wp-content/uploads/2013/03/street-art-musée-urban-nation-2.jpg",
+  "Mundo Subterráneo de Berlín": "https://www.berliner-unterwelten.de/fileadmin/_processed_/5/e/csm_Broschuere_T1_ENG_2101bf1577.jpg",
+  "Museo de Videojuegos": "https://urlaubspapa.de/wp-content/uploads/2020/06/computermuseum_berlin02.jpg",
+  "Tempelhofer Feld": "https://louisas-place.de/wp-content/uploads/2020/11/tempelhofer_feld_-_nutzung_oderstrasse_c_manuel_frauendorf_1k1a9605_KLEIN.jpg",
+  "Teufelsberg": "https://www.streetartaddict.nl/wp-content/uploads/2023/03/Teufelsberg-Berlin-07-rotated.jpeg",
+  "Maybachufer": "https://i.pinimg.com/736x/5b/9b/fb/5b9bfbec19eb4954aca3bd8f080ccebd--berlin.jpg",
+  "Schlachtensee": "https://www.pure-wanderlust.de/wp-content/uploads/2023/05/schlachtensee-1-1024x683.jpg",
+  "Krumme Lanke": "https://image.geo.de/30136600/t/go/v4/w1440/r0/-/krumme-lanke-f-155388280-jpg--77617-.jpg",
+  "Plötzensee": "https://www.kuladig.de/api/Media/Vespa?token=BI2aXCqgCsa4lsWamUKQflbUYGYIPm0QsThGcUdivZq1sb1oFABzaBHt1uH3QyIU4YClT5S-O6GS2meHuwREma65g6d_0sUw56CDY0727hNatVX9H2V2VM_KQeSGU1YN9Zw5G1txr7CCAGQfp0DCGQ-Oi597hGU5UUJ1POXDFk4pAYiDVvtiyAlHZz64GnEazM-M3FDajWvjxb342hAOCV8bS7DwhAR3jlRdpJ0Hok7JeNOKF00dEmu2_BAVJkE-fyDRKqIbMgBUzR-tcdHe0Q((",
+  "Wannsee": "https://img.oastatic.com/img2/76117480/2500x950r/boote-am-grossen-wannsee-in-berlin.jpg",
+  "Mauerpark": "https://www.mauerpark.info/wp-content/uploads/2020/06/mauerpark-erweiterung_DJI_0612.jpg",
+  "Memorial Soviético de Treptow": "https://thumbs.dreamstime.com/z/aerial-view-soviet-war-memorial-great-red-army-soldier-treptower-park-to-honor-soldiers-who-liberated-berlin-312803767.jpg",
+  "YAAM": "https://c8.alamy.com/comp/MXT5FK/yaam-club-at-river-spree-friedrichshain-berlin-germany-MXT5FK.jpg",
+  "Holzmarkt – Strandbar": "https://berlijn-blog.nl/wp-content/uploads/2016/06/20150805-DSCF1927-BerlijnBlog-strandbar-holzmarkt-berlijn-friedrichshain.jpg",
+  "Tresor": "https://traveldudes.com/wp-content/uploads/2023/06/Entrance-to-the-Tresor-Club-in-Berlin-Germany-1286x1285.jpg",
+  "Sisyphos": "https://technoedm.com/wp-content/uploads/2023/10/Sisyphos-Nightclub_TECHNOEDM.jpg",
+  "Süss War Gestern": "https://www.sveapietschmann.de/wordpress/wp-content/uploads/2020/06/14-svea-pietschmann-fotografin-fotografie-berlin-bars-friedrichshain-corona-lockdownsuess-war-gestern_2168.jpg",
+  "Salon – Zur wilden Renate": "https://vivreaberlin.com/wp-content/uploads/2015/07/3066_1d7e5feb456a.jpg",
+  "Kater Blau": "https://technoedm.com/wp-content/uploads/2023/10/Kater-Blau_TECHNOEDM.webp",
+  "://about blank": "https://www.berlin.de/binaries/asset/image_assets/9659242/ratio_2_1/1749200658/1000x500/",
+  "MS Hoppetosse": "https://cdn.eventinc.de/provider_pictures/pictures/000/139/575/cropped/eventlocation-hoppetosse-berlin.jpg?1553319812",
+  "RSO.BERLIN": "https://www.top10berlin.de/wp-content/uploads/2024/05/RSO.webp",
+  "19grams Alex": "https://europeancoffeetrip.com/wp-content/uploads/city-guides/cafes/1422/19grams-alex-berlin-1.JPG",
+  "Café Engels": "https://media-cdn.tripadvisor.com/media/photo-s/0a/dc/36/69/aussenansicht.jpg",
+  "The Klub Kitchen": "https://www.cremeguides.com/wp-content/uploads/2021/06/klub-kitchen-west-berlin-2.1624534378.jpg",
+  "Wilke": "https://tasteandtea.com/wp-content/uploads/2019/01/Wilke-Cafe-1440x1080.jpg",
+  "annelies": "https://europeancoffeetrip.com/wp-content/uploads/city-guides/cafes/1396/annelies-berlin-social-media-2.jpg",
+  "Shakespeare & Sons – Fine Bagels": "https://images.happycow.net/venues/1024/17/99/hcmp179944_1708854.jpeg",
+  "Bricks & Mortar": "https://images.happycow.net/venues/1024/23/32/hcmp233251_1108792.jpeg",
+  "Sorrel": "https://images.squarespace-cdn.com/content/v1/6040a5c51a048874afdbe661/1624276281082-ROB3JYC3X5CHF3DGAT4S/IMG_5951.jpg?format=1500w",
+  "The Barn Café": "https://media-cdn.tripadvisor.com/media/photo-p/14/9d/57/64/photo3jpg.jpg",
+  "Two Trick Pony": "https://static.wixstatic.com/media/967498_f98873b2d63d43f789bc785802513510~mv2.jpg/v1/fill/w_1024,h_684,al_c,q_85,enc_auto/967498_f98873b2d63d43f789bc785802513510~mv2.jpg",
+  "Bar Normal": "https://www.cremeguides.com/wp-content/uploads/2022/03/bar-normal-berlin-by-gebhart-de-koekkoek-3.1647337220.jpg",
+  "No Bananas": "https://ceecee.cc/wp-content/uploads/2019/06/No-Bananas_Berlin_Cee_Cee_Berlin-1024x1024.jpg",
+  "Velvet": "https://img.atlasobscura.com/Vw-UbZhQQ4COCMoe1wH1107e3V2oIWZ3-6f0ROM7O_I/rt:fit/h:390/q:81/sm:1/scp:1/ar:1/aHR0cHM6Ly9hdGxh/cy1kZXYuczMuYW1h/em9uYXdzLmNvbS91/cGxvYWRzL3BsYWNl/X2ltYWdlcy80ZTk3/NmQ3ZjA3NDgxOTM5/M2RfaW50ZXJpb3Ig/KDEpLmpwZw.jpg",
+  "Hallmann und Klee": "https://www.cremeguides.com/wp-content/uploads/2023/03/hallmann-klee-i-interieur-i-ronja-kolls-i-2.1678354497.jpg",
+  "ORA": "http://thegoldenbun.com/wp-content/uploads/2017/11/ORA-Berlin-Kreuzberg-Café-Berlin-1.jpg",
+  "Clärchens Ballroom": "https://c8.alamy.com/comp/EJ5X3B/clrchens-ballhaus-ballroom-interior-famous-historic-dancehall-opened-EJ5X3B.jpg",
+  "Freundschaft Wine Bar": "https://dinnerunddrinks.com/wp-content/uploads/2018/10/WEINBAR-FREUNDSCHAFT-BERLIN-18-e1563728054352.jpg",
+  "Bellboy Bar Berlin": "https://www.qiez.de/app/uploads/2021/12/bb-achso-kh-7400-2-scaled-e1638878937818-910x511.jpg",
+  "Buck and Breck": "https://images.squarespace-cdn.com/content/v1/56238e70e4b079b0ec755562/1455585950184-K5K9AU15FNO0TDNTSEJX/oldcrow-bar.jpg",
+  "theNOname – Restaurant": "https://loff.it/wp-content/uploads/2019/07/loffit-thenoname-el-restaurante-vanguardista-y-rompedor-que-tienes-que-probar-en-berlin-07.jpg",
+  "Victoria Bar": "https://res.cloudinary.com/the-infatuation/image/upload/c_fill,w_3840,ar_4:3,g_center,f_auto/images/Viktoria_Bar_Exterior5_RasaUrnieziute_Berlin_ihswpd",
+  "Boxhagener Platz": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/73/3e/f8/img-20180325-125555-largejpg.jpg?w=1200&h=1200&s=1",
+  "RAW-Gelände": "https://peterstravel.de/wp-content/uploads/2016/06/RAW-Gelände-Berlin-Eingang-Totale.jpg",
+  "Hackescher Markt": "https://www.berlin.de/binaries/asset/image_assets/6279725/ratio_4_3/1682518673/800x600/"
+};
+
+// ── PHOTO URL (source.unsplash.com, free, no key needed) ─────────
+function getPhotoUrl(place) {
+  if (PHOTO_URLS[place.name]) return PHOTO_URLS[place.name];
+  const catKw = {
+    'Food':                'food,restaurant',
+    'Bars':                'bar,beer,pub',
+    'Museums':             'museum,exhibition',
+    'Green Areas & Lakes': 'park,lake,nature',
+    'Clubs':               'nightclub,music',
+    'Cafes/Brunch':        'coffee,cafe,brunch',
+    'Feeling Fancy':       'cocktail,fine+dining',
+    'Squares & Locations': 'city,plaza,street',
+  };
+  const name = place.name.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().split(/\s+/).slice(0, 2).join('+');
+  const cat = catKw[place.category] || 'berlin';
+  return `https://source.unsplash.com/800x500/?berlin,${cat},${name}`;
+}
+
+// ── DATA (source: Google My Maps) ────────────────────────────────
+const PLACES = [
+  // ── FOOD ─────────────────────────────────────────────
+  { name:"Markthalle Neun", lat:52.5020234, lon:13.4319352, category:"Food", desc:"Food market with everything you can dream of! If you don't know where to go, head here!" },
+  { name:"Kebap with Attitude", lat:52.5272108, lon:13.3990791, category:"Food", desc:"A modern take on the Berlin Kebab, emphasising quality and locality. Keep an eye out for the club-themed toilets." },
+  { name:"Knödelwirtschaft NORD", lat:52.5474016, lon:13.4143086, category:"Food", desc:"German dumplings. Simple, hearty, and delicious." },
+  { name:"Zur letzten Instanz", lat:52.5173623, lon:13.4137991, category:"Food", desc:"You just can't get more 'German' than this. Definitely worth a visit for your German food hit." },
+  { name:"Feel good food by Omar", lat:52.4814108, lon:13.4309226, category:"Food", desc:"The best schawarma and falafel in the city. Everything is home-made, and Omar is a legend." },
+  { name:"Scheers Schnitzel", lat:52.5028152, lon:13.4473839, category:"Food", desc:"A Berlin institution for schnitzel, served from a small stand on the banks of the Spree. Quick, unpretentious, and seriously satisfying." },
+  { name:"Kitten Deli", lat:52.4930051, lon:13.4283684, category:"Food", desc:"Probably one of the coolest spots in Berlin. Stocking some of the best hummus I have ever had. In summer, this feels like the heart of the city with tables scattered all about the cobblestones. The sabbich is definitely one of their most popular dishes!" },
+  { name:"Curry 61", lat:52.523725, lon:13.4007139, category:"Food", desc:"One of my favourite currywurst places!" },
+  { name:"Klinke", lat:52.5013981, lon:13.4163071, category:"Food", desc:"Klinke takes classic German dishes and elevates them so you're not just eating pork and potatoes. It's basically a German tapas bar." },
+  { name:"Best Gemüse Kebap", lat:52.4810743, lon:13.4346183, category:"Food", desc:"I'm convinced these boys have the best kebab in Berlin. Roast vegetables, 3 sauces, goats cheese, fresh salad with dressing, locally sourced chicken — all for 4,50€!" },
+  { name:"Blechbilderbar", lat:52.5099985, lon:13.4565153, category:"Food", desc:"The oldest bar on this street! Famous for its Flammkuchen, a traditional German/French dish. The lady who runs it seems 'Berliner Schnauze' to the naked eye, but she's incredibly kind and funny." },
+  { name:"W Pizza", lat:52.4868346, lon:13.4395688, category:"Food", desc:"My favourite pizza in Berlin. Keep it simple: it's their tomato sauce that makes them so special." },
+  { name:"Altes Europa", lat:52.5267028, lon:13.4010694, category:"Food", desc:"If you're looking for German food, this is definitely on the better end of where to find it in Berlin!" },
+  { name:"Ketels Wurstspezialitäten", lat:52.4952016, lon:13.4204331, category:"Food", desc:"This is my favourite spot for a Currywurst." },
+  { name:"Azzam Restaurant", lat:52.4849592, lon:13.4328283, category:"Food", desc:"Huge portions of Lebanese food. One of the famous names in Berlin for people in the know." },
+  { name:"Burgermeister Schlesisches Tor", lat:52.5010953, lon:13.4424637, category:"Food", desc:"The most famous burger joint in Berlin — in an old toilet!" },
+  { name:"CRAZY BASTARD KITCHEN", lat:52.4835709, lon:13.4407992, category:"Food", desc:"A hot sauce company! They change their menu weekly, fitting their food to their hot sauces!" },
+  { name:"Gazzo", lat:52.4911554, lon:13.4258232, category:"Food", desc:"An insanely popular pizza spot." },
+  { name:"Sahara Imbiss", lat:52.48849, lon:13.42863, category:"Food", desc:"Their peanut sauce wraps are incredibly cheap and incredibly tasty. There are Saharas all over the place, and no wonder." },
+  { name:"Teras", lat:52.5117229, lon:13.3835554, category:"Food", desc:"Angela Merkel's favourite Kebab Shop." },
+  { name:"Mittendrin Restaurant & Café", lat:52.5256803, lon:13.4009374, category:"Food", desc:"German lunch/dinner spot." },
+  { name:"SammyS Berliner Donuts", lat:52.5262949, lon:13.3992381, category:"Food", desc:"A great place to get your classic 'Berliners'." },
+  { name:"1990 Vegan Living", lat:52.5104235, lon:13.4586497, category:"Food", desc:"One of the most popular spots in Berlin. I'm not vegan, but I keep coming back! A dream for fresh, tasty Vietnamese food." },
+  { name:"Saveur de Bánh Mì", lat:52.523583, lon:13.4000107, category:"Food", desc:"Simple, cheap, and delicious Vietnamese sandwiches with a generous size." },
+  { name:"Rüyam Gemüse Kebab (Prenzlauer Berg)", lat:52.5405338, lon:13.4125814, category:"Food", desc:"Same legendary vegetable kebab formula as the Neukölln original — roasted veg, multiple sauces, goats cheese, all for just a few euros. Worth the trip to either branch." },
+  { name:"Rüyam Gemüse Kebab (Schöneberg)", lat:52.484503, lon:13.3523488, category:"Food", desc:"Same legendary vegetable kebab formula as the Neukölln original — roasted veg, multiple sauces, goats cheese, all for just a few euros. Worth the trip to either branch." },
+
+  // ── BARS ─────────────────────────────────────────────
+  { name:"Blauer Affe", lat:52.4791633, lon:13.423784, category:"Bars", desc:"One of Neukölln's most beloved local bars. Unpretentious, cheap, and full of regulars. A great place to settle in for the evening." },
+  { name:"Ä", lat:52.4850275, lon:13.4371403, category:"Bars", desc:"This, for me, is the absolutely typical Berlin bar. Dark, smoky, and cheap beer — incredibly popular with the Kreuzköllners." },
+  { name:"Hops & Barley", lat:52.5089972, lon:13.4606998, category:"Bars", desc:"If you want a look into the craft beer scene in Berlin, this is the place to go!" },
+  { name:"Dschungel", lat:52.4892459, lon:13.4280289, category:"Bars", desc:"Incredible inside 'jungle' decor, but it's a smoking bar, so keep it in mind!" },
+  { name:"Eschenbräu", lat:52.543739, lon:13.359138, category:"Bars", desc:"A Berliner brewery with great quality and incredibly affordable prices! Head down the steps underground. They also serve Flammkuchen in the true German style!" },
+  { name:"Prater Beer Garden", lat:52.5397629, lon:13.4105365, category:"Bars", desc:"The oldest beer garden in the city, and the default meeting place for us tour guides! Definitely a great stop on a summer's day." },
+  { name:"My Bar ICI", lat:52.5272417, lon:13.3974889, category:"Bars", desc:"The opposite of a Berlin bar — it feels like walking into Paris. Easy wines, smooth jazz, and the most Parisian looking owner you will ever meet in Berlin." },
+  { name:"Lamm", lat:52.5533752, lon:13.4152355, category:"Bars", desc:"One of my favourite cocktail spots in the north. In winter, they're particularly popular for their elevated Glühwein." },
+  { name:"Schneeeule – Berliner Bierkultur", lat:52.5553087, lon:13.3441786, category:"Bars", desc:"Ulrike is the world expert in Berliner Weisse, a traditional sour beer that Napoleon called the 'champagne of the north'. Beer fans from all over the world come here to try the best of the best." },
+  { name:"Café Luzia", lat:52.5016759, lon:13.4182843, category:"Bars", desc:"You want the classic Kreuzberg bar? This is the place to go." },
+  { name:"Ritchie Café & Bar", lat:52.5013347, lon:13.418534, category:"Bars", desc:"If Cafe Luzia is too busy, this is right opposite it and pretty much exactly the same bar." },
+  { name:"Café Cinema", lat:52.524261, lon:13.4026214, category:"Bars", desc:"A relaxed bar in the heart of Mitte with a retro cinema vibe. Good cocktails, good company, and a reliably fun night." },
+  { name:"MUTED HORN", lat:52.4806732, lon:13.4262815, category:"Bars", desc:"A passionate craft beer bar in Kreuzkölln stocking a rotating selection of local and international brews. A must for beer enthusiasts." },
+  { name:"Fitcher's Vogel", lat:52.510388, lon:13.451204, category:"Bars", desc:"A wonderfully dark and eclectic bar in Friedrichshain, named after a Brothers Grimm fairy tale. A great pre-club stop or a destination in itself." },
+  { name:"James June Biergarten", lat:52.5178184, lon:13.4414425, category:"Bars", desc:"A riverside biergarten on the banks of the Spree — one of the more relaxed spots to enjoy a sunny Berlin afternoon with a cold beer." },
+  { name:"Klunkerkranich", lat:52.482195, lon:13.4318524, category:"Bars", desc:"Rooftop bar on top of the Neukölln Arcaden shopping centre." },
+  { name:"BRLO Brwhouse", lat:52.5001966, lon:13.3737, category:"Bars", desc:"Craft brewery and restaurant in a reclaimed industrial space at Gleisdreieck Park. Excellent beers, solid food, and a great outdoor terrace in summer." },
+
+  // ── MUSEUMS ──────────────────────────────────────────
+  { name:"Stasi Museum", lat:52.5145001, lon:13.4875157, category:"Museums", desc:"Based in the original Stasi secret police HQ. Documents all the ways East Germans were spied on by their government. The building was occupied by protestors after re-unification to protect the documents from being destroyed. The place even has a floor left exactly as it was in the 80s." },
+  { name:"Topografía del Terror", lat:52.5066836, lon:13.3837023, category:"Museums", desc:"Definitely a top recommendation in Berlin. On the old site of the SS and Gestapo, this 'place of information' talks about the system of terror of the Third Reich. Free entry." },
+  { name:"Kulturbrauerei – Exposición RDA", lat:52.5382032, lon:13.4127133, category:"Museums", desc:"While most people go to the DDR Museum, the Kulturbrauerei is a more nuanced and interesting place to look at life in the GDR, based in the old Schultheiss brewery." },
+  { name:"Memorial y Museo Sachsenhausen", lat:52.767081, lon:13.2624754, category:"Museums", desc:"The concentration camp just outside of Berlin in Oranienburg. A little far out, but you can organise a tour trip there. Definitely a whole day event." },
+  { name:"Memorial del Muro de Berlín", lat:52.5350521, lon:13.3901898, category:"Museums", desc:"The most significant preserved section of the Berlin Wall, with an open-air exhibition along Bernauer Straße. Free entry." },
+  { name:"Palacio Ephraim", lat:52.515897, lon:13.407189, category:"Museums", desc:"The 'Berlin Zeit' exhibition is the only open exhibition that does a bit of all of German history." },
+  { name:"Prisión de la Stasi (Hohenschönhausen)", lat:52.5418366, lon:13.5002334, category:"Museums", desc:"Different to the Stasi museum, but steeped in just as much history. Former secret prison where dissidents were interrogated. Guided tours only." },
+  { name:"Deutschlandmuseum", lat:52.5087602, lon:13.3783615, category:"Museums", desc:"An interactive history of Germany. Not the most extensive, but definitely fun if you're looking for something more accessible." },
+  { name:"Berlin Story Bunker", lat:52.5029008, lon:13.3803901, category:"Museums", desc:"If you want a Second World War museum, this is your best bet. Comprehensive history of the war and the Nazis, and a re-constructed Hitler's bunker inside an actual real-world bunker." },
+  { name:"Ethnologisches Museum", lat:52.51724, lon:13.4016456, category:"Museums", desc:"A really interesting museum on German colonial history. If you're interested in how Europe should look at its colonial past, the museum is a mostly good example." },
+  { name:"Märkisches Museum", lat:52.5136027, lon:13.4150118, category:"Museums", desc:"While the German Historical Museum is closed, this is probably one of your better bets for learning more about German history. Kaisers, the Wall, the Nazis — this place covers it all." },
+  { name:"Museo del Espionaje", lat:52.5087676, lon:13.3792366, category:"Museums", desc:"A fun place to learn about the 'city of spies' of Cold War Berlin. Very interactive, so can be a good day out for families too." },
+  { name:"Urban Nation Street Art Museum", lat:52.498642, lon:13.356607, category:"Museums", desc:"It's a street art museum! It's pretty cool!" },
+  { name:"Mundo Subterráneo de Berlín", lat:52.5477911, lon:13.3889929, category:"Museums", desc:"Very cool tours of the underground sites of the city — bunkers, tunnels, and cold war infrastructure." },
+  { name:"Museo de Videojuegos", lat:52.5176466, lon:13.4420058, category:"Museums", desc:"Not very Berlin, but definitely fun if you want to play some old video games." },
+
+  // ── GREEN AREAS & LAKES ──────────────────────────────
+  { name:"Tempelhofer Feld", lat:52.475391, lon:13.401893, category:"Green Areas & Lakes", desc:"This is your sunny-weather must. Be a true Berliner and head to the now re-purposed Nazi airfield with a few beers in the sun. Watch the skaters, fly a kite, or just sunbathe. Get what you need before you go — it is quite literally an airfield with no shops inside." },
+  { name:"Teufelsberg", lat:52.4972222, lon:13.2411111, category:"Green Areas & Lakes", desc:"Climbing this man-made mountain from WW2 rubble to reach an old abandoned US spy station is probably one of the most classically 'Berlin' experiences you can have. The caretakers charge around 10€ to let you in." },
+  { name:"Maybachufer", lat:52.4927247, lon:13.4303466, category:"Green Areas & Lakes", desc:"This is where I go on a sunny day, just as does the whole of Kreuzkölln. The busy canal feels like the heart of the city when the weather's good." },
+  { name:"Schlachtensee", lat:52.4430741, lon:13.2171377, category:"Green Areas & Lakes", desc:"A beautiful lake in the southwest of the city. Perfect for swimming in summer." },
+  { name:"Krumme Lanke", lat:52.452201, lon:13.232695, category:"Green Areas & Lakes", desc:"Another great swimming lake in the southwest of Berlin." },
+  { name:"Plötzensee", lat:52.5437973, lon:13.3304851, category:"Green Areas & Lakes", desc:"One of the more central lakes in the city. It has a dark history, but now most people go to enjoy the sun. If you're feeling adventurous, you can try the FKK nudist side of the beach." },
+  { name:"Wannsee", lat:52.415113, lon:13.1468678, category:"Green Areas & Lakes", desc:"Probably the most famous lake in Berlin. The Wannsee Conference (1942) was held here — where the Nazis planned the Final Solution." },
+  { name:"Mauerpark", lat:52.5424, lon:13.403352, category:"Green Areas & Lakes", desc:"See the Berlin Wall, join the outdoor karaoke, or go to the Sunday market. Whatever you do, Mauerpark is a staple of living in Berlin." },
+  { name:"Memorial Soviético de Treptow", lat:52.4861394, lon:13.4719577, category:"Green Areas & Lakes", desc:"Probably one of the most absurd spaces in Berlin. You can't get more Soviet than this — a colossal monument to the Red Army soldiers who fell in the Battle of Berlin." },
+  { name:"YAAM", lat:52.5092601, lon:13.4305412, category:"Green Areas & Lakes", desc:"Young African Art Market — a cultural centre on the Spree with a beach, bar, and live music." },
+  { name:"Holzmarkt – Strandbar", lat:52.5114768, lon:13.4263493, category:"Green Areas & Lakes", desc:"A riverside cultural village on the Spree with bars, restaurants, and a beach." },
+
+  // ── CLUBS ────────────────────────────────────────────
+  { name:"Tresor", lat:52.5109975, lon:13.4195219, category:"Clubs", desc:"If you want your traditional 'Berlin' club, this is the place to go. The music is always fantastic, the space is amazing, and it really is the Berlin club." },
+  { name:"Sisyphos", lat:52.4929592, lon:13.4912445, category:"Clubs", desc:"A fantastic club loved by all. Part outside, part inside, its rooms cater to nearly everyone. Some say it's an inverted Berghain. Remember the 'camp' theme for the Met Gala? This is Sisy — sequins, colours, fantastic." },
+  { name:"Süss War Gestern", lat:52.5086104, lon:13.4609797, category:"Clubs", desc:"Half bar, half club — a great spot for a night out in Friedrichshain." },
+  { name:"Salon – Zur wilden Renate", lat:52.4973775, lon:13.4653682, category:"Clubs", desc:"One of Berlin's most beloved mid-size clubs, spread across several rooms and a courtyard in a converted house in Friedrichshain. Great atmosphere and music." },
+  { name:"Kater Blau", lat:52.5114949, lon:13.4263867, category:"Clubs", desc:"A club right on the Spree with a relaxed outdoor space and an indoor dance floor. A good entry point into Berlin's club scene." },
+  { name:"://about blank", lat:52.5023662, lon:13.4662862, category:"Clubs", desc:"A serious techno and electronic music club in Friedrichshain with a large outdoor area. One of the cornerstones of Berlin's scene, known for its inclusive vibe." },
+  { name:"MS Hoppetosse", lat:52.4975353, lon:13.4546997, category:"Clubs", desc:"A club built on a repurposed boat moored on the Spree near the East Side Gallery. Great outdoor deck and a focus on techno and house." },
+  { name:"RSO.BERLIN", lat:52.45989, lon:13.50548, category:"Clubs", desc:"A large industrial club in Schöneweide, one of Berlin's newer additions to the techno scene. Known for marathon sets and a loyal crowd." },
+
+  // ── CAFES/BRUNCH ─────────────────────────────────────
+  { name:"19grams Alex", lat:52.5227717, lon:13.4075961, category:"Cafes/Brunch", desc:"Decent brunch/coffee in an otherwise bleak area." },
+  { name:"Café Engels", lat:52.4767177, lon:13.4200274, category:"Cafes/Brunch", desc:"A classic neighbourhood café in the heart of Neukölln. Nothing revolutionary, but solid coffee and a great spot to read, work, or catch up with a friend." },
+  { name:"The Klub Kitchen", lat:52.5249043, lon:13.4090042, category:"Cafes/Brunch", desc:"An easy spot for lunch in Mitte." },
+  { name:"Wilke", lat:52.4807436, lon:13.4314333, category:"Cafes/Brunch", desc:"Wilke has some of the best brunch in the city until 3pm Wed–Sun. The dishes are seasonal and locally sourced, and the staff are the friendliest in Berlin. The coffee is fantastic, and Carolin, the owner, bakes all of the cakes herself each night." },
+  { name:"annelies", lat:52.4985667, lon:13.4349439, category:"Cafes/Brunch", desc:"One of my favourite brunch spots. The pancakes are something else, but get there early, because Annelies is definitely a hotspot." },
+  { name:"Shakespeare & Sons – Fine Bagels", lat:52.5126813, lon:13.4531308, category:"Cafes/Brunch", desc:"A charming combination of independent bookshop and bagel bakery in Friedrichshain. Serious bagels, good coffee, and great books." },
+  { name:"Bricks & Mortar", lat:52.515184, lon:13.4676004, category:"Cafes/Brunch", desc:"A speciality coffee shop in Friedrichshain with a clean, minimal aesthetic and a serious approach to brewing. One of the better cups in the east." },
+  { name:"Sorrel", lat:52.490121, lon:13.4337898, category:"Cafes/Brunch", desc:"A neighbourhood restaurant in Neukölln with a short, seasonal menu and a welcoming atmosphere. One of those places that just feels right." },
+  { name:"The Barn Café", lat:52.5274383, lon:13.39818, category:"Cafes/Brunch", desc:"Won best coffee in Europe a few years ago, but take the whole experience with a pinch of salt. Not the warmest place." },
+  { name:"Two Trick Pony", lat:52.488942, lon:13.4048412, category:"Cafes/Brunch", desc:"A laid-back café and brunch spot in Schöneberg with a relaxed vibe and generous portions. Popular with the local crowd on weekends." },
+
+  // ── FEELING FANCY ────────────────────────────────────
+  { name:"Bar Normal", lat:52.5386515, lon:13.4100706, category:"Feeling Fancy", desc:"Ignore the reviews. The new chef is knocking it out of the park, and their wine selection is incredible. I take every excuse to come here." },
+  { name:"No Bananas", lat:52.4929983, lon:13.4144221, category:"Feeling Fancy", desc:"Nothing outrageously 'fancy', but one of the best food spots in the city if you're willing to spend just a little more than you would on a kebab." },
+  { name:"Velvet", lat:52.4789825, lon:13.4384567, category:"Feeling Fancy", desc:"Won best cocktail bar in Germany a few years ago, and I can see why!" },
+  { name:"Hallmann und Klee", lat:52.4738085, lon:13.449695, category:"Feeling Fancy", desc:"An upscale neighbourhood restaurant in Neukölln with a refined but unpretentious take on seasonal European cuisine. A great choice for a special dinner." },
+  { name:"ORA", lat:52.5013586, lon:13.4159237, category:"Feeling Fancy", desc:"Restaurant and cocktail bar in an old pharmacy." },
+  { name:"Clärchens Ballroom", lat:52.5267016, lon:13.3968996, category:"Feeling Fancy", desc:"Is it a bar? Is it a club? Is it a restaurant? I don't really know, but it used to be the central dancehall of Weimar Berlin." },
+  { name:"Freundschaft Wine Bar", lat:52.5182501, lon:13.390308, category:"Feeling Fancy", desc:"A wine bar that's so fancy, it feels like you're in Munich. My friends and I definitely don't fit in here, but that doesn't stop us from getting toasted on some of the best wines in the world." },
+  { name:"Bellboy Bar Berlin", lat:52.5121123, lon:13.3920211, category:"Feeling Fancy", desc:"Mitte isn't the pulsing heart of Berlin's nightlife, but this is one of my preferred cocktail bars here." },
+  { name:"Buck and Breck", lat:52.5321302, lon:13.3989457, category:"Feeling Fancy", desc:"83rd best cocktail bar in the world a few years back." },
+  { name:"theNOname – Restaurant", lat:52.5249533, lon:13.3936914, category:"Feeling Fancy", desc:"I've been recommending the NoName for years, and finally was vindicated when it got a Michelin star! A gorgeous restaurant right next to the New Synagogue." },
+  { name:"Victoria Bar", lat:52.5013916, lon:13.3638416, category:"Feeling Fancy", desc:"A bit more of a classic cocktail bar on the higher end. Not the best in the city, but definitely one of the better stops in the area." },
+
+  // ── SQUARES & LOCATIONS ──────────────────────────────
+  { name:"Boxhagener Platz", lat:52.5109507, lon:13.4597037, category:"Squares & Locations", desc:"A central square in the city with a market too. If you're struggling for where to go in the evening, this is the easiest decision." },
+  { name:"RAW-Gelände", lat:52.5077339, lon:13.4516618, category:"Squares & Locations", desc:"Definitely worth having a mooch through — bars, clubs, skate park, and street art in an old railway maintenance yard." },
+  { name:"Hackescher Markt", lat:52.5237159, lon:13.4022679, category:"Squares & Locations", desc:"A little touristy for my taste, but there are still some gems dotted about." },
+];
+
+// ── MAP ──────────────────────────────────────────────────────────
+const map = L.map('map', { center:[52.499,13.400], zoom:12, zoomControl:true, attributionControl:true });
+map.attributionControl.setPrefix(false);
+const ATTR = '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> © <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+
+// Recolorea el estilo del mapa con la paleta del sitio
+function tuneStyle(style) {
+  const ink='#001219', stone='#012A36', raised='#013747', line='#003D52', mist='#7FB5BF', parch='#E9D8A6';
+  style.layers = style.layers.filter(l => !/oneway|aeroway|highway_name_motorway|boundary_state/.test(l.id));
+  style.layers.forEach(l => {
+    const p = l.paint = l.paint || {};
+    if (l.type === 'background') p['background-color'] = ink;
+    else if (l.id === 'water') { p['fill-color'] = raised; delete p['fill-pattern']; }
+    else if (l.id === 'waterway') p['line-color'] = raised;
+    else if (/landuse_park|landcover_wood/.test(l.id)) { p['fill-color'] = '#01212B'; p['fill-opacity'] = 1; }
+    else if (l.id === 'building') { p['fill-color'] = '#011A24'; delete p['fill-outline-color']; }
+    else if (l.type === 'fill') p['fill-color'] = ink;
+    else if (/motorway/.test(l.id) && l.type === 'line') p['line-color'] = '#01394A';
+    else if (/major/.test(l.id) && l.type === 'line') p['line-color'] = '#012F3D';
+    else if (/rail/.test(l.id) && l.type === 'line') p['line-color'] = stone;
+    else if (l.type === 'line') p['line-color'] = '#011F2A';
+    else if (l.type === 'symbol') {
+      p['text-color'] = /place_(city|town|suburb)/.test(l.id) ? parch : mist;
+      p['text-halo-color'] = ink;
+      p['text-halo-width'] = 1.2;
+    }
+  });
+  return style;
+}
+function rasterFallback() {
+  map.getContainer().classList.add('is-raster');
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(map);
+}
+(async function initBase() {
+  try {
+    if (!window.maplibregl || !L.maplibreGL) throw new Error('no maplibre');
+    if (!document.createElement('canvas').getContext('webgl2')) throw new Error('no webgl');
+    const r = await fetch('https://tiles.openfreemap.org/styles/dark');
+    if (!r.ok) throw new Error('style ' + r.status);
+    L.maplibreGL({ style: tuneStyle(await r.json()), attribution: ATTR }).addTo(map);
+  } catch (e) { rasterFallback(); }
+})();
+
+// ── MARKERS ──────────────────────────────────────────────────────
+const markerOf = new Map();
+PLACES.forEach(place => {
+  const icon = L.divIcon({ html:`<span class="pin">${svg(place.category)}</span>`, className:'pin-wrap', iconSize:[24,24], iconAnchor:[12,12] });
+  const m = L.marker([place.lat, place.lon], { icon, alt:place.name, riseOnHover:true });
+  m.bindTooltip(place.name, { className:'pin-tip', direction:'top', offset:[0,-12] });
+  m.on('click', () => { lastTrigger = null; selectPlace(place); });
+  markerOf.set(place, m);
+});
+function renderMarkers() {
+  let count = 0;
+  PLACES.forEach(p => {
+    const show = !currentCategory || p.category === currentCategory;
+    const m = markerOf.get(p);
+    if (show) { if (!map.hasLayer(m)) m.addTo(map); count++; }
+    else if (map.hasLayer(m)) map.removeLayer(m);
+  });
+  const nc = document.getElementById('n-count');
+  nc.dataset.count = count;
+  nc.textContent = places_n(count);
+}
+function markSel(place, on) {
+  const el = markerOf.get(place)?.getElement();
+  if (el) el.classList.toggle('is-sel', on);
+  markerOf.get(place)?.setZIndexOffset(on ? 2000 : 0);
+}
+
+// ── LIST ─────────────────────────────────────────────────────────
+function renderList() {
+  const list = document.getElementById('list');
+  const top = list.scrollTop;
+  list.innerHTML = '';
+  Object.keys(CAT).forEach(c => {
+    if (currentCategory && c !== currentCategory) return;
+    const places = PLACES.filter(p => p.category === c);
+    if (!places.length) return;
+    const g = document.createElement('section');
+    g.className = 'l-group';
+    g.innerHTML = `<h2>${svg(c)}<span></span><span></span></h2>`;
+    g.querySelector('h2 span').textContent = label(c);
+    g.querySelector('h2 span:last-child').textContent = places_n(places.length);
+    places.forEach(place => {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'list-item' + (selected === place ? ' sel' : '');
+      item._place = place;
+      item.innerHTML = `<span class="li-thumb">${svg(place.category)}<img alt="" loading="lazy"></span><span><span class="li-name"></span><span class="li-desc"></span></span>`;
+      const img = item.querySelector('img');
+      img.onerror = () => img.remove();
+      if (PHOTO_URLS[place.name]) img.src = PHOTO_URLS[place.name]; else img.remove();
+      item.querySelector('.li-name').textContent = place.name;
+      item.querySelector('.li-desc').textContent = descOf(place);
+      item.addEventListener('click', () => { lastTrigger = item; selectPlace(place); });
+      const hot = on => { const m = markerOf.get(place), el = m.getElement(); if (el) el.classList.toggle('is-hot', on); if (selected !== place) m.setZIndexOffset(on ? 1500 : 0); };
+      item.addEventListener('mouseenter', () => hot(true));
+      item.addEventListener('mouseleave', () => hot(false));
+      item.addEventListener('focus', () => hot(true));
+      item.addEventListener('blur', () => hot(false));
+      g.appendChild(item);
+    });
+    list.appendChild(g);
+  });
+  const legal = document.createElement('p');
+  legal.className = 'm-legal';
+  legal.innerHTML = `<a href="privacy.html">${lang === 'es' ? 'Política de privacidad' : 'Privacy policy'}</a><a href="impressum.html">Impressum</a>`;
+  list.appendChild(legal);
+  list.scrollTop = top;
+}
+
+// ── PANEL ────────────────────────────────────────────────────────
+function fillPanel(place) {
+  const badge = document.getElementById('p-badge');
+  badge.innerHTML = svg(place.category) + '<span></span>';
+  badge.querySelector('span').textContent = label(place.category);
+  document.getElementById('p-name').textContent = place.name;
+  document.getElementById('p-desc').textContent = descOf(place);
+  document.getElementById('p-gmaps').href = `https://maps.google.com/?q=${place.lat},${place.lon}`;
+  const info = document.getElementById('p-info');
+  info.innerHTML = '';
+  const hrs = HOURS[place.name];
+  if (hrs) {
+    info.innerHTML = `<div class="p-row">${svg('clock')}<span></span></div>`;
+    info.querySelector('span').textContent = hrs;
+  }
+}
+function selectPlace(place) {
+  if (selected && selected !== place) markSel(selected, false);
+  selected = place;
+  markSel(place, true);
+  fillPanel(place);
+  const ph = document.getElementById('panel-photo');
+  ph.innerHTML = svg(place.category);
+  const url = getPhotoUrl(place);
+  if (url) { const img = new Image(); img.alt = place.name; img.onerror = () => img.remove(); img.src = url; ph.appendChild(img); }
+  document.getElementById('panel-scroll').scrollTop = 0;
+  const panel = document.getElementById('panel');
+  panel.classList.add('open');
+  document.querySelectorAll('.list-item').forEach(i => {
+    const on = i._place === place;
+    i.classList.toggle('sel', on);
+    if (on) i.scrollIntoView({ block:'nearest' });
+  });
+  const pt = map.project([place.lat, place.lon]);
+  if (innerWidth > 900) pt.x += panel.offsetWidth / 2;
+  map.panTo(map.unproject(pt), { animate:true, duration:.5 });
+  if (lastTrigger) document.getElementById('panel-close').focus({ preventScroll:true });
+}
+function closePanel() {
+  const panel = document.getElementById('panel');
+  if (!panel.classList.contains('open')) return;
+  panel.classList.remove('open');
+  document.querySelectorAll('.list-item.sel').forEach(i => i.classList.remove('sel'));
+  if (selected) { markSel(selected, false); selected = null; }
+  if (lastTrigger && document.contains(lastTrigger)) lastTrigger.focus({ preventScroll:true });
+  lastTrigger = null;
+}
+document.getElementById('panel-close').addEventListener('click', closePanel);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+map.on('click', closePanel);
+
+// ── FILTERS ──────────────────────────────────────────────────────
+const filterBar = document.getElementById('filters');
+const counts = {};
+PLACES.forEach(p => counts[p.category] = (counts[p.category] || 0) + 1);
+function applyFilter(cat) {
+  currentCategory = cat;
+  filterBar.querySelectorAll('.chip').forEach(b => {
+    const on = (b.dataset.cat || null) === cat;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', on);
+  });
+  closePanel();
+  renderMarkers();
+  document.getElementById('list').scrollTop = 0;
+  renderList();
+}
+const mkChip = (key, es, en, n) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'chip';
+  if (key !== 'all') b.dataset.cat = key;
+  const hide = lang === 'es' ? ['', 'none'] : ['none', ''];
+  b.innerHTML = `${svg(key)}<span class="l-es" style="display:${hide[0]}">${es}</span><span class="l-en" style="display:${hide[1]}">${en}</span>${n ? `<span class="cnt">${n}</span>` : ''}`;
+  b.addEventListener('click', () => {
+    if (key === 'all') return applyFilter(null);
+    applyFilter(currentCategory === key ? null : key);   // segundo clic: vuelve a todos
+  });
+  filterBar.appendChild(b);
+};
+mkChip('all', 'Todos', 'All');
+Object.entries(CAT).forEach(([name, c]) => { if (counts[name]) mkChip(name, c.label_es, c.label_en, counts[name]); });
+
+// ── LANG ─────────────────────────────────────────────────────────
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('.l-es').forEach(e => e.style.display = l === 'es' ? '' : 'none');
+  document.querySelectorAll('.l-en').forEach(e => e.style.display = l === 'en' ? '' : 'none');
+  [['btn-es','es'],['btn-en','en']].forEach(([id, v]) => {
+    const b = document.getElementById(id);
+    b.classList.toggle('active', l === v);
+    b.setAttribute('aria-pressed', l === v);
+  });
+  const close = document.getElementById('panel-close');
+  close.title = close.ariaLabel = l === 'es' ? 'Cerrar' : 'Close';
+  filterBar.setAttribute('aria-label', l === 'es' ? 'Mis recomendaciones' : 'My recommendations');
+  document.getElementById('n-count').textContent = places_n(parseInt(document.getElementById('n-count').dataset.count || '0'));
+  renderList();
+  if (selected) fillPanel(selected);
+}
+
+applyFilter(null);
+setLang(document.documentElement.lang === 'en' ? 'en' : 'es');
+</script>
+
+
+</body></html>

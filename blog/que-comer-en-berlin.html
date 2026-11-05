@@ -13,8 +13,6 @@
   <meta property="og:description" content="Döner kebab, currywurst, desayuno alemán y mercados de comida: todo lo que tienes que probar en Berlín." />
   <meta property="og:image" content="https://juanberliner.com/blog/que-comer-en-berlin-hero.webp" />
   <meta property="og:locale" content="es_ES" />
-  <link rel="alternate" hreflang="es" href="https://juanberliner.com/blog/que-comer-en-berlin.html" />
-  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/blog/que-comer-en-berlin.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Qué comer en Berlín: guía gastronómica completa" />
   <meta name="twitter:description" content="Döner kebab, currywurst, desayuno alemán y mercados: la guía gastronómica de Berlín." />
@@ -66,6 +64,9 @@
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="stylesheet" href="../assets/harmony.css" />
+<link rel="alternate" hreflang="es" href="https://juanberliner.com/blog/que-comer-en-berlin.html" />
+  <link rel="alternate" hreflang="en" href="https://juanberliner.com/en/blog/que-comer-en-berlin.html" />
+  <link rel="alternate" hreflang="x-default" href="https://juanberliner.com/blog/que-comer-en-berlin.html" />
 </head>
 <body>
 <a id="whatsapp-float" href="https://wa.me/4915736214462" target="_blank" rel="noopener" aria-label="WhatsApp">
@@ -99,7 +100,7 @@
       <a href="index.html" class="text-sm text-white transition-colors duration-200 tracking-wide lang-en">Blog</a>
     </div>
     <div class="flex items-center gap-3">
-      <button class="lang-toggle" onclick="toggleLang()"><span id="lang-flag">🇪🇸</span><span id="lang-label">ES</span></button>
+      <a class="lang-toggle" href="../en/blog/que-comer-en-berlin.html" hreflang="en" aria-label="Switch language" title="Switch language"><span id="lang-flag">🇪🇸</span><span id="lang-label">ES</span></a>
       <a href="../index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-es">Reservar un tour</a>
       <a href="../index.html#booking" class="hidden md:inline-flex btn-gold text-sm px-4 py-2 rounded-md lang-en">Book a tour</a>
       <button id="hamburger" onclick="toggleMobileMenu()" class="md:hidden p-3 text-white"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 5h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 11h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
@@ -358,12 +359,13 @@
       <a href="../index.html#booking" class="hover:text-white transition-colors lang-es">Reservar</a>
       <a href="../index.html#booking" class="hover:text-white transition-colors lang-en">Book</a>
     </div>
+  <div class="flex flex-wrap gap-4 mt-3"><a href="../privacy.html" class="text-xs text-berlin-muted hover:text-white transition-colors duration-200 lang-es">Política de privacidad</a><a href="../privacy.html" class="text-xs text-berlin-muted hover:text-white transition-colors duration-200 lang-en">Privacy policy</a><a href="../impressum.html" class="text-xs text-berlin-muted hover:text-white transition-colors duration-200">Impressum</a></div>
   </div>
 </footer>
 
 <script>
-  function toggleLang(){const b=document.body;const isEn=b.classList.toggle('lang-en');localStorage.setItem('lang',isEn?'en':'es');document.getElementById('lang-flag').textContent=isEn?'🇬🇧':'🇪🇸';document.getElementById('lang-label').textContent=isEn?'EN':'ES';}
-  (function(){const l=localStorage.getItem('lang');if(l==='en'){document.body.classList.add('lang-en');document.getElementById('lang-flag').textContent='🇬🇧';document.getElementById('lang-label').textContent='EN';}})();
+  function toggleLang(){const b=document.body;const isEn=b.classList.toggle('lang-en');document.getElementById('lang-flag').textContent=isEn?'🇬🇧':'🇪🇸';document.getElementById('lang-label').textContent=isEn?'EN':'ES';}
+  (function(){const l=document.documentElement.lang;if(l==='en'){document.body.classList.add('lang-en');document.getElementById('lang-flag').textContent='🇬🇧';document.getElementById('lang-label').textContent='EN';}})();
   function toggleMobileMenu(){const m=document.getElementById('mobile-menu');m.classList.toggle('open');}
   window.addEventListener('scroll',function(){const n=document.getElementById('navbar');n.classList.toggle('scrolled',window.scrollY>40);});
 </script>
