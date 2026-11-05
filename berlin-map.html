@@ -67,6 +67,10 @@
     .li-name{display:block;font:500 1.0625rem/1.25 'Playfair Display',Georgia,serif;color:#fff;overflow-wrap:anywhere}
     .li-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:.2rem;font-size:.8125rem;line-height:1.45;color:var(--mist)}
 
+    .m-legal{display:flex;gap:1rem;padding:1rem 1.5rem 1.25rem;font-size:.8125rem}
+    .m-legal a{color:var(--mist);text-decoration:underline;text-underline-offset:.2em}
+    .m-legal a:hover{color:#fff}
+
     /* Map */
     #map{grid-area:map;min-height:0;background:var(--ink)}
     .is-raster .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.72) saturate(.5)}
@@ -780,6 +784,10 @@ function renderList() {
     });
     list.appendChild(g);
   });
+  const legal = document.createElement('p');
+  legal.className = 'm-legal';
+  legal.innerHTML = `<a href="privacy.html">${lang === 'es' ? 'Política de privacidad' : 'Privacy policy'}</a><a href="impressum.html">Impressum</a>`;
+  list.appendChild(legal);
   list.scrollTop = top;
 }
 
