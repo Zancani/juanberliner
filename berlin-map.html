@@ -4,413 +4,205 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mis Recomendaciones en Berlín — Juan Berliner</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <style>
-    :root {
-      --bg: #001219;
-      --surface: #012A36;
-      --surface2: #013747;
-      --border: #003D52;
-      --gold: #EE9B00;
-      --gold-glow: rgba(238,155,0,.12);
-      --text: #E9D8A6;
-      --muted: #7FB5BF;
-      --dim: #4a7a85;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-    }
+    :root{--ink:#001219;--stone:#012A36;--raised:#013747;--line:#003D52;--mist:#7FB5BF;--parchment:#E9D8A6;--brass:#B8860B;--brass-line:rgba(184,134,11,.32);--r:2px;--ease:cubic-bezier(.16,1,.3,1);--list:392px;--panel:408px}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;overflow:hidden}
+    body{display:flex;flex-direction:column;height:100dvh;background:var(--ink);color:var(--parchment);font:400 15px/1.6 'Inter',system-ui,sans-serif;font-feature-settings:"tnum" 1,"lnum" 1}
+    ::selection{background:var(--brass);color:var(--ink)}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+    :focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+    *{scrollbar-width:thin;scrollbar-color:var(--line) transparent}
 
-    /* ── NAV ───────────────────────────────────────────── */
-    nav {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      height: 54px;
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-shrink: 0;
-      z-index: 500;
-    }
-    .nav-back {
-      display: flex; align-items: center; gap: 6px;
-      color: var(--muted); text-decoration: none; font-size: 13px;
-      transition: color .2s;
-    }
-    .nav-back:hover { color: var(--gold); }
-    .nav-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
-    .nav-brand { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--gold); text-decoration: none; }
-    .nav-tag { font-size: 11px; color: var(--muted); font-weight: 500; }
-    .nav-flex { flex: 1; }
-    .lang-toggle { display: flex; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
-    .lang-btn {
-      padding: 5px 11px; font-size: 11px; font-weight: 600;
-      border: none; background: transparent; color: var(--muted);
-      cursor: pointer; transition: all .2s; font-family: inherit;
-    }
-    .lang-btn.active { background: var(--gold); color: #001219; }
+    /* Nav */
+    .m-nav{flex:none;display:flex;align-items:center;gap:1rem;height:64px;padding:0 1.5rem;background:var(--ink);border-bottom:1px solid var(--line);position:relative;z-index:1100}
+    .nav-back{display:flex;align-items:center;gap:.4rem;min-height:44px;font-size:.875rem;color:var(--mist);transition:color .2s}
+    .nav-back:hover{color:#fff}
+    .nav-sep{width:1px;height:20px;background:var(--line)}
+    .nav-brand{font:600 1.375rem/1 'Playfair Display',Georgia,serif;letter-spacing:-.01em;color:#fff;transition:color .2s}
+    .nav-brand:hover{color:var(--brass)}
+    .nav-flex{flex:1}
+    .lang-toggle{display:flex;border:1px solid var(--line);border-radius:var(--r)}
+    .lang-btn{min-width:44px;min-height:40px;padding:0 .7rem;font-size:.75rem;font-weight:600;letter-spacing:.1em;color:var(--mist);transition:color .2s,background-color .2s}
+    .lang-btn:hover{color:#fff}
+    .lang-btn.active{background:var(--brass);color:var(--ink)}
 
-    /* ── FILTER BAR ─────────────────────────────────────── */
-    #filter-bar-wrap {
-      position: relative;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    #filter-bar-wrap::after {
-      content: '';
-      position: absolute; top: 0; right: 0; bottom: 0; width: 48px;
-      background: linear-gradient(to left, var(--surface) 20%, transparent);
-      pointer-events: none; z-index: 2;
-    }
-    #filter-bar {
-      padding: 0 16px;
-      height: 52px;
-      display: flex; align-items: center; gap: 6px;
-      overflow-x: auto;
-      -ms-overflow-style: none; scrollbar-width: none;
-    }
-    #filter-bar::-webkit-scrollbar { display: none; }
-    .chip {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 6px 13px 6px 10px; border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.06);
-      background: rgba(255,255,255,.03);
-      color: var(--muted); font-size: 11px; font-weight: 500;
-      letter-spacing: .01em;
-      cursor: pointer; white-space: nowrap; flex-shrink: 0;
-      transition: background .15s, border-color .15s, color .15s, transform .15s, box-shadow .15s;
-      user-select: none; font-family: inherit;
-    }
-    .chip-emoji { font-size: 14px; line-height: 1; flex-shrink: 0; opacity: .7; transition: opacity .15s, transform .15s; }
-    .chip-label { letter-spacing: .02em; font-size: 11px; }
-    .chip .cnt {
-      background: rgba(255,255,255,.07); border-radius: 5px;
-      padding: 1px 6px; font-size: 10px; font-weight: 700;
-      letter-spacing: 0; color: var(--dim);
-      transition: background .15s, color .15s;
-    }
-    .chip.active {
-      background: color-mix(in srgb, var(--chip-color, #C8A84B) 12%, transparent);
-      border-color: color-mix(in srgb, var(--chip-color, #C8A84B) 30%, transparent);
-      color: var(--chip-color, #C8A84B);
-      box-shadow: 0 0 0 1px color-mix(in srgb, var(--chip-color, #C8A84B) 10%, transparent) inset;
-    }
-    .chip.active .chip-emoji { opacity: 1; }
-    .chip.active .cnt {
-      background: color-mix(in srgb, var(--chip-color, #C8A84B) 18%, transparent);
-      color: var(--chip-color, #C8A84B);
-    }
-    .chip:hover:not(.active) {
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.11);
-      color: var(--text);
-      transform: translateY(-1px);
-    }
-    .chip:hover:not(.active) .chip-emoji { opacity: .9; transform: scale(1.1); }
-    .chip:active { transform: translateY(0) !important; }
-    #n-count { margin-left: auto; flex-shrink: 0; font-size: 11px; color: var(--dim); font-weight: 500; padding-left: 8px; }
+    /* Layout */
+    #main{flex:1;min-height:0;position:relative;overflow:hidden;display:grid;grid-template-columns:var(--list) minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);grid-template-areas:"head map" "filters map" "list map"}
+    #m-head{grid-area:head;display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:1.5rem 1.5rem .25rem;border-right:1px solid var(--line)}
+    #m-head h1{white-space:nowrap;font:500 1.5625rem/1.1 'Playfair Display',Georgia,serif;letter-spacing:-.015em;color:#fff}
+    #n-count{flex:none;font-size:.8125rem;color:var(--mist)}
+    #filters{grid-area:filters;display:flex;flex-wrap:wrap;gap:.25rem .375rem;padding:.875rem 1.5rem 1rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .chip{display:inline-flex;align-items:center;gap:.4rem;min-height:36px;padding:.2rem .6rem;border:1px solid transparent;border-radius:var(--r);font-size:.8125rem;font-weight:500;line-height:1.2;color:var(--mist);white-space:nowrap;transition:color .2s,border-color .2s,background-color .2s}
+    .chip svg{width:14px;height:14px;flex:none}
+    .chip .cnt{font-size:.75rem;opacity:.75}
+    .chip:hover{color:#fff;border-color:var(--line)}
+    .chip.active{background:var(--raised);border-color:var(--brass);color:var(--parchment)}
+    .chip.active svg{color:var(--brass)}
+    #list{grid-area:list;min-height:0;overflow-y:auto;overscroll-behavior:contain;border-right:1px solid var(--line)}
+    .l-group h2{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:.5rem;padding:.8rem 1.5rem .6rem;background:var(--ink);border-bottom:1px solid var(--brass-line);font:600 .75rem/1.3 'Inter',sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--parchment)}
+    .l-group h2 svg{width:14px;height:14px;color:var(--brass);flex:none}
+    .l-group h2 span:last-child{margin-left:auto;font-weight:400;letter-spacing:0;text-transform:none;color:var(--mist)}
+    .list-item{display:grid;grid-template-columns:64px minmax(0,1fr);gap:.875rem;align-items:center;width:100%;padding:.75rem 1.5rem;text-align:left;border-bottom:1px solid rgba(0,61,82,.55);transition:background-color .15s}
+    .list-item:hover{background:var(--stone)}
+    .list-item.sel{background:var(--raised);box-shadow:inset 2px 0 0 var(--brass)}
+    .list-item:focus-visible{outline-offset:-2px}
+    .li-thumb{position:relative;display:flex;align-items:center;justify-content:center;width:64px;height:64px;overflow:hidden;border-radius:var(--r);background:var(--stone);color:var(--brass)}
+    .li-thumb svg{width:22px;height:22px}
+    .li-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .li-name{display:block;font:500 1.0625rem/1.25 'Playfair Display',Georgia,serif;color:#fff;overflow-wrap:anywhere}
+    .li-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:.2rem;font-size:.8125rem;line-height:1.45;color:var(--mist)}
 
-    /* ── MAIN ───────────────────────────────────────────── */
-    #main { flex: 1; display: flex; overflow: hidden; position: relative; }
-    #map { flex: 1; transition: all .3s; }
+    /* Map */
+    #map{grid-area:map;min-height:0;background:var(--ink)}
+    .is-raster .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.72) saturate(.5)}
+    .leaflet-container{font-family:inherit;background:var(--ink)}
+    .leaflet-control-zoom{border:1px solid var(--line)!important;border-radius:var(--r)!important;box-shadow:none!important}
+    .leaflet-control-zoom a{width:36px!important;height:36px!important;line-height:34px!important;background:var(--ink)!important;border-color:var(--line)!important;border-radius:0!important;color:var(--parchment)!important;transition:color .2s}
+    .leaflet-control-zoom a:hover{color:var(--brass)!important}
+    .leaflet-control-attribution{background:rgba(0,18,25,.72)!important;color:var(--mist)!important;font-size:10px}
+    .leaflet-control-attribution a{color:var(--parchment)!important}
+    .leaflet-marker-icon.pin-wrap{background:none;border:0;outline:0}
+    .pin{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--ink);border:1px solid var(--brass);color:var(--parchment);box-shadow:0 2px 6px rgba(0,0,0,.45);transition:transform .2s var(--ease),background-color .15s,color .15s}
+    .pin svg{width:13px;height:13px}
+    .pin-wrap:hover .pin,.pin-wrap.is-hot .pin,.pin-wrap:focus-visible .pin{transform:scale(1.25);background:var(--raised);color:#fff}
+    .pin-wrap:focus-visible .pin{outline:2px solid var(--parchment);outline-offset:2px}
+    .pin-wrap.is-sel .pin{transform:scale(1.5);background:var(--brass);border-color:var(--parchment);color:var(--ink)}
+    .leaflet-tooltip.pin-tip{padding:.25rem .55rem;background:var(--ink);border:1px solid var(--brass-line);border-radius:var(--r);box-shadow:0 3px 10px rgba(0,0,0,.4);font:500 .875rem/1.3 'Playfair Display',Georgia,serif;color:#fff}
+    .leaflet-tooltip.pin-tip::before{display:none}
 
-    /* ── PANEL ──────────────────────────────────────────── */
-    #panel {
-      width: 0; background: var(--surface);
-      border-left: none;
-      display: flex; flex-direction: column; flex-shrink: 0;
-      overflow: hidden; position: relative;
-      transition: width .35s cubic-bezier(.4,0,.2,1), border-color .35s;
-    }
-    #panel.open {
-      width: 360px;
-      border-left: 1px solid var(--border);
-    }
+    /* Detail panel */
+    #panel{position:absolute;top:0;right:0;bottom:0;z-index:1000;display:flex;flex-direction:column;width:var(--panel);background:var(--ink);border-left:1px solid var(--brass-line);box-shadow:-12px 0 32px rgba(0,0,0,.35);transform:translateX(102%);visibility:hidden;transition:transform .38s var(--ease),visibility 0s .38s}
+    #panel.open{transform:none;visibility:visible;transition:transform .38s var(--ease),visibility 0s}
+    #panel-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+    #panel-photo{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:3/2;background:var(--stone);color:var(--brass);overflow:hidden}
+    #panel-photo>svg{width:44px;height:44px}
+    #panel-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    #panel-close{position:absolute;top:.75rem;right:.75rem;z-index:3;display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:var(--ink);border:1px solid var(--line);border-radius:var(--r);color:var(--parchment);transition:color .2s,border-color .2s}
+    #panel-close:hover{color:#fff;border-color:var(--brass)}
+    #panel-body{padding:1.5rem}
+    .p-badge{display:flex;align-items:center;gap:.45rem;font-size:.75rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--parchment)}
+    .p-badge svg{width:14px;height:14px;color:var(--brass);flex:none}
+    .p-name{margin-top:.5rem;font:500 2rem/1.12 'Playfair Display',Georgia,serif;letter-spacing:-.015em;color:#fff;text-wrap:balance;overflow-wrap:anywhere}
+    .p-desc{margin-top:1rem;font-size:1rem;line-height:1.65;color:var(--parchment);text-wrap:pretty}
+    .p-row{display:flex;gap:.6rem;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.875rem;line-height:1.55;color:var(--mist)}
+    .p-row svg{width:15px;height:15px;flex:none;margin-top:.2rem;color:var(--brass)}
+    .p-gmaps{display:flex;align-items:center;justify-content:center;gap:.55rem;min-height:48px;margin-top:1.5rem;padding:.6rem 1rem;border:1px solid var(--brass);border-radius:var(--r);font-size:.9375rem;font-weight:600;color:var(--parchment);transition:background-color .2s,color .2s}
+    .p-gmaps:hover{background:var(--brass);color:var(--ink)}
+    .p-gmaps svg{transition:transform .25s var(--ease)}
+    .p-gmaps:hover svg{transform:translateX(3px)}
 
-    /* Photos */
-    #panel-photos {
-      position: relative; height: 200px; flex-shrink: 0;
-      background: var(--surface2); overflow: hidden;
+    @media (max-width:900px){
+      :root{--head:50px;--filters:56px;--map-h:36svh}
+      .m-nav{height:56px;padding:0 1rem;gap:.75rem}
+      .nav-brand{font-size:1.1875rem}
+      #main{grid-template-columns:minmax(0,1fr);grid-template-rows:var(--head) var(--filters) var(--map-h) minmax(0,1fr);grid-template-areas:"head" "filters" "map" "list"}
+      #m-head{align-items:center;padding:0 1rem;border-right:0}
+      #m-head h1{font-size:1.375rem}
+      #filters{flex-wrap:nowrap;overflow-x:auto;align-items:center;gap:.375rem;padding:0 1rem;border-right:0;scrollbar-width:none}
+      #filters::-webkit-scrollbar{display:none}
+      .chip{min-height:40px;flex:none}
+      #list{border-right:0;border-top:1px solid var(--line)}
+      .l-group h2,.list-item{padding-inline:1rem}
+      #panel{top:calc(var(--head) + var(--filters) + var(--map-h));width:100%;border-left:0;border-top:1px solid var(--brass);box-shadow:0 -10px 28px rgba(0,0,0,.4);transform:translateY(102%)}
+      #panel-photo{aspect-ratio:21/9}
+      #panel-body{padding:1.1rem 1rem 1.5rem}
+      .p-name{font-size:1.625rem}
+      #panel-close{top:.5rem;right:.5rem}
     }
-    #panel-photos.empty {
-      display: flex; align-items: center; justify-content: center;
-      font-size: 48px;
-    }
-    .ph-img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0; transition: opacity .55s;
-    }
-    .ph-img.on { opacity: 1; }
-    .ph-nav-btn {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 32px; height: 32px; background: rgba(0,0,0,.55);
-      border: none; border-radius: 50%; color: #fff; font-size: 14px;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      z-index: 2; transition: background .2s; font-family: inherit;
-    }
-    .ph-nav-btn:hover { background: rgba(0,0,0,.85); }
-    .ph-prev { left: 9px; }
-    .ph-next { right: 9px; }
-    .ph-dots { position: absolute; bottom: 9px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 2; }
-    .ph-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.3); cursor: pointer; transition: background .2s; }
-    .ph-dot.on { background: #fff; }
-
-    /* Close */
-    #panel-close {
-      position: absolute; top: 10px; right: 10px;
-      width: 30px; height: 30px; background: rgba(0,0,0,.65);
-      border: none; border-radius: 50%; color: #fff; font-size: 14px;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      z-index: 20; transition: background .2s; font-family: inherit;
-    }
-    #panel-close:hover { background: rgba(0,0,0,.9); }
-
-    /* Body */
-    #panel-body {
-      padding: 16px 20px 32px; overflow-y: auto; flex: 1;
-      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-    }
-    #panel-body::-webkit-scrollbar { width: 4px; }
-    #panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .p-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 10px; border-radius: 20px;
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .09em; margin-bottom: 11px;
-    }
-    .p-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px; font-weight: 700; line-height: 1.2; margin-bottom: 5px;
-    }
-    .p-addr { font-size: 12px; color: var(--muted); margin-bottom: 13px; line-height: 1.5; }
-    .p-divider { height: 1px; background: var(--border); margin: 13px 0; }
-    .p-desc { font-size: 13px; line-height: 1.8; color: #ccc; margin-bottom: 14px; }
-    .p-row { display: flex; gap: 10px; margin-bottom: 9px; font-size: 13px; align-items: flex-start; }
-    .p-icon { color: var(--gold); flex-shrink: 0; width: 16px; text-align: center; margin-top: 2px; font-size: 12px; }
-    .p-val { color: var(--text); line-height: 1.5; }
-    .p-val a { color: var(--gold); text-decoration: none; }
-    .p-val a:hover { text-decoration: underline; }
-    .p-gmaps {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin-top: 22px; padding: 11px;
-      text-align: center; border: 1px solid var(--gold);
-      border-radius: 6px; color: var(--gold); text-decoration: none;
-      font-size: 13px; font-weight: 600; transition: all .2s;
-    }
-    .p-gmaps:hover { background: var(--gold); color: #000; }
-    .p-gmaps svg { transition: transform .2s; }
-    .p-gmaps:hover svg { transform: translateX(3px); }
-
-    /* ── LIST PANEL ─────────────────────────────────────── */
-    #list-panel {
-      width: 0; background: var(--surface);
-      border-right: none;
-      display: flex; flex-direction: column; flex-shrink: 0;
-      overflow: hidden; position: relative;
-      transition: width .35s cubic-bezier(.4,0,.2,1);
-    }
-    #list-panel.open { width: 280px; border-right: 1px solid var(--border); }
-
-    #list-header {
-      padding: 12px 15px 11px; border-bottom: 1px solid var(--border);
-      flex-shrink: 0; display: flex; align-items: center; gap: 7px;
-    }
-    #list-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    #list-title {
-      font-size: 11px; font-weight: 700; letter-spacing: .07em;
-      text-transform: uppercase;
-    }
-    #list-cnt { margin-left: auto; font-size: 11px; color: var(--dim); font-weight: 500; }
-
-    #list-body {
-      overflow-y: auto; flex: 1;
-      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-    }
-    #list-body::-webkit-scrollbar { width: 4px; }
-    #list-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .list-item {
-      display: flex; align-items: center; gap: 11px;
-      padding: 11px 15px; border-bottom: 1px solid rgba(255,255,255,.04);
-      cursor: pointer; transition: background .14s;
-    }
-    .list-item:hover, .list-item.sel { background: var(--surface2); }
-    .li-photo {
-      width: 50px; height: 50px; border-radius: 6px;
-      object-fit: cover; flex-shrink: 0; background: var(--surface2);
-    }
-    .li-body { flex: 1; min-width: 0; }
-    .li-name {
-      font-size: 13px; font-weight: 600; color: var(--text);
-      margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-    .li-desc {
-      font-size: 11.5px; color: var(--muted); line-height: 1.45;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-    }
-    .li-chev { color: var(--dim); flex-shrink: 0; }
-
-    /* ── LEAFLET OVERRIDES ──────────────────────────────── */
-    .leaflet-control-attribution { display: none !important; }
-    .leaflet-control-zoom a {
-      background: var(--surface) !important;
-      border-color: var(--border) !important;
-      color: var(--muted) !important;
-    }
-    .leaflet-control-zoom a:hover { color: var(--gold) !important; background: var(--surface2) !important; }
-    .m-wrap { cursor: pointer; transition: transform .15s; }
-    .m-wrap:hover { transform: scale(1.18) translateY(-3px) !important; }
-    .m-wrap.sel { transform: scale(1.28) translateY(-4px) !important; }
-
-    /* ── MOBILE ─────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      nav { padding: 0 14px; gap: 10px; }
-      .nav-tag { display: none; }
-      #list-panel {
-        position: absolute; bottom: 0; left: 0; right: 0;
-        width: 100% !important; height: 0;
-        border: none; border-radius: 16px 16px 0 0;
-        z-index: 1000;
-        background: var(--surface);
-        transition: height .35s cubic-bezier(.4,0,.2,1);
-      }
-      #list-panel.open {
-        height: 52vh;
-        border-top: 1px solid var(--border);
-      }
-      #list-header { padding: 14px 18px 12px; }
-      #panel {
-        position: absolute; bottom: 0; left: 0; right: 0;
-        width: 100% !important; height: 0;
-        border: none;
-        border-radius: 16px 16px 0 0;
-        z-index: 1001;
-        transition: height .35s cubic-bezier(.4,0,.2,1);
-      }
-      #panel.open {
-        height: 60vh;
-        border-top: 1px solid var(--border);
-      }
-      #panel-photos { height: 200px; }
-      .p-name { font-size: 19px; }
-    }
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation:none!important}}
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
-<nav>
+<nav class="m-nav">
   <a href="index.html" class="nav-back">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
     <span class="l-es">Inicio</span><span class="l-en" style="display:none">Home</span>
   </a>
   <div class="nav-sep"></div>
   <a href="index.html" class="nav-brand">Juan Berliner</a>
-  <span class="nav-tag l-es">· Mis recomendaciones</span>
-  <span class="nav-tag l-en" style="display:none">· My recommendations</span>
   <div class="nav-flex"></div>
   <div class="lang-toggle">
-    <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
-    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn active" id="btn-es" onclick="setLang('es')" aria-pressed="true">ES</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')" aria-pressed="false">EN</button>
   </div>
 </nav>
 
-<div id="filter-bar-wrap"><div id="filter-bar"></div></div>
-
 <div id="main">
-  <div id="list-panel">
-    <div id="list-header">
-      <span id="list-dot"></span>
-      <span id="list-title"></span>
-      <span id="list-cnt"></span>
-    </div>
-    <div id="list-body"></div>
-  </div>
+  <header id="m-head">
+    <h1><span class="l-es">Mis recomendaciones</span><span class="l-en" style="display:none">My recommendations</span></h1>
+    <span id="n-count" aria-live="polite"></span>
+  </header>
+  <div id="filters" role="group"></div>
+  <div id="list"></div>
   <div id="map"></div>
-  <div id="panel">
-    <div id="panel-photos"></div>
-    <button id="panel-close" title="Cerrar">✕</button>
-    <div id="panel-body">
-      <div id="p-badge" class="p-badge"></div>
-      <div id="p-name" class="p-name"></div>
-      <div id="p-addr" class="p-addr"></div>
-      <div class="p-divider"></div>
-      <div id="p-desc" class="p-desc"></div>
-      <div id="p-info"></div>
-      <a id="p-gmaps" class="p-gmaps" target="_blank" rel="noopener">
-        <span class="l-es">Ver en Google Maps</span>
-        <span class="l-en" style="display:none">Open in Google Maps</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
+  <aside id="panel">
+    <button id="panel-close" title="Cerrar" aria-label="Cerrar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div id="panel-scroll">
+      <div id="panel-photo"></div>
+      <div id="panel-body">
+        <div id="p-badge" class="p-badge"></div>
+        <h2 id="p-name" class="p-name"></h2>
+        <p id="p-desc" class="p-desc"></p>
+        <div id="p-info"></div>
+        <a id="p-gmaps" class="p-gmaps" target="_blank" rel="noopener">
+          <span class="l-es">Ver en Google Maps</span>
+          <span class="l-en" style="display:none">Open in Google Maps</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
     </div>
-  </div>
+  </aside>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.22/leaflet-maplibre-gl.js"></script>
 <script>
-// ── LANG ────────────────────────────────────────────────────────
+// ── STATE ───────────────────────────────────────────────────────
 let lang = 'es';
 let currentCategory = null;
-function setLang(l) {
-  lang = l;
-  localStorage.setItem('lang', l);
-  document.querySelectorAll('.l-es').forEach(e => e.style.display = l==='es'?'':'none');
-  document.querySelectorAll('.l-en').forEach(e => e.style.display = l==='en'?'':'none');
-  document.getElementById('btn-es').classList.toggle('active', l==='es');
-  document.getElementById('btn-en').classList.toggle('active', l==='en');
-  if (selectedMarker) {
-    const p = selectedMarker._place;
-    const cat = CAT[p.category];
-    document.getElementById('p-desc').textContent = l === 'es' ? (DESC_ES[p.name] || p.desc) : p.desc;
-    document.getElementById('p-badge').textContent = cat.emoji + ' ' + (l === 'es' ? cat.label_es : cat.label_en);
-    if (p.hours) document.getElementById('p-hours').textContent = p.hours;
-  }
-  // Refresh place count label
-  const nc = document.getElementById('n-count');
-  if (nc) {
-    const c = parseInt(nc.dataset.count || '0');
-    nc.textContent = l === 'es' ? c + ' lugar' + (c!==1?'es':'') : c + ' place' + (c!==1?'s':'');
-  }
-  // Refresh list panel if open
-  if (currentCategory) {
-    const cat = CAT[currentCategory];
-    const titleEl = document.getElementById('list-title');
-    titleEl.textContent = l === 'es' ? cat.label_es : cat.label_en;
-    const items = document.querySelectorAll('.list-item');
-    const cnt = items.length;
-    document.getElementById('list-cnt').textContent =
-      l === 'es' ? cnt + ' lugar' + (cnt !== 1 ? 'es' : '') : cnt + ' place' + (cnt !== 1 ? 's' : '');
-    items.forEach(item => {
-      const p = item._place;
-      if (p) item.querySelector('.li-desc').textContent =
-        l === 'es' ? (DESC_ES[p.name] || p.desc) : p.desc;
-    });
-  }
-}
+let selected = null;
+let lastTrigger = null;
 
-// ── CATEGORIES ──────────────────────────────────────────────────
-const CAT = {
-  "Food":                { color:"#0288D1", emoji:"🍽️", bg:"rgba(2,136,209,.13)",   label_es:"Comida",          label_en:"Food"             },
-  "Bars":                { color:"#9C27B0", emoji:"🍺", bg:"rgba(156,39,176,.13)",  label_es:"Bares",           label_en:"Bars"             },
-  "Museums":             { color:"#D4A800", emoji:"🏛️", bg:"rgba(212,168,0,.13)",   label_es:"Museos",          label_en:"Museums"          },
-  "Green Areas & Lakes": { color:"#2E7D32", emoji:"🌿", bg:"rgba(46,125,50,.13)",   label_es:"Parques y Lagos", label_en:"Parks & Lakes"    },
-  "Clubs":               { color:"#546E7A", emoji:"🎧", bg:"rgba(84,110,122,.13)",  label_es:"Clubes",          label_en:"Clubs"            },
-  "Cafes/Brunch":        { color:"#C2185B", emoji:"☕", bg:"rgba(194,24,91,.13)",   label_es:"Cafés",           label_en:"Cafés"            },
-  "Feeling Fancy":       { color:"#757575", emoji:"⭐", bg:"rgba(117,117,117,.13)", label_es:"Para darse un gusto", label_en:"Feeling Fancy"},
-  "Squares & Locations": { color:"#FF5252", emoji:"📍", bg:"rgba(255,82,82,.13)",   label_es:"Plazas",          label_en:"Squares"          },
+// ── CATEGORIES (un solo color: se distinguen por el icono) ──────
+const GLYPH = {
+  "Food":"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
+  "Bars":"M8 22h8M7 10h10M12 15v7M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z",
+  "Museums":"M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 2l8 5H4Z",
+  "Green Areas & Lakes":"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10ZM2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12",
+  "Clubs":"M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3Z",
+  "Cafes/Brunch":"M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4ZM6 2v2M10 2v2M14 2v2",
+  "Feeling Fancy":"M12 3l1.9 5.6a2 2 0 0 0 1.3 1.3L21 12l-5.8 2.1a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.6a2 2 0 0 0-1.3-1.3L3 12l5.8-2.1a2 2 0 0 0 1.3-1.3Z",
+  "Squares & Locations":"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0ZM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
+  "all":"M4 6h16M4 12h16M4 18h16",
+  "clock":"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5l3 2"
 };
+const svg = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${GLYPH[k]}"/></svg>`;
+const CAT = {
+  "Food":                { label_es:"Comida",              label_en:"Food"          },
+  "Bars":                { label_es:"Bares",               label_en:"Bars"          },
+  "Museums":             { label_es:"Museos",              label_en:"Museums"       },
+  "Green Areas & Lakes": { label_es:"Parques y Lagos",     label_en:"Parks & Lakes" },
+  "Clubs":               { label_es:"Clubes",              label_en:"Clubs"         },
+  "Cafes/Brunch":        { label_es:"Cafés",               label_en:"Cafés"         },
+  "Feeling Fancy":       { label_es:"Para darse un gusto", label_en:"Feeling Fancy" },
+  "Squares & Locations": { label_es:"Plazas",              label_en:"Squares"       },
+};
+const label = c => lang === 'es' ? CAT[c].label_es : CAT[c].label_en;
+const places_n = n => lang === 'es' ? n + ' lugar' + (n !== 1 ? 'es' : '') : n + ' place' + (n !== 1 ? 's' : '');
+const descOf = p => lang === 'es' ? (DESC_ES[p.name] || p.desc) : p.desc;
 
 // ── SPANISH DESCRIPTIONS ─────────────────────────────────────────
 const DESC_ES = {
@@ -873,302 +665,219 @@ const PLACES = [
   { name:"Hackescher Markt", lat:52.5237159, lon:13.4022679, category:"Squares & Locations", desc:"A little touristy for my taste, but there are still some gems dotted about." },
 ];
 
-// ── MAP SETUP ────────────────────────────────────────────────────
-const map = L.map('map', { center:[52.499,13.400], zoom:12, zoomControl:true });
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
-  subdomains:'abcd', maxZoom:19
-}).addTo(map);
+// ── MAP ──────────────────────────────────────────────────────────
+const map = L.map('map', { center:[52.499,13.400], zoom:12, zoomControl:true, attributionControl:true });
+map.attributionControl.setPrefix(false);
+const ATTR = '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> © <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
 
-// ── ICONS ────────────────────────────────────────────────────────
-function mkIcon(color, selected=false) {
-  const s = selected ? 32 : 26;
-  const h = Math.round(s * 1.32);
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${h}" viewBox="0 0 26 34">
-    <defs>
-      <filter id="ds" x="-30%" y="-20%" width="160%" height="160%">
-        <feDropShadow dx="0" dy="2" stdDeviation="${selected?3:2}" flood-color="rgba(0,0,0,.7)"/>
-      </filter>
-    </defs>
-    <path d="M13 0C5.82 0 0 5.82 0 13c0 8.8 13 21 13 21S26 21.8 26 13C26 5.82 20.18 0 13 0z"
-          fill="${color}" filter="url(#ds)" opacity="${selected?.97:.88}"/>
-    <circle cx="13" cy="13" r="5.5" fill="white" opacity=".95"/>
-  </svg>`;
-  return L.divIcon({
-    html:`<div class="m-wrap${selected?' sel':''}">${svg}</div>`,
-    iconSize:[s,h], iconAnchor:[s/2,h], popupAnchor:[0,-h], className:''
+// Recolorea el estilo del mapa con la paleta del sitio
+function tuneStyle(style) {
+  const ink='#001219', stone='#012A36', raised='#013747', line='#003D52', mist='#7FB5BF', parch='#E9D8A6';
+  style.layers = style.layers.filter(l => !/oneway|aeroway|highway_name_motorway|boundary_state/.test(l.id));
+  style.layers.forEach(l => {
+    const p = l.paint = l.paint || {};
+    if (l.type === 'background') p['background-color'] = ink;
+    else if (l.id === 'water') { p['fill-color'] = raised; delete p['fill-pattern']; }
+    else if (l.id === 'waterway') p['line-color'] = raised;
+    else if (/landuse_park|landcover_wood/.test(l.id)) { p['fill-color'] = '#01212B'; p['fill-opacity'] = 1; }
+    else if (l.id === 'building') { p['fill-color'] = '#011A24'; delete p['fill-outline-color']; }
+    else if (l.type === 'fill') p['fill-color'] = ink;
+    else if (/motorway/.test(l.id) && l.type === 'line') p['line-color'] = '#01394A';
+    else if (/major/.test(l.id) && l.type === 'line') p['line-color'] = '#012F3D';
+    else if (/rail/.test(l.id) && l.type === 'line') p['line-color'] = stone;
+    else if (l.type === 'line') p['line-color'] = '#011F2A';
+    else if (l.type === 'symbol') {
+      p['text-color'] = /place_(city|town|suburb)/.test(l.id) ? parch : mist;
+      p['text-halo-color'] = ink;
+      p['text-halo-width'] = 1.2;
+    }
   });
+  return style;
+}
+function rasterFallback() {
+  map.getContainer().classList.add('is-raster');
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>' }).addTo(map);
+}
+(async function initBase() {
+  try {
+    if (!window.maplibregl || !L.maplibreGL) throw new Error('no maplibre');
+    if (!document.createElement('canvas').getContext('webgl2')) throw new Error('no webgl');
+    const r = await fetch('https://tiles.openfreemap.org/styles/dark');
+    if (!r.ok) throw new Error('style ' + r.status);
+    L.maplibreGL({ style: tuneStyle(await r.json()), attribution: ATTR }).addTo(map);
+  } catch (e) { rasterFallback(); }
+})();
+
+// ── MARKERS ──────────────────────────────────────────────────────
+const markerOf = new Map();
+PLACES.forEach(place => {
+  const icon = L.divIcon({ html:`<span class="pin">${svg(place.category)}</span>`, className:'pin-wrap', iconSize:[24,24], iconAnchor:[12,12] });
+  const m = L.marker([place.lat, place.lon], { icon, alt:place.name, riseOnHover:true });
+  m.bindTooltip(place.name, { className:'pin-tip', direction:'top', offset:[0,-12] });
+  m.on('click', () => { lastTrigger = null; selectPlace(place); });
+  markerOf.set(place, m);
+});
+function renderMarkers() {
+  let count = 0;
+  PLACES.forEach(p => {
+    const show = !currentCategory || p.category === currentCategory;
+    const m = markerOf.get(p);
+    if (show) { if (!map.hasLayer(m)) m.addTo(map); count++; }
+    else if (map.hasLayer(m)) map.removeLayer(m);
+  });
+  const nc = document.getElementById('n-count');
+  nc.dataset.count = count;
+  nc.textContent = places_n(count);
+}
+function markSel(place, on) {
+  const el = markerOf.get(place)?.getElement();
+  if (el) el.classList.toggle('is-sel', on);
+  markerOf.get(place)?.setZIndexOffset(on ? 2000 : 0);
 }
 
-// ── STATE ────────────────────────────────────────────────────────
-let activeFilters = new Set(Object.keys(CAT));
-let markers = [];
-let selectedMarker = null;
-let photoIdx = 0;
-let curPhotos = [];
-
-// ── PHOTO CAROUSEL ───────────────────────────────────────────────
-function buildPhotos(photos, emoji) {
-  const el = document.getElementById('panel-photos');
-  el.innerHTML = '';
-  el.className = '';
-  curPhotos = photos;
-  photoIdx = 0;
-
-  if (!photos || photos.length === 0) {
-    el.classList.add('empty');
-    el.textContent = emoji;
-    return;
-  }
-
-  photos.forEach((src, i) => {
-    const img = document.createElement('img');
-    img.className = 'ph-img' + (i===0?' on':'');
-    img.src = src;
-    img.alt = '';
-    img.loading = 'eager';
-    img.onerror = () => { if (!el.querySelector('.ph-img.on') || el.querySelector('.ph-img.on') === img) { el.innerHTML=''; el.classList.add('empty'); el.textContent = emoji; } };
-    el.appendChild(img);
-  });
-
-  if (photos.length > 1) {
-    const prev = document.createElement('button');
-    prev.className = 'ph-nav-btn ph-prev';
-    prev.innerHTML = '&#8249;';
-    prev.onclick = () => movePhoto(-1);
-    const next = document.createElement('button');
-    next.className = 'ph-nav-btn ph-next';
-    next.innerHTML = '&#8250;';
-    next.onclick = () => movePhoto(1);
-    const dots = document.createElement('div');
-    dots.className = 'ph-dots';
-    photos.forEach((_,i) => {
-      const d = document.createElement('div');
-      d.className = 'ph-dot' + (i===0?' on':'');
-      d.onclick = () => goPhoto(i);
-      dots.appendChild(d);
+// ── LIST ─────────────────────────────────────────────────────────
+function renderList() {
+  const list = document.getElementById('list');
+  const top = list.scrollTop;
+  list.innerHTML = '';
+  Object.keys(CAT).forEach(c => {
+    if (currentCategory && c !== currentCategory) return;
+    const places = PLACES.filter(p => p.category === c);
+    if (!places.length) return;
+    const g = document.createElement('section');
+    g.className = 'l-group';
+    g.innerHTML = `<h2>${svg(c)}<span></span><span></span></h2>`;
+    g.querySelector('h2 span').textContent = label(c);
+    g.querySelector('h2 span:last-child').textContent = places_n(places.length);
+    places.forEach(place => {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'list-item' + (selected === place ? ' sel' : '');
+      item._place = place;
+      item.innerHTML = `<span class="li-thumb">${svg(place.category)}<img alt="" loading="lazy"></span><span><span class="li-name"></span><span class="li-desc"></span></span>`;
+      const img = item.querySelector('img');
+      img.onerror = () => img.remove();
+      if (PHOTO_URLS[place.name]) img.src = PHOTO_URLS[place.name]; else img.remove();
+      item.querySelector('.li-name').textContent = place.name;
+      item.querySelector('.li-desc').textContent = descOf(place);
+      item.addEventListener('click', () => { lastTrigger = item; selectPlace(place); });
+      const hot = on => { const m = markerOf.get(place), el = m.getElement(); if (el) el.classList.toggle('is-hot', on); if (selected !== place) m.setZIndexOffset(on ? 1500 : 0); };
+      item.addEventListener('mouseenter', () => hot(true));
+      item.addEventListener('mouseleave', () => hot(false));
+      item.addEventListener('focus', () => hot(true));
+      item.addEventListener('blur', () => hot(false));
+      g.appendChild(item);
     });
-    el.appendChild(prev);
-    el.appendChild(next);
-    el.appendChild(dots);
-  }
-}
-
-function movePhoto(dir) {
-  goPhoto((photoIdx + dir + curPhotos.length) % curPhotos.length);
-}
-function goPhoto(i) {
-  const el = document.getElementById('panel-photos');
-  el.querySelectorAll('.ph-img').forEach((img,j) => img.classList.toggle('on', j===i));
-  el.querySelectorAll('.ph-dot').forEach((d,j) => d.classList.toggle('on', j===i));
-  photoIdx = i;
+    list.appendChild(g);
+  });
+  list.scrollTop = top;
 }
 
 // ── PANEL ────────────────────────────────────────────────────────
-function openPanel(place) {
-  const cat = CAT[place.category];
-
-  buildPhotos([getPhotoUrl(place)], cat.emoji);
-
+function fillPanel(place) {
   const badge = document.getElementById('p-badge');
-  badge.style.background = cat.bg;
-  badge.style.color = cat.color;
-  badge.textContent = cat.emoji + ' ' + (lang === 'es' ? cat.label_es : cat.label_en);
-
+  badge.innerHTML = svg(place.category) + '<span></span>';
+  badge.querySelector('span').textContent = label(place.category);
   document.getElementById('p-name').textContent = place.name;
-  const addrEl = document.getElementById('p-addr');
-  addrEl.textContent = '';
-  addrEl.style.display = 'none';
-  document.getElementById('p-desc').textContent = lang === 'es' ? (DESC_ES[place.name] || place.desc) : place.desc;
+  document.getElementById('p-desc').textContent = descOf(place);
   document.getElementById('p-gmaps').href = `https://maps.google.com/?q=${place.lat},${place.lon}`;
-
   const info = document.getElementById('p-info');
   info.innerHTML = '';
   const hrs = HOURS[place.name];
   if (hrs) {
-    info.innerHTML = `<div class="p-row"><span class="p-icon">🕐</span><span class="p-val">${hrs}</span></div>`;
+    info.innerHTML = `<div class="p-row">${svg('clock')}<span></span></div>`;
+    info.querySelector('span').textContent = hrs;
   }
-
-  document.getElementById('panel').classList.add('open');
-  // Sync list selection when marker is clicked directly
-  if (currentCategory) {
-    document.querySelectorAll('.list-item').forEach(item => {
-      item.classList.toggle('sel', item._place === place);
-    });
-  }
-  setTimeout(() => map.invalidateSize(), 350);
 }
-
+function selectPlace(place) {
+  if (selected && selected !== place) markSel(selected, false);
+  selected = place;
+  markSel(place, true);
+  fillPanel(place);
+  const ph = document.getElementById('panel-photo');
+  ph.innerHTML = svg(place.category);
+  const url = getPhotoUrl(place);
+  if (url) { const img = new Image(); img.alt = place.name; img.onerror = () => img.remove(); img.src = url; ph.appendChild(img); }
+  document.getElementById('panel-scroll').scrollTop = 0;
+  const panel = document.getElementById('panel');
+  panel.classList.add('open');
+  document.querySelectorAll('.list-item').forEach(i => {
+    const on = i._place === place;
+    i.classList.toggle('sel', on);
+    if (on) i.scrollIntoView({ block:'nearest' });
+  });
+  const pt = map.project([place.lat, place.lon]);
+  if (innerWidth > 900) pt.x += panel.offsetWidth / 2;
+  map.panTo(map.unproject(pt), { animate:true, duration:.5 });
+  if (lastTrigger) document.getElementById('panel-close').focus({ preventScroll:true });
+}
 function closePanel() {
-  document.getElementById('panel').classList.remove('open');
-  document.querySelectorAll('.list-item').forEach(i => i.classList.remove('sel'));
-  if (selectedMarker) {
-    const place = selectedMarker._place;
-    const cat = CAT[place.category];
-    selectedMarker.setIcon(mkIcon(cat.color, false));
-    selectedMarker._el && selectedMarker._el.classList.remove('sel');
-    selectedMarker = null;
-  }
-  setTimeout(() => map.invalidateSize(), 350);
+  const panel = document.getElementById('panel');
+  if (!panel.classList.contains('open')) return;
+  panel.classList.remove('open');
+  document.querySelectorAll('.list-item.sel').forEach(i => i.classList.remove('sel'));
+  if (selected) { markSel(selected, false); selected = null; }
+  if (lastTrigger && document.contains(lastTrigger)) lastTrigger.focus({ preventScroll:true });
+  lastTrigger = null;
 }
-
 document.getElementById('panel-close').addEventListener('click', closePanel);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+map.on('click', closePanel);
 
-// ── LIST PANEL ────────────────────────────────────────────────────
-function openList(categoryName) {
-  const cat = CAT[categoryName];
-  currentCategory = categoryName;
-  const places = PLACES.filter(p => p.category === categoryName);
-
-  const dot = document.getElementById('list-dot');
-  dot.style.background = cat.color;
-  const titleEl = document.getElementById('list-title');
-  titleEl.textContent = lang === 'es' ? cat.label_es : cat.label_en;
-  titleEl.style.color = cat.color;
-  document.getElementById('list-cnt').textContent =
-    lang === 'es' ? places.length + ' lugar' + (places.length !== 1 ? 'es' : '')
-                  : places.length + ' place' + (places.length !== 1 ? 's' : '');
-
-  const listBody = document.getElementById('list-body');
-  listBody.innerHTML = '';
-  listBody.scrollTop = 0;
-
-  places.forEach(place => {
-    const item = document.createElement('div');
-    item.className = 'list-item';
-    item._place = place;
-    item.innerHTML = `
-      <img class="li-photo" src="" alt="" loading="lazy">
-      <div class="li-body">
-        <div class="li-name"></div>
-        <div class="li-desc"></div>
-      </div>
-      <svg class="li-chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
-    `;
-    const img = item.querySelector('.li-photo');
-    img.src = PHOTO_URLS[place.name] || '';
-    img.onerror = function() { this.style.display = 'none'; };
-    item.querySelector('.li-name').textContent = place.name;
-    item.querySelector('.li-desc').textContent =
-      lang === 'es' ? (DESC_ES[place.name] || place.desc) : place.desc;
-
-    item.addEventListener('click', () => {
-      listBody.querySelectorAll('.list-item').forEach(i => i.classList.remove('sel'));
-      item.classList.add('sel');
-      const m = markers.find(mk => mk._place === place);
-      if (m) {
-        if (selectedMarker && selectedMarker !== m) {
-          const prev = selectedMarker._place;
-          selectedMarker.setIcon(mkIcon(CAT[prev.category].color, false));
-          selectedMarker._el && selectedMarker._el.classList.remove('sel');
-        }
-        m.setIcon(mkIcon(cat.color, true));
-        selectedMarker = m;
-        map.panTo([place.lat, place.lon], { animate: true, duration: .5 });
-      }
-      openPanel(place);
-    });
-
-    listBody.appendChild(item);
-  });
-
-  document.getElementById('list-panel').classList.add('open');
-  setTimeout(() => map.invalidateSize(), 350);
-}
-
-function closeList() {
-  currentCategory = null;
-  document.getElementById('list-panel').classList.remove('open');
-  setTimeout(() => map.invalidateSize(), 350);
-}
-
-// ── RENDER MARKERS ───────────────────────────────────────────────
-function renderMarkers() {
-  markers.forEach(m => map.removeLayer(m));
-  markers = [];
-  let count = 0;
-
-  PLACES.forEach(place => {
-    if (!activeFilters.has(place.category)) return;
-    const cat = CAT[place.category];
-    const m = L.marker([place.lat, place.lon], { icon: mkIcon(cat.color) });
-    m._place = place;
-    m.addTo(map);
-
-    m.on('click', () => {
-      if (selectedMarker && selectedMarker !== m) {
-        const prev = selectedMarker._place;
-        selectedMarker.setIcon(mkIcon(CAT[prev.category].color, false));
-      }
-      m.setIcon(mkIcon(cat.color, true));
-      selectedMarker = m;
-      openPanel(place);
-      map.panTo([place.lat, place.lon], { animate:true, duration:.5 });
-    });
-
-    markers.push(m);
-    count++;
-  });
-
-  const nc = document.getElementById('n-count');
-  nc.dataset.count = count;
-  nc.textContent = lang === 'es' ? count + ' lugar' + (count!==1?'es':'') : count + ' place' + (count!==1?'s':'');
-}
-
-// ── FILTER UI ────────────────────────────────────────────────────
-const filterBar = document.getElementById('filter-bar');
-
-// Count per category
+// ── FILTERS ──────────────────────────────────────────────────────
+const filterBar = document.getElementById('filters');
 const counts = {};
-PLACES.forEach(p => counts[p.category] = (counts[p.category]||0) + 1);
-
-// All button
-const allChip = document.createElement('button');
-allChip.className = 'chip all active';
-allChip.style.setProperty('--chip-color', '#C8A84B');
-allChip.innerHTML = `<span class="chip-emoji">✦</span><span class="chip-label"><span class="l-es">Todos</span><span class="l-en" style="display:none">All</span></span>`;
-allChip.addEventListener('click', () => {
-  activeFilters = new Set(Object.keys(CAT));
-  filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.add('active'));
-  allChip.classList.add('active');
-  renderMarkers();
-  closeList();
-  if (document.getElementById('panel').classList.contains('open')) closePanel();
-});
-filterBar.appendChild(allChip);
-
-Object.entries(CAT).forEach(([name, cfg]) => {
-  if (!counts[name]) return;
-  const btn = document.createElement('button');
-  btn.className = 'chip active';
-  btn.dataset.cat = name;
-  btn.style.setProperty('--chip-color', cfg.color);
-  btn.innerHTML = `<span class="chip-emoji">${cfg.emoji}</span><span class="chip-label"><span class="l-es">${cfg.label_es}</span><span class="l-en" style="display:none">${cfg.label_en}</span></span><span class="cnt">${counts[name]}</span>`;
-  btn.addEventListener('click', () => {
-    const solo = activeFilters.size === 1 && activeFilters.has(name);
-    if (solo) {
-      // Re-enable all
-      activeFilters = new Set(Object.keys(CAT));
-      filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.add('active'));
-      allChip.classList.add('active');
-      closeList();
-    } else {
-      activeFilters = new Set([name]);
-      filterBar.querySelectorAll('.chip[data-cat]').forEach(b => b.classList.toggle('active', b.dataset.cat === name));
-      allChip.classList.remove('active');
-      openList(name);
-    }
-    renderMarkers();
-    if (document.getElementById('panel').classList.contains('open')) closePanel();
+PLACES.forEach(p => counts[p.category] = (counts[p.category] || 0) + 1);
+function applyFilter(cat) {
+  currentCategory = cat;
+  filterBar.querySelectorAll('.chip').forEach(b => {
+    const on = (b.dataset.cat || null) === cat;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', on);
   });
-  filterBar.appendChild(btn);
-});
+  closePanel();
+  renderMarkers();
+  document.getElementById('list').scrollTop = 0;
+  renderList();
+}
+const mkChip = (key, es, en, n) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'chip';
+  if (key !== 'all') b.dataset.cat = key;
+  const hide = lang === 'es' ? ['', 'none'] : ['none', ''];
+  b.innerHTML = `${svg(key)}<span class="l-es" style="display:${hide[0]}">${es}</span><span class="l-en" style="display:${hide[1]}">${en}</span>${n ? `<span class="cnt">${n}</span>` : ''}`;
+  b.addEventListener('click', () => {
+    if (key === 'all') return applyFilter(null);
+    applyFilter(currentCategory === key ? null : key);   // segundo clic: vuelve a todos
+  });
+  filterBar.appendChild(b);
+};
+mkChip('all', 'Todos', 'All');
+Object.entries(CAT).forEach(([name, c]) => { if (counts[name]) mkChip(name, c.label_es, c.label_en, counts[name]); });
 
-const countEl = document.createElement('span');
-countEl.id = 'n-count';
-filterBar.appendChild(countEl);
+// ── LANG ─────────────────────────────────────────────────────────
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('lang', l);
+  document.documentElement.lang = l;
+  document.querySelectorAll('.l-es').forEach(e => e.style.display = l === 'es' ? '' : 'none');
+  document.querySelectorAll('.l-en').forEach(e => e.style.display = l === 'en' ? '' : 'none');
+  [['btn-es','es'],['btn-en','en']].forEach(([id, v]) => {
+    const b = document.getElementById(id);
+    b.classList.toggle('active', l === v);
+    b.setAttribute('aria-pressed', l === v);
+  });
+  const close = document.getElementById('panel-close');
+  close.title = close.ariaLabel = l === 'es' ? 'Cerrar' : 'Close';
+  filterBar.setAttribute('aria-label', l === 'es' ? 'Mis recomendaciones' : 'My recommendations');
+  document.getElementById('n-count').textContent = places_n(parseInt(document.getElementById('n-count').dataset.count || '0'));
+  renderList();
+  if (selected) fillPanel(selected);
+}
 
-renderMarkers();
-if (localStorage.getItem('lang') === 'en') setLang('en');
+applyFilter(null);
+setLang(localStorage.getItem('lang') === 'en' ? 'en' : 'es');
 </script>
 </body>
 </html>
