@@ -160,10 +160,9 @@
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="stylesheet" href="../assets/harmony.css" />
+  <link rel="stylesheet" href="../assets/tours.css" />
 </head>
-<body>
-
-<!-- Navbar -->
+<body class="body-ruta">
 <nav id="navbar" class="w-full py-4 px-6 md:px-10">
   <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
     <a href="../index.html" class="flex flex-col leading-none group">
@@ -224,261 +223,22 @@
     </div>
   </div>
 </nav>
-
-<!-- Breadcrumb -->
-<div class="pt-20 pb-0 px-6 md:px-10 max-w-7xl mx-auto">
-  <div class="flex items-center gap-2 text-xs text-berlin-muted mt-6 overflow-hidden">
-    <a href="../index.html" class="hover:text-gold transition-colors lang-es flex-shrink-0">Inicio</a>
-    <a href="../index.html" class="hover:text-gold transition-colors lang-en flex-shrink-0">Home</a>
-    <span class="flex-shrink-0">›</span>
-    <a href="../index.html#tours" class="hover:text-gold transition-colors flex-shrink-0">Tours</a>
-    <span class="flex-shrink-0">›</span>
-    <span class="text-white lang-es truncate">Free Tour Berlín</span>
-    <span class="text-white lang-en truncate">Berlin Free Tour</span>
-  </div>
-</div>
-
-<!-- Hero Image -->
-<div class="relative h-72 md:h-[480px] overflow-hidden mt-4">
-  <img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.1.-Puerta-de-Brandemburgo.jpg" alt="Puerta de Brandeburgo — Free Tour Berlín" class="w-full h-full object-cover" style="filter:brightness(.5) saturate(.7);" />
-  <div class="absolute inset-0 bg-gradient-to-t from-berlin-dark via-berlin-dark/20 to-transparent"></div>
-  <div class="absolute bottom-8 left-6 md:left-10">
-    <span class="inline-block bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase mb-3 lang-es">En base a propinas</span>
-    <span class="inline-block bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase mb-3 lang-en">Free — Tip based</span>
-    <h1 class="section-heading text-3xl md:text-5xl text-white lang-es">Free Tour por Berlín</h1>
-    <h1 class="section-heading text-3xl md:text-5xl text-white lang-en">Berlin Free Tour</h1>
-    <p class="text-berlin-muted text-sm mt-2 lang-es">Free Tour por el centro de la ciudad</p>
-    <p class="text-berlin-muted text-sm mt-2 lang-en">Free tour through the heart of the city</p>
-  </div>
-</div>
-
-<!-- Content -->
-<div class="max-w-7xl mx-auto px-6 md:px-10 py-12">
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-
-    <!-- Main content -->
-    <div class="lg:col-span-2 space-y-8">
-
-      <!-- Quick info bar -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-
-        <div class="info-card">
-          <div class="info-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="info-card-label lang-es">Duración</div>
-          <div class="info-card-label lang-en">Duration</div>
-          <div class="info-card-value">3h 30min</div>
-        </div>
-
-        <div class="info-card">
-          <div class="info-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          </div>
-          <div class="info-card-label lang-es">Horarios · Todos los días</div>
-          <div class="info-card-label lang-en">Schedule · Every day</div>
-          <div class="info-card-value">9:00 · 12:00 · 13:00 · 16:00</div>
-        </div>
-
-        <div class="info-card">
-          <div class="info-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <div class="info-card-label lang-es">Precio</div>
-          <div class="info-card-label lang-en">Price</div>
-          <div class="info-card-value lang-es">En base a propinas</div>
-          <div class="info-card-value lang-en">Tip-based</div>
-        </div>
-
-      </div>
-
-      <!-- Description -->
-      <div>
-        <h2 class="section-heading text-2xl md:text-3xl text-white mb-4 lang-es">Sobre este tour</h2>
-        <h2 class="section-heading text-2xl md:text-3xl text-white mb-4 lang-en">About this tour</h2>
-        <div class="space-y-4 text-berlin-muted text-[15px] leading-relaxed">
-          <p class="lang-es">Nos reuniremos a la hora acordada frente a la embajada francesa para comenzar este tour en español, con una introducción histórica que nos ayudará a entender el papel crucial de Berlín en los últimos dos siglos. Cruzaremos la icónica Puerta de Brandeburgo, el símbolo más representativo de la ciudad, para sumergirnos en la historia de Berlín y Alemania, visitando diversos puntos relacionados con la Segunda Guerra Mundial y la Guerra Fría.</p>
-          <p class="lang-en">We'll meet at the agreed time in front of the French Embassy to begin this tour, with a historical introduction that will help us understand Berlin's crucial role over the last two centuries. We'll cross the iconic Brandenburg Gate, the city's most representative symbol, to immerse ourselves in the history of Berlin and Germany, visiting various sites related to World War II and the Cold War.</p>
-          <p class="lang-es">Berlín es una ciudad que no se comprende sin un guía turístico. Es la capital de la Historia, y cada esquina, si sabes dónde mirar, impresiona. Es la capital de la Historia, y cada esquina, cada piedra, cada edificio es fuente de aprendizaje que no debemos dejar de buscar. Este es el tour básico, el crucial para comenzar a entender Berlín como una metrópolis única e irrepetible.</p>
-          <p class="lang-en">Berlin is a city you can't fully understand without a guide. It is the capital of History — every corner, every stone, every building is a source of learning not to be missed. This is the essential tour, the one that's crucial to begin understanding Berlin as a unique and unrepeatable metropolis.</p>
-        </div>
-      </div>
-
-      <!-- Gallery -->
-      <div>
-        <h2 class="section-heading text-xl text-white mb-4 lang-es">Galería del tour</h2>
-        <h2 class="section-heading text-xl text-white mb-4 lang-en">Tour gallery</h2>
-        <div class="gallery-grid">
-          <img class="gallery-main" src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.1.-Puerta-de-Brandemburgo.jpg" alt="Puerta de Brandeburgo" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.2.-Memorial-Judios-asesinados-de-Europa.jpg" alt="Memorial Judíos Asesinados de Europa" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.3.-Bundesministerium-der-Finanzen.jpg" alt="Ministerio Federal de Finanzas" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.4.-Muro-de-Berlin.jpg" alt="Muro de Berlín" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.5.-Muro-de-Berlin-y-Ministerio-de-la-Aviacion-del-Reich.jpg" alt="Muro de Berlín y Ministerio de Aviación del Reich" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.6.-Checkpoint-Charlie.jpg" alt="Checkpoint Charlie" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.7.-Gendarmenmarkt.jpg" alt="Gendarmenmarkt" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.9.-Facultad-de-derecho.jpg" alt="Facultad de Derecho" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/Bundesarchiv_Bild_183-V04744_Berlin_Garten_der_zerstorte_Reichskanzlei.jpg" alt="Antigua Reichskanzlei" />
-        </div>
-      </div>
-
-      <!-- What you'll see -->
-      <div>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-es">¿Qué visitaremos?</h2>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-en">What will we visit?</h2>
-        <ul class="space-y-3">
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Pariser Platz</strong> — Punto de partida frente a la embajada francesa</span><span class="lang-en"><strong class="text-white">Pariser Platz</strong> — Starting point in front of the French Embassy</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Puerta de Brandeburgo</strong> — El símbolo más representativo de la ciudad</span><span class="lang-en"><strong class="text-white">Brandenburg Gate</strong> — The most representative symbol of the city</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Monumento a los Judíos Asesinados de Europa</strong> — 2.711 estelas en el corazón de Berlín</span><span class="lang-en"><strong class="text-white">Holocaust Memorial</strong> — 2,711 stelae in the heart of Berlin</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Führerbunker</strong> — El lugar donde Hitler pasó sus últimos días</span><span class="lang-en"><strong class="text-white">Führerbunker</strong> — Where Hitler spent his final days</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Antiguo Ministerio del Aire del Reich</strong> — Uno de los pocos edificios nazis que sobrevivió</span><span class="lang-en"><strong class="text-white">Former Reich Air Ministry</strong> — One of the few Nazi buildings that survived</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Muro de Berlín</strong> — Restos originales del muro que dividió la ciudad</span><span class="lang-en"><strong class="text-white">Berlin Wall</strong> — Original remains of the wall that divided the city</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Checkpoint Charlie</strong> — El cruce fronterizo más famoso de la Guerra Fría</span><span class="lang-en"><strong class="text-white">Checkpoint Charlie</strong> — The most famous Cold War border crossing</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Gendarmenmarkt</strong> — La plaza más elegante de Berlín</span><span class="lang-en"><strong class="text-white">Gendarmenmarkt</strong> — Berlin's most elegant square</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Bebelplatz</strong> — Escenario de la quema de libros nazi en 1933</span><span class="lang-en"><strong class="text-white">Bebelplatz</strong> — Scene of the Nazi book burning in 1933</span></li>
-        </ul>
-      </div>
-
-      <div class="divider-line"></div>
-
-      <!-- FAQ -->
-      <div>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-es">Preguntas frecuentes</h2>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-en">Frequently asked questions</h2>
-        <div class="space-y-3">
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Cuánto cuesta el Free Tour por Berlín?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">How much does the Berlin Free Tour cost?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El Free Tour funciona con el sistema de propina voluntaria. Reservas gratis y al finalizar valoras el tour y aportas lo que consideres justo según tu experiencia y presupuesto. No hay precio fijo.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">The Free Tour works on a tip-based system. You book for free and at the end you value the tour and contribute what you consider fair based on your experience and budget. There is no fixed price.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Es necesario reservar el tour?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">Do I need to book the tour?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">Sí. Aunque es gratuito, es obligatorio reservar plaza porque los grupos tienen cupo limitado para garantizar una buena experiencia. Puedes reservar de forma rápida en nuestra web o contactarme directamente por WhatsApp.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">Yes. Although it's free, booking a spot is mandatory because groups have limited capacity to ensure a good experience. You can book quickly on our website or contact me directly via WhatsApp.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Dónde empieza el Free Tour?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">Where does the Free Tour start?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El punto de encuentro es en Pariser Platz, frente a la embajada francesa, junto a la Puerta de Brandeburgo. Es una ubicación céntrica y fácil de encontrar. Recibirás las indicaciones exactas al hacer la reserva.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">The meeting point is at Pariser Platz, in front of the French Embassy, next to the Brandenburg Gate. It's a central and easy-to-find location. You'll receive exact directions when you book.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿En qué idioma se hace el recorrido?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">What language is the tour in?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El tour se ofrece en español, con guía nativo certificado. Juan Berliner es un guía oficial hispanohablante que conoce la historia y los secretos de Berlín a fondo.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">The tour is offered in Spanish, with a certified native guide. Juan Berliner is an official Spanish-speaking guide who knows Berlin's history and secrets in depth.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Cuánto se camina durante el tour?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">How much walking is involved?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El recorrido tiene una duración de 3 horas y 30 minutos con un ritmo tranquilo. Se camina aproximadamente 3 kilómetros con varias paradas para explicaciones y descanso. Es apto para la mayoría de las personas.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">The tour lasts 3 hours and 30 minutes at a relaxed pace. You walk approximately 3 kilometers with several stops for explanations and rest. It's suitable for most people.</p>
-          </details>
-        </div>
-      </div>
-
-      <div class="divider-line"></div>
-
-      <!-- Reviews -->
-      <div>
-        <h2 class="section-heading text-2xl text-white mb-6 lang-es">Reseñas de este tour</h2>
-        <h2 class="section-heading text-2xl text-white mb-6 lang-en">Reviews for this tour</h2>
-        <div class="space-y-4">
-          <div class="info-card">
-            <div class="text-gold text-sm mb-2">★★★★★</div>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-es">"Recorrido fundamental para entender la compleja historia que tiene Berlín. Es muy completo y lo recomendaría a toda persona que acabe de llegar a la ciudad. Se visitan los monumentos principales y es un gran punto de partida. Además, la guía nos recomendó muchos planes para aprovechar el tiempo al máximo. 10/10"</p>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-en">"Amazing tour. Juan was very energetic, funny and knowledgeable. Two hours went by quickly and at the end I felt like I wanted to know even more about Berlin's history. Highly recommended!"</p>
-            <div class="text-sm">
-              <div class="text-white font-semibold">Carlos Méndez</div>
-              <div class="text-berlin-muted">Google Reviews</div>
-            </div>
-          </div>
-          <div class="info-card">
-            <div class="text-gold text-sm mb-2">★★★★★</div>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-es">"Fantástico tour el ofrecido por el guía. Berlín es una ciudad con muchos matices que a simple vista pasan desapercibidos y no te puedes ir sin conocerlos. Me impresionó mucho el contraste de una historia tan dura con la belleza de algunas de sus plazas clásicas."</p>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-en">"Juan is an excellent guide — covers all topics in a very well-informed way, but with great ease and enthusiasm. The contrast between Berlin's difficult history and the beauty of its classic squares is something you don't want to miss."</p>
-            <div class="text-sm">
-              <div class="text-white font-semibold">Elena Castillo</div>
-              <div class="text-berlin-muted">Google Reviews</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sidebar -->
-    <div class="space-y-5">
-      <!-- Book CTA -->
-      <div class="bg-berlin-surface border border-berlin-border rounded-lg p-5">
-        <h3 class="section-heading text-xl text-white mb-1 lang-es">Reserva tu plaza</h3>
-        <h3 class="section-heading text-xl text-white mb-1 lang-en">Reserve your spot</h3>
-        <p class="text-xs text-berlin-muted mb-4 lang-es">Cupos limitados — asegura tu lugar con antelación.</p>
-        <p class="text-xs text-berlin-muted mb-4 lang-en">Limited spots — book in advance to secure your place.</p>
-        <a href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Quiero%20reservar%20el%20Free%20Tour%20Berlín." target="_blank" rel="noopener" class="btn-whatsapp flex items-center justify-center gap-2 w-full py-3 rounded-md font-semibold text-sm mb-3 lang-es">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Reservar por WhatsApp
-        </a>
-        <a href="https://wa.me/4915736214462?text=Hi%20Juan!%20I%20want%20to%20book%20the%20Berlin%20Free%20Tour." target="_blank" rel="noopener" class="btn-whatsapp flex items-center justify-center gap-2 w-full py-3 rounded-md font-semibold text-sm mb-3 lang-en">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Book via WhatsApp
-        </a>
-        <a href="../index.html#booking" class="btn-outline flex items-center justify-center gap-2 w-full py-2.5 rounded-md font-medium text-sm lang-es">Formulario de reserva</a>
-        <a href="../index.html#booking" class="btn-outline flex items-center justify-center gap-2 w-full py-2.5 rounded-md font-medium text-sm lang-en">Booking form</a>
-      </div>
-      <!-- Details -->
-      <div class="info-card space-y-4">
-        <div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-es">Punto de encuentro</div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-en">Meeting point</div>
-          <p class="text-sm text-berlin-muted lang-es">Pariser Platz (frente a la Embajada Francesa).</p>
-          <p class="text-sm text-berlin-muted lang-en">Pariser Platz (in front of the French Embassy).</p>
-          <div class="mt-3 rounded overflow-hidden" style="height:160px;">
-            <iframe src="https://maps.google.com/maps?q=52.5163,13.3779&z=17&output=embed" width="100%" height="160" style="border:0;" loading="lazy" allowfullscreen title="Punto de encuentro"></iframe>
-          </div>
-        </div>
-        <div class="divider-line"></div>
-        <div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-es">Horarios</div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-en">Schedule</div>
-          <p class="text-sm text-berlin-muted">9:00 · 12:00 · 13:00 · 16:00</p>
-        </div>
-        <div class="divider-line"></div>
-        <div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-es">Normas</div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-en">Rules</div>
-          <p class="text-sm text-berlin-muted lang-es">No se aceptan grupos de más de 6 personas. Grupos mayores deben reservar visita privada.</p>
-          <p class="text-sm text-berlin-muted lang-en">Groups larger than 6 must book a private tour.</p>
-        </div>
-      </div>
-      <!-- Other tours -->
-      <div class="info-card">
-        <h3 class="text-gold text-xs tracking-widest uppercase font-semibold mb-3 lang-es">Otros tours</h3>
-        <h3 class="text-gold text-xs tracking-widest uppercase font-semibold mb-3 lang-en">Other tours</h3>
-        <div class="space-y-2">
-          <a href="muro-de-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-es">Muro de Berlín & Guerra Fría</a>
-          <a href="muro-de-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-en">Berlin Wall & Cold War</a>
-          <a href="nazismo-tercer-reich.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-es">Nazismo / Tercer Reich</a>
-          <a href="nazismo-tercer-reich.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-en">Nazism / Third Reich</a>
-          <a href="sachsenhausen.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-es">Sachsenhausen</a>
-          <a href="sachsenhausen.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-en">Sachsenhausen</a>
-          <a href="potsdam.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border">Potsdam</a>
-          <a href="berlin-alternativo.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 lang-es">Berlín Alternativo — 3h45</a>
-          <a href="berlin-alternativo.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 lang-en">Alternative Berlin — 3h45</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Floating WhatsApp -->
+<main class="p p-ruta">
+ <header class="r-head"><div class="r-head-text"><nav class="p-crumbs" aria-label="Breadcrumb"><a href="../index.html" class="lang-es">Inicio</a><a href="../index.html" class="lang-en">Home</a><i></i><a href="../index.html#tours">Tours</a><i></i><span class="lang-es p-crumb-now">Free Tour Berlín</span><span class="lang-en p-crumb-now">Berlin Free Tour</span></nav><h1 class="lang-es">Free Tour por Berlín</h1><h1 class="lang-en">Berlin Free Tour</h1><p class="lang-es r-sub">Free Tour por el centro de la ciudad</p><p class="lang-en r-sub">Free tour through the heart of the city</p><dl class="p-facts"><div><dt><span class="lang-es">Duración</span><span class="lang-en">Duration</span></dt><dd><span class="">3h 30min</span></dd></div><div><dt><span class="lang-es">Horarios · Todos los días</span><span class="lang-en">Schedule · Every day</span></dt><dd><span class="">9:00 · 12:00 · 13:00 · 16:00</span></dd></div><div><dt><span class="lang-es">Precio</span><span class="lang-en">Price</span></dt><dd><span class="lang-es">En base a propinas</span><span class="lang-en">Tip-based</span></dd></div></dl></div>
+ <div class="r-head-img"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.1.-Puerta-de-Brandemburgo.jpg" alt="Puerta de Brandeburgo — Free Tour Berlín" fetchpriority="high"></div></header>
+ <div class="r-body"><div class="r-main">
+  <section><h2 class="lang-es">Sobre este tour</h2><h2 class="lang-en">About this tour</h2><div class="p-prose"><p class="lang-es">Nos reuniremos a la hora acordada frente a la embajada francesa para comenzar este tour en español, con una introducción histórica que nos ayudará a entender el papel crucial de Berlín en los últimos dos siglos. Cruzaremos la icónica Puerta de Brandeburgo, el símbolo más representativo de la ciudad, para sumergirnos en la historia de Berlín y Alemania, visitando diversos puntos relacionados con la Segunda Guerra Mundial y la Guerra Fría.</p><p class="lang-es">Berlín es una ciudad que no se comprende sin un guía turístico. Es la capital de la Historia, y cada esquina, cada piedra, cada edificio es fuente de aprendizaje que no debemos dejar de buscar. Este es el tour básico, el crucial para comenzar a entender Berlín como una metrópolis única e irrepetible.</p><p class="lang-en">We'll meet at the agreed time in front of the French Embassy to begin this tour, with a historical introduction that will help us understand Berlin's crucial role over the last two centuries. We'll cross the iconic Brandenburg Gate, the city's most representative symbol, to immerse ourselves in the history of Berlin and Germany, visiting various sites related to World War II and the Cold War.</p><p class="lang-en">Berlin is a city you can't fully understand without a guide. It is the capital of History — every corner, every stone, every building is a source of learning not to be missed. This is the essential tour, the one that's crucial to begin understanding Berlin as a unique and unrepeatable metropolis.</p></div></section>
+  <section class="r-route"><h2 class="lang-es">¿Qué visitaremos?</h2><h2 class="lang-en">What will we visit?</h2><ol><li class=""><div class="r-stop"><h3><span class="">Pariser Platz</span></h3><p class="lang-es">Punto de partida frente a la embajada francesa</p><p class="lang-en">Starting point in front of the French Embassy</p></div></li><li class="has-img"><div class="r-stop"><h3><span class="lang-es">Puerta de Brandeburgo</span><span class="lang-en">Brandenburg Gate</span></h3><p class="lang-es">El símbolo más representativo de la ciudad</p><p class="lang-en">The most representative symbol of the city</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.1.-Puerta-de-Brandemburgo.jpg" alt="Puerta de Brandeburgo" loading="lazy"></li><li class="has-img"><div class="r-stop"><h3><span class="lang-es">Monumento a los Judíos Asesinados de Europa</span><span class="lang-en">Holocaust Memorial</span></h3><p class="lang-es">2.711 estelas en el corazón de Berlín</p><p class="lang-en">2,711 stelae in the heart of Berlin</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.2.-Memorial-Judios-asesinados-de-Europa.jpg" alt="Memorial Judíos Asesinados de Europa" loading="lazy"></li><li class="has-img"><div class="r-stop"><h3><span class="">Führerbunker</span></h3><p class="lang-es">El lugar donde Hitler pasó sus últimos días</p><p class="lang-en">Where Hitler spent his final days</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/Bundesarchiv_Bild_183-V04744_Berlin_Garten_der_zerstorte_Reichskanzlei.jpg" alt="Antigua Reichskanzlei" loading="lazy"></li><li class="has-img"><div class="r-stop"><h3><span class="lang-es">Antiguo Ministerio del Aire del Reich</span><span class="lang-en">Former Reich Air Ministry</span></h3><p class="lang-es">Uno de los pocos edificios nazis que sobrevivió</p><p class="lang-en">One of the few Nazi buildings that survived</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.3.-Bundesministerium-der-Finanzen.jpg" alt="Ministerio Federal de Finanzas" loading="lazy"></li><li class="has-img"><div class="r-stop"><h3><span class="lang-es">Muro de Berlín</span><span class="lang-en">Berlin Wall</span></h3><p class="lang-es">Restos originales del muro que dividió la ciudad</p><p class="lang-en">Original remains of the wall that divided the city</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.4.-Muro-de-Berlin.jpg" alt="Muro de Berlín" loading="lazy"></li><li class="has-img"><div class="r-stop"><h3><span class="">Checkpoint Charlie</span></h3><p class="lang-es">El cruce fronterizo más famoso de la Guerra Fría</p><p class="lang-en">The most famous Cold War border crossing</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.6.-Checkpoint-Charlie.jpg" alt="Checkpoint Charlie" loading="lazy"></li><li class="has-img"><div class="r-stop"><h3><span class="">Gendarmenmarkt</span></h3><p class="lang-es">La plaza más elegante de Berlín</p><p class="lang-en">Berlin's most elegant square</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.7.-Gendarmenmarkt.jpg" alt="Gendarmenmarkt" loading="lazy"></li><li class="has-img"><div class="r-stop"><h3><span class="">Bebelplatz</span></h3><p class="lang-es">Escenario de la quema de libros nazi en 1933</p><p class="lang-en">Scene of the Nazi book burning in 1933</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.9.-Facultad-de-derecho.jpg" alt="Facultad de Derecho" loading="lazy"></li></ol></section>
+  <section class="r-gal n1"><h2 class="lang-es">Galería del tour</h2><h2 class="lang-en">Tour gallery</h2><div><figure class="p-plate "><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.5.-Muro-de-Berlin-y-Ministerio-de-la-Aviacion-del-Reich.jpg" alt="Muro de Berlín y Ministerio de Aviación del Reich" loading="lazy"><figcaption class="lang-es">Muro de Berlín y Ministerio de Aviación del Reich</figcaption></figure></div></section>
+  <section class="r-details"><div class="p-detail"><h3><span class="lang-es">Punto de encuentro</span><span class="lang-en">Meeting point</span></h3><p class="lang-es">Pariser Platz (frente a la Embajada Francesa).</p><p class="lang-en">Pariser Platz (in front of the French Embassy).</p><div class="p-map"><iframe src="https://maps.google.com/maps?q=52.5163,13.3779&z=17&output=embed" loading="lazy" allowfullscreen title="Punto de encuentro"></iframe></div></div><div class="p-detail"><h3><span class="lang-es">Horarios</span><span class="lang-en">Schedule</span></h3><p class="">9:00 · 12:00 · 13:00 · 16:00</p></div><div class="p-detail"><h3><span class="lang-es">Normas</span><span class="lang-en">Rules</span></h3><p class="lang-es">No se aceptan grupos de más de 6 personas. Grupos mayores deben reservar visita privada.</p><p class="lang-en">Groups larger than 6 must book a private tour.</p></div></section>
+  <section><h2 class="lang-es">Reseñas de este tour</h2><h2 class="lang-en">Reviews for this tour</h2><div class="p-reviews"><figure><div class="p-stars" role="img" aria-label="5/5"><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg></div><blockquote><p class="lang-es">"Maravillosa experiencia con el Free Tour acompañados de Juan. Explicaciones muy detalladas y enriquecedoras que te dan una explicación muy realista a la historia de Berlín. Lo recomiendo sin duda."</p><p class="lang-en">"I take a free walking tour in most cities, but Juan was the best tour guide I’ve ever had! His passion and knowledge are unmatched, and his story telling made complex topics easy to digest, even for a non-history buff like me."</p></blockquote><figcaption><b class="lang-es">Gala Canca Atencia</b><b class="lang-en">Madison Paquette</b> <span>Google Reviews</span></figcaption></figure><figure><div class="p-stars" role="img" aria-label="5/5"><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg></div><blockquote><p class="lang-es">"Excelente free walking tour de Berlin con Juan! Infinidad de datos históricos contados con alegría y una pizca de humor. 100% recomendable."</p><p class="lang-en">"This is one of the best free walking tours I’ve taken. Juan is so knowledgeable, funny and engaging. He is very passionate and you could feel that from his explanations. Great job Juan"</p></blockquote><figcaption><b class="lang-es">Fran La Frossia</b><b class="lang-en">Eby Akhigbe</b> <span>Google Reviews</span></figcaption></figure></div></section>
+  <section><h2 class="lang-es">Preguntas frecuentes</h2><h2 class="lang-en">Frequently asked questions</h2><div class="p-faq"><details><summary><span class=""><span class="lang-es">¿Cuánto cuesta el Free Tour por Berlín?</span><span class="lang-en">How much does the Berlin Free Tour cost?</span></span></summary><p class="lang-es">El Free Tour funciona con el sistema de propina voluntaria. Reservas gratis y al finalizar valoras el tour y aportas lo que consideres justo según tu experiencia y presupuesto. No hay precio fijo.</p><p class="lang-en">The Free Tour works on a tip-based system. You book for free and at the end you value the tour and contribute what you consider fair based on your experience and budget. There is no fixed price.</p></details><details><summary><span class=""><span class="lang-es">¿Es necesario reservar el tour?</span><span class="lang-en">Do I need to book the tour?</span></span></summary><p class="lang-es">Sí. Aunque es gratuito, es obligatorio reservar plaza porque los grupos tienen cupo limitado para garantizar una buena experiencia. Puedes reservar de forma rápida en nuestra web o contactarme directamente por WhatsApp.</p><p class="lang-en">Yes. Although it's free, booking a spot is mandatory because groups have limited capacity to ensure a good experience. You can book quickly on our website or contact me directly via WhatsApp.</p></details><details><summary><span class=""><span class="lang-es">¿Dónde empieza el Free Tour?</span><span class="lang-en">Where does the Free Tour start?</span></span></summary><p class="lang-es">El punto de encuentro es en Pariser Platz, frente a la embajada francesa, junto a la Puerta de Brandeburgo. Es una ubicación céntrica y fácil de encontrar. Recibirás las indicaciones exactas al hacer la reserva.</p><p class="lang-en">The meeting point is at Pariser Platz, in front of the French Embassy, next to the Brandenburg Gate. It's a central and easy-to-find location. You'll receive exact directions when you book.</p></details><details><summary><span class=""><span class="lang-es">¿En qué idioma se hace el recorrido?</span><span class="lang-en">What language is the tour in?</span></span></summary><p class="lang-es">El tour se ofrece en español, con guía nativo certificado. Juan Berliner es un guía oficial hispanohablante que conoce la historia y los secretos de Berlín a fondo.</p><p class="lang-en">The tour is offered in Spanish, with a certified native guide. Juan Berliner is an official Spanish-speaking guide who knows Berlin's history and secrets in depth.</p></details><details><summary><span class=""><span class="lang-es">¿Cuánto se camina durante el tour?</span><span class="lang-en">How much walking is involved?</span></span></summary><p class="lang-es">El recorrido tiene una duración de 3 horas y 30 minutos con un ritmo tranquilo. Se camina aproximadamente 3 kilómetros con varias paradas para explicaciones y descanso. Es apto para la mayoría de las personas.</p><p class="lang-en">The tour lasts 3 hours and 30 minutes at a relaxed pace. You walk approximately 3 kilometers with several stops for explanations and rest. It's suitable for most people.</p></details></div></section>
+ </div><aside class="r-aside"><div class="r-book"><div class="lang-es p-price">En base a propinas</div><div class="lang-en p-price">Free — Tip based</div><h2 class="lang-es p-book-h">Reserva tu plaza</h2><h2 class="lang-en p-book-h">Reserve your spot</h2><p class="lang-es p-book-note">Cupos limitados — asegura tu lugar con antelación.</p><p class="lang-en p-book-note">Limited spots — book in advance to secure your place.</p><div class="p-actions"><a href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Quiero%20reservar%20el%20Free%20Tour%20Berlín." target="_blank" rel="noopener" class="p-wa lang-es"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>Reservar por WhatsApp</a><a href="https://wa.me/4915736214462?text=Hi%20Juan!%20I%20want%20to%20book%20the%20Berlin%20Free%20Tour." target="_blank" rel="noopener" class="p-wa lang-en"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>Book via WhatsApp</a><a href="../index.html#booking" class="p-form lang-es">Formulario de reserva</a><a href="../index.html#booking" class="p-form lang-en">Booking form</a></div></div></aside></div>
+ <section class="p-others o-a"><h2 class="lang-es">Otros tours</h2><h2 class="lang-en">Other tours</h2><ul><li><a href="muro-de-berlin.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTMGF.-5.-Memorial-Muro-Bernauer-strase.jpg" alt="" loading="lazy"><h3 class="lang-es">Muro de Berlín & Guerra Fría</h3><h3 class="lang-en">Berlin Wall & Cold War</h3><p><span class="">3h 30min</span><i></i><span class="lang-es">En base a propinas</span><span class="lang-en">Tip-based</span></p></a></li><li><a href="nazismo-tercer-reich.html"><img src="../naz.jpg" alt="" loading="lazy"><h3 class="lang-es">Nazismo / Tercer Reich</h3><h3 class="lang-en">Nazism / Third Reich</h3><p><span class="">3h 30min</span><i></i><span class=""><s>€22</s> €20</span></p></a></li><li><a href="sachsenhausen.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/01.-excursion-campo-concentracion-sachsenhausen.jpg" alt="" loading="lazy"><h3 class="">Sachsenhausen</h3><p><span class="">5h 30min</span><i></i><span class=""><s>€30</s> €27</span></p></a></li><li><a href="potsdam.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/04.-fachada-dorada-palacio-sanssouci-potsdam.jpg" alt="" loading="lazy"><h3 class="">Potsdam</h3><p><span class="">5h 45min</span><i></i><span class=""><s>€30</s> €27</span></p></a></li><li><a href="berlin-alternativo.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/02.-berlin-mural-east-side-gallery.jpg" alt="" loading="lazy"><h3 class="lang-es">Berlín Alternativo</h3><h3 class="lang-en">Alternative Berlin</h3><p><span class="">3h 45min</span><i></i><span class=""><s>€20</s> €18</span></p></a></li></ul></section>
+ </main>
 <a id="whatsapp-float" href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Quiero%20reservar%20el%20Free%20Tour%20Berlín." target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
-
-<!-- ═══════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════ -->
 <footer class="bg-berlin-surface border-t border-berlin-border pt-12 pb-8">
   <div class="max-w-7xl mx-auto px-6 md:px-10">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mb-8 md:mb-10">

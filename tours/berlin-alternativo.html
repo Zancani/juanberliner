@@ -152,10 +152,9 @@
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="stylesheet" href="../assets/harmony.css" />
+  <link rel="stylesheet" href="../assets/tours.css" />
 </head>
-<body>
-
-<!-- Navbar -->
+<body class="body-ruta">
 <nav id="navbar" class="w-full py-4 px-6 md:px-10">
   <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
     <a href="../index.html" class="flex flex-col leading-none group">
@@ -216,248 +215,22 @@
     </div>
   </div>
 </nav>
-
-<!-- Breadcrumb -->
-<div class="pt-20 pb-0 px-6 md:px-10 max-w-7xl mx-auto">
-  <div class="flex items-center gap-2 text-xs text-berlin-muted mt-6 overflow-hidden">
-    <a href="../index.html" class="hover:text-gold transition-colors lang-es flex-shrink-0">Inicio</a>
-    <a href="../index.html" class="hover:text-gold transition-colors lang-en flex-shrink-0">Home</a>
-    <span class="flex-shrink-0">›</span>
-    <a href="../index.html#tours" class="hover:text-gold transition-colors flex-shrink-0">Tours</a>
-    <span class="flex-shrink-0">›</span>
-    <span class="text-white lang-es truncate">Tour Berlín Alternativo</span>
-    <span class="text-white lang-en truncate">Alternative Berlin Tour</span>
-  </div>
-</div>
-
-<!-- Hero Image -->
-<div class="relative h-72 md:h-[480px] overflow-hidden mt-4">
-  <img src="https://exploraberlin.com/wp-content/uploads/2024/12/02.-berlin-mural-east-side-gallery.jpg" alt="East Side Gallery — Berlín Alternativo" class="w-full h-full object-cover" style="filter:brightness(.5) saturate(.7);" />
-  <div class="absolute inset-0 bg-gradient-to-t from-berlin-dark via-berlin-dark/20 to-transparent"></div>
-  <div class="absolute bottom-8 left-6 md:left-10">
-    <span class="inline-block bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase mb-3">€18 <span class="line-through opacity-60 font-normal">€20</span></span>
-    <h1 class="section-heading text-3xl md:text-5xl text-white lang-es">Tour del Berlín Alternativo</h1>
-    <h1 class="section-heading text-3xl md:text-5xl text-white lang-en">Alternative Berlin Tour</h1>
-    <p class="text-berlin-muted text-sm mt-2 lang-es">Conoceremos la cara real de la ciudad y entenderán por qué elegí esta ciudad como mi hogar</p>
-    <p class="text-berlin-muted text-sm mt-2 lang-en">You'll be amazed by what you discover!</p>
-  </div>
-</div>
-
-<!-- Content -->
-<div class="max-w-7xl mx-auto px-6 md:px-10 py-12">
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-
-    <!-- Main content -->
-    <div class="lg:col-span-2 space-y-8">
-
-      <!-- Quick info bar -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-
-        <div class="info-card">
-          <div class="info-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="info-card-label lang-es">Duración</div>
-          <div class="info-card-label lang-en">Duration</div>
-          <div class="info-card-value">3h 45min</div>
-        </div>
-
-        <div class="info-card">
-          <div class="info-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          </div>
-          <div class="info-card-label lang-es">Horarios · Lun · Mar · Jue · Vie · Sáb · Dom</div>
-          <div class="info-card-label lang-en">Schedule · Mon · Tue · Thu · Fri · Sat · Sun</div>
-          <div class="info-card-value">10:00 · 15:00</div>
-        </div>
-
-        <div class="info-card">
-          <div class="info-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <div class="info-card-label lang-es">Precio</div>
-          <div class="info-card-label lang-en">Price</div>
-          <div class="info-card-value"><span class="line-through opacity-50 font-normal text-berlin-muted text-xs">€20</span> €18</div>
-        </div>
-
-      </div>
-
-      <!-- Description -->
-      <div>
-        <h2 class="section-heading text-2xl md:text-3xl text-white mb-4 lang-es">Sobre este tour</h2>
-        <h2 class="section-heading text-2xl md:text-3xl text-white mb-4 lang-en">About this tour</h2>
-        <div class="space-y-4 text-berlin-muted text-[15px] leading-relaxed">
-          <p class="lang-es">Berlín es capital alternativa, del arte urbano, del techno, la libertad y el libertinaje mundial. ¿Por qué? ¿Desde cuándo? Vayamos más allá de los monumentos tradicionales para conocer la Berlín de verdad que se esconde en los barrios bohemios de la ciudad.</p>
-          <p class="lang-en">Berlin is the world capital of alternative culture, street art, techno, freedom and libertinism. Why? Since when? Let's go beyond the traditional monuments to discover the real Berlin hidden in the city's bohemian neighborhoods.</p>
-          <p class="lang-es">Nos encontraremos junto al Tränenpalast para recorrer la Oranienburger Straße, los patios art nouveau de las Hackesche Höfe, el barrio multicultural de Kotti y el vibrante Kreuzberg. El tour culmina ante los más de 100 murales que componen la East Side Gallery.</p>
-          <p class="lang-en">We'll meet by the Tränenpalast to walk through Oranienburger Straße, the art nouveau courtyards of Hackesche Höfe, the multicultural neighborhood of Kotti, and vibrant Kreuzberg. The tour ends before the more than 100 murals that make up the East Side Gallery.</p>
-          <p class="lang-es"><strong class="text-white">Nota:</strong> Para los desplazamientos utilizaremos el transporte público (Zonas AB). Es fundamental contar con un abono válido.</p>
-          <p class="lang-en"><strong class="text-white">Note:</strong> We'll use public transport for transfers (Zones AB). A valid transport pass is required.</p>
-        </div>
-      </div>
-
-      <!-- Gallery -->
-      <div>
-        <h2 class="section-heading text-xl text-white mb-4 lang-es">Galería del tour</h2>
-        <h2 class="section-heading text-xl text-white mb-4 lang-en">Tour gallery</h2>
-        <div class="gallery-grid">
-          <img class="gallery-main" src="https://exploraberlin.com/wp-content/uploads/2024/12/02.-berlin-mural-east-side-gallery.jpg" alt="East Side Gallery" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/01.-berlin-de-barrio.jpg" alt="Berlín de barrio" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/03.-callejones-alternativos-berlin.jpg" alt="Callejones alternativos de Berlín" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/04.-kreuzberg-barrio-berlin.jpg" alt="Kreuzberg" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/05.-mural-east-side-gallery.jpg" alt="Mural East Side Gallery" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/06.-patio-ar-nouveau-berlin-urbano.jpg" alt="Patio art nouveau Berlín" />
-          <img src="https://exploraberlin.com/wp-content/uploads/2024/12/07.-yaam-berlin-urbano.jpg" alt="YAAM Berlín" />
-        </div>
-      </div>
-
-      <!-- What you'll see -->
-      <div>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-es">¿Qué visitaremos?</h2>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-en">What will we visit?</h2>
-        <ul class="space-y-3">
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Oranienburger Straße</strong> — Antiguo corazón de la comunidad judía berlinesa</span><span class="lang-en"><strong class="text-white">Oranienburger Straße</strong> — Former heart of Berlin's Jewish community</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Hackesche Höfe</strong> — El impresionante complejo de patios de estilo art nouveau</span><span class="lang-en"><strong class="text-white">Hackesche Höfe</strong> — The impressive art nouveau courtyard complex</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Barrio de Kotti</strong> — Multicultural, punk y hogar del hip hop turco</span><span class="lang-en"><strong class="text-white">Kotti neighborhood</strong> — Multicultural, punk and birthplace of Turkish hip hop</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">"Astronaut Cosmonaut" en Kreuzberg</strong> — El famoso grafiti de Victor Ash con impacto visual antibélico</span><span class="lang-en"><strong class="text-white">"Astronaut Cosmonaut" in Kreuzberg</strong> — Victor Ash's famous anti-war mural</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Oranienstraße</strong> — Lugar de encuentro de los jóvenes berlineses</span><span class="lang-en"><strong class="text-white">Oranienstraße</strong> — A favorite gathering place for Berlin's youth</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Baumhaus</strong> — Centro ecológico en el corazón de Berlín</span><span class="lang-en"><strong class="text-white">Baumhaus</strong> — Ecological center in the heart of Berlin</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Mercado de Yaam</strong> — Comida africana y conciertos de reggae en vivo</span><span class="lang-en"><strong class="text-white">Yaam Market</strong> — African food and live reggae concerts</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">East Side Gallery</strong> — Más de 100 murales en el tramo más largo del Muro conservado</span><span class="lang-en"><strong class="text-white">East Side Gallery</strong> — Over 100 murals on the longest preserved stretch of the Wall</span></li>
-        </ul>
-      </div>
-
-      <div class="divider-line"></div>
-
-      <!-- FAQ -->
-      <div>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-es">Preguntas frecuentes</h2>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-en">Frequently asked questions</h2>
-        <div class="space-y-3">
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Qué tipo de lugares se visitan en el tour alternativo?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">What kind of places do we visit on the alternative tour?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El tour recorre barrios como Kreuzberg y Friedrichshain, visitando arte callejero, centros culturales alternativos, squats históricos, galerías independientes, mercados urbanos y espacios que reflejan la contracultura berlinesa.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">The tour explores neighborhoods like Kreuzberg and Friedrichshain, visiting street art, alternative cultural centers, historic squats, independent galleries, urban markets, and spaces that reflect Berlin's counterculture.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Es un tour de arte callejero?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">Is this a street art tour?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El arte callejero es una parte importante del recorrido, pero no lo es todo. También se explora la historia de la escena alternativa berlinesa, la cultura de clubes, el movimiento okupa, la transformación urbana y la creatividad que define a Berlín desde la caída del Muro.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">Street art is an important part of the tour, but not the only thing. We also explore the history of Berlin's alternative scene, club culture, the squatting movement, urban transformation, and the creativity that has defined Berlin since the fall of the Wall.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Cuánto cuesta el tour alternativo?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">How much does the alternative tour cost?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El tour tiene un precio de 18€ por persona. Incluye 3 horas y 45 minutos de recorrido guiado por los barrios más creativos de Berlín con un guía oficial que conoce la escena local a fondo.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">The tour is priced at €18 per person. It includes 3 hours and 45 minutes of guided walking through Berlin's most creative neighborhoods with an official guide who knows the local scene in depth.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Qué zonas de Berlín se recorren?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">Which areas of Berlin are covered?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El recorrido se centra en Kreuzberg (barrio alternativo por excelencia), Friedrichshain (escena underground y arte callejero) y partes del este de la ciudad donde la cultura alternativa berlinesa tiene su máxima expresión.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">The tour focuses on Kreuzberg (Berlin's quintessential alternative district), Friedrichshain (underground scene and street art), and parts of the east where Berlin's alternative culture reaches its fullest expression.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿En qué se diferencia de los tours turísticos tradicionales?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">How is it different from traditional tourist tours?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">A diferencia de los tours tradicionales que se centran en monumentos y grandes hitos, este tour te lleva al Berlín auténtico que los locales viven: patios escondidos, talleres de artistas, murales, cafés alternativos y la vibrante cultura underground que hace única a la ciudad.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">Unlike traditional tours that focus on monuments and major landmarks, this tour takes you to the authentic Berlin that locals experience: hidden courtyards, artist workshops, murals, alternative cafés, and the vibrant underground culture that makes the city unique.</p>
-          </details>
-        </div>
-      </div>
-
-      <div class="divider-line"></div>
-
-      <!-- Reviews -->
-      <div>
-        <h2 class="section-heading text-2xl text-white mb-6 lang-es">Reseñas de este tour</h2>
-        <h2 class="section-heading text-2xl text-white mb-6 lang-en">Reviews for this tour</h2>
-        <div class="space-y-4">
-          <div class="info-card">
-            <div class="text-gold text-sm mb-2">★★★★★</div>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-es">"Berlín es mucho más que nazis y muro, ¡cuántas sorpresas depara este tour! Me encantó ver tanto arte urbano creativo y en general tantas manifestaciones artísticas. 3 horas y media que pasan volando."</p>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-en">"Juan was a fantastic guide who set a perfect pace — providing just enough insight without overwhelming you. Very engaging delivery. Would absolutely recommend."</p>
-            <div class="text-sm">
-              <div class="text-white font-semibold">Juan C. Navarro</div>
-              <div class="text-berlin-muted">Google Reviews</div>
-            </div>
-          </div>
-          <div class="info-card">
-            <div class="text-gold text-sm mb-2">★★★★★</div>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-es">"El primer día que pasé en Berlín me llevé un mal sabor de boca. No me pareció una ciudad especial, diría incluso que me decepcionó. Pero este tour me cambió la perspectiva. Berlín tiene muchos rincones ocultos que de ninguna manera hubiera descubierto por mi cuenta. ¡Mil gracias!"</p>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-en">"Juan was fantastic! Really friendly, well-informed, and explained everything in a very interesting way. 100% recommend him!"</p>
-            <div class="text-sm">
-              <div class="text-white font-semibold">Natalia Fuentes</div>
-              <div class="text-berlin-muted">Google Reviews</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sidebar -->
-    <div class="space-y-5">
-      <div class="bg-berlin-surface border border-berlin-border rounded-lg p-5">
-        <h3 class="section-heading text-xl text-white mb-1 lang-es">Reserva tu plaza</h3>
-        <h3 class="section-heading text-xl text-white mb-1 lang-en">Reserve your spot</h3>
-        <p class="text-xs text-berlin-muted mb-4 lang-es">Cupos limitados — asegura tu lugar con antelación.</p>
-        <p class="text-xs text-berlin-muted mb-4 lang-en">Limited spots — secure your place in advance.</p>
-        <a href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Quiero%20reservar%20el%20Tour%20de%20Berlín%20Alternativo." target="_blank" rel="noopener" class="btn-whatsapp flex items-center justify-center gap-2 w-full py-3 rounded-md font-semibold text-sm mb-3 lang-es">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Reservar por WhatsApp
-        </a>
-        <a href="https://wa.me/4915736214462?text=Hi%20Juan!%20I%20want%20to%20book%20the%20Alternative%20Berlin%20Tour." target="_blank" rel="noopener" class="btn-whatsapp flex items-center justify-center gap-2 w-full py-3 rounded-md font-semibold text-sm mb-3 lang-en">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Book via WhatsApp
-        </a>
-        <a href="../index.html#booking" class="btn-outline flex items-center justify-center gap-2 w-full py-2.5 rounded-md font-medium text-sm lang-es">Formulario de reserva</a>
-        <a href="../index.html#booking" class="btn-outline flex items-center justify-center gap-2 w-full py-2.5 rounded-md font-medium text-sm lang-en">Booking form</a>
-      </div>
-      <div class="info-card space-y-4">
-        <div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-es">Punto de encuentro</div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-en">Meeting point</div>
-          <p class="text-sm text-berlin-muted lang-es">Palacio de las Lágrimas (Tränenpalast), junto a la Estación de Friedrichstraße.</p>
-          <p class="text-sm text-berlin-muted lang-en">Palace of Tears (Tränenpalast), next to Friedrichstraße station.</p>
-          <div class="mt-3 rounded overflow-hidden" style="height:160px;">
-            <iframe src="https://maps.google.com/maps?q=52.520797,13.387483&z=17&output=embed" width="100%" height="160" style="border:0;" loading="lazy" title="Punto de encuentro" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="divider-line"></div>
-        <div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-es">Transporte</div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-en">Transport</div>
-          <p class="text-sm text-berlin-muted lang-es">Zonas AB del transporte público. <span class="text-white">No incluido.</span></p>
-          <p class="text-sm text-berlin-muted lang-en">Public transport Zones AB. <span class="text-white">Not included.</span></p>
-        </div>
-      </div>
-      <div class="info-card">
-        <h3 class="text-gold text-xs tracking-widest uppercase font-semibold mb-3 lang-es">Otros tours</h3>
-        <h3 class="text-gold text-xs tracking-widest uppercase font-semibold mb-3 lang-en">Other tours</h3>
-        <div class="space-y-2">
-          <a href="free-tour-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-es">Free Tour Berlín</a>
-          <a href="free-tour-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-en">Berlin Free Tour</a>
-          <a href="muro-de-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-es">Muro de Berlín & Guerra Fría</a>
-          <a href="muro-de-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-en">Berlin Wall & Cold War</a>
-          <a href="nazismo-tercer-reich.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-es">Nazismo / Tercer Reich</a>
-          <a href="nazismo-tercer-reich.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-en">Nazism / Third Reich</a>
-          <a href="sachsenhausen.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-es">Sachsenhausen</a>
-          <a href="sachsenhausen.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1 border-b border-berlin-border lang-en">Sachsenhausen</a>
-          <a href="potsdam.html" class="block text-sm text-berlin-muted hover:text-white transition-colors py-1">Potsdam</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+<main class="p p-ruta">
+ <header class="r-head"><div class="r-head-text"><nav class="p-crumbs" aria-label="Breadcrumb"><a href="../index.html" class="lang-es">Inicio</a><a href="../index.html" class="lang-en">Home</a><i></i><a href="../index.html#tours">Tours</a><i></i><span class="lang-es p-crumb-now">Tour Berlín Alternativo</span><span class="lang-en p-crumb-now">Alternative Berlin Tour</span></nav><h1 class="lang-es">Tour del Berlín Alternativo</h1><h1 class="lang-en">Alternative Berlin Tour</h1><p class="lang-es r-sub">Conoceremos la cara real de la ciudad y entenderán por qué elegí esta ciudad como mi hogar</p><p class="lang-en r-sub">You'll be amazed by what you discover!</p><dl class="p-facts"><div><dt><span class="lang-es">Duración</span><span class="lang-en">Duration</span></dt><dd><span class="">3h 45min</span></dd></div><div><dt><span class="lang-es">Horarios · Lun · Mar · Jue · Vie · Sáb · Dom</span><span class="lang-en">Schedule · Mon · Tue · Thu · Fri · Sat · Sun</span></dt><dd><span class="">10:00 · 15:00</span></dd></div><div><dt><span class="lang-es">Precio</span><span class="lang-en">Price</span></dt><dd><span class=""><s>€20</s> €18</span></dd></div></dl></div>
+ <div class="r-head-img"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/02.-berlin-mural-east-side-gallery.jpg" alt="East Side Gallery — Berlín Alternativo" fetchpriority="high"></div></header>
+ <div class="r-body"><div class="r-main">
+  <section><h2 class="lang-es">Sobre este tour</h2><h2 class="lang-en">About this tour</h2><div class="p-prose"><p class="lang-es">Berlín es capital alternativa, del arte urbano, del techno, la libertad y el libertinaje mundial. ¿Por qué? ¿Desde cuándo? Vayamos más allá de los monumentos tradicionales para conocer la Berlín de verdad que se esconde en los barrios bohemios de la ciudad.</p><p class="lang-es">Nos encontraremos junto al Tränenpalast para recorrer la Oranienburger Straße, los patios art nouveau de las Hackesche Höfe, el barrio multicultural de Kotti y el vibrante Kreuzberg. El tour culmina ante los más de 100 murales que componen la East Side Gallery.</p><p class="lang-es"><strong>Nota:</strong> Para los desplazamientos utilizaremos el transporte público (Zonas AB). Es fundamental contar con un abono válido.</p><p class="lang-en">Berlin is the world capital of alternative culture, street art, techno, freedom and libertinism. Why? Since when? Let's go beyond the traditional monuments to discover the real Berlin hidden in the city's bohemian neighborhoods.</p><p class="lang-en">We'll meet by the Tränenpalast to walk through Oranienburger Straße, the art nouveau courtyards of Hackesche Höfe, the multicultural neighborhood of Kotti, and vibrant Kreuzberg. The tour ends before the more than 100 murals that make up the East Side Gallery.</p><p class="lang-en"><strong>Note:</strong> We'll use public transport for transfers (Zones AB). A valid transport pass is required.</p></div></section>
+  <section class="r-route"><h2 class="lang-es">¿Qué visitaremos?</h2><h2 class="lang-en">What will we visit?</h2><ol><li class=""><div class="r-stop"><h3><span class="">Oranienburger Straße</span></h3><p class="lang-es">Antiguo corazón de la comunidad judía berlinesa</p><p class="lang-en">Former heart of Berlin's Jewish community</p></div></li><li class="has-img"><div class="r-stop"><h3><span class="">Hackesche Höfe</span></h3><p class="lang-es">El impresionante complejo de patios de estilo art nouveau</p><p class="lang-en">The impressive art nouveau courtyard complex</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/06.-patio-ar-nouveau-berlin-urbano.jpg" alt="Patio art nouveau Berlín" loading="lazy"></li><li class="has-img"><div class="r-stop"><h3><span class="lang-es">Barrio de Kotti</span><span class="lang-en">Kotti neighborhood</span></h3><p class="lang-es">Multicultural, punk y hogar del hip hop turco</p><p class="lang-en">Multicultural, punk and birthplace of Turkish hip hop</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/04.-kreuzberg-barrio-berlin.jpg" alt="Kreuzberg" loading="lazy"></li><li class=""><div class="r-stop"><h3><span class="lang-es">"Astronaut Cosmonaut" en Kreuzberg</span><span class="lang-en">"Astronaut Cosmonaut" in Kreuzberg</span></h3><p class="lang-es">El famoso grafiti de Victor Ash con impacto visual antibélico</p><p class="lang-en">Victor Ash's famous anti-war mural</p></div></li><li class=""><div class="r-stop"><h3><span class="">Oranienstraße</span></h3><p class="lang-es">Lugar de encuentro de los jóvenes berlineses</p><p class="lang-en">A favorite gathering place for Berlin's youth</p></div></li><li class=""><div class="r-stop"><h3><span class="">Baumhaus</span></h3><p class="lang-es">Centro ecológico en el corazón de Berlín</p><p class="lang-en">Ecological center in the heart of Berlin</p></div></li><li class="has-img"><div class="r-stop"><h3><span class="">East Side Gallery</span></h3><p class="lang-es">Más de 100 murales en el tramo más largo del Muro conservado</p><p class="lang-en">Over 100 murals on the longest preserved stretch of the Wall</p></div><img src="https://exploraberlin.com/wp-content/uploads/2024/12/05.-mural-east-side-gallery.jpg" alt="Mural East Side Gallery" loading="lazy"></li></ol></section>
+  <section class="r-gal n3"><h2 class="lang-es">Galería del tour</h2><h2 class="lang-en">Tour gallery</h2><div><figure class="p-plate "><img src="https://exploraberlin.com/wp-content/uploads/2024/12/02.-berlin-mural-east-side-gallery.jpg" alt="East Side Gallery" loading="lazy"><figcaption class="lang-es">East Side Gallery</figcaption></figure><figure class="p-plate "><img src="https://exploraberlin.com/wp-content/uploads/2024/12/01.-berlin-de-barrio.jpg" alt="Mural de Thierry Noir en la East Side Gallery" loading="lazy"><figcaption class="lang-es">Mural de Thierry Noir en la East Side Gallery</figcaption></figure><figure class="p-plate "><img src="https://exploraberlin.com/wp-content/uploads/2024/12/03.-callejones-alternativos-berlin.jpg" alt="Callejones alternativos de Berlín" loading="lazy"><figcaption class="lang-es">Callejones alternativos de Berlín</figcaption></figure></div></section>
+  <section class="r-details"><div class="p-detail"><h3><span class="lang-es">Punto de encuentro</span><span class="lang-en">Meeting point</span></h3><p class="lang-es">Palacio de las Lágrimas (Tränenpalast), junto a la Estación de Friedrichstraße.</p><p class="lang-en">Palace of Tears (Tränenpalast), next to Friedrichstraße station.</p><div class="p-map"><iframe src="https://maps.google.com/maps?q=52.520797,13.387483&z=17&output=embed" loading="lazy" allowfullscreen title="Punto de encuentro"></iframe></div></div><div class="p-detail"><h3><span class="lang-es">Transporte</span><span class="lang-en">Transport</span></h3><p class="lang-es">Zonas AB del transporte público. <b>No incluido.</b></p><p class="lang-en">Public transport Zones AB. <b>Not included.</b></p></div></section>
+  <section><h2 class="lang-es">Reseñas de este tour</h2><h2 class="lang-en">Reviews for this tour</h2><div class="p-reviews"><figure><div class="p-stars" role="img" aria-label="5/5"><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg></div><blockquote><p class="">"Increíble la experiencia del tour alternativo con Juan, muy entretenido para mostrar los lugares. Recomendado para conocer de otra forma berlin !!"</p></blockquote><figcaption><b class="">Daniela delpin</b> <span>Google Reviews</span></figcaption></figure><figure><div class="p-stars" role="img" aria-label="5/5"><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg></div><blockquote><p class="">"Hicimos el tour por Berlín alternativo con Juan .Gran guia, entretenido, informativo, simpático"</p></blockquote><figcaption><b class="">Paulina de Aguirre</b> <span>Google Reviews</span></figcaption></figure></div></section>
+  <section><h2 class="lang-es">Preguntas frecuentes</h2><h2 class="lang-en">Frequently asked questions</h2><div class="p-faq"><details><summary><span class=""><span class="lang-es">¿Qué tipo de lugares se visitan en el tour alternativo?</span><span class="lang-en">What kind of places do we visit on the alternative tour?</span></span></summary><p class="lang-es">El tour recorre barrios como Kreuzberg y Friedrichshain, visitando arte callejero, centros culturales alternativos, squats históricos, galerías independientes, mercados urbanos y espacios que reflejan la contracultura berlinesa.</p><p class="lang-en">The tour explores neighborhoods like Kreuzberg and Friedrichshain, visiting street art, alternative cultural centers, historic squats, independent galleries, urban markets, and spaces that reflect Berlin's counterculture.</p></details><details><summary><span class=""><span class="lang-es">¿Es un tour de arte callejero?</span><span class="lang-en">Is this a street art tour?</span></span></summary><p class="lang-es">El arte callejero es una parte importante del recorrido, pero no lo es todo. También se explora la historia de la escena alternativa berlinesa, la cultura de clubes, el movimiento okupa, la transformación urbana y la creatividad que define a Berlín desde la caída del Muro.</p><p class="lang-en">Street art is an important part of the tour, but not the only thing. We also explore the history of Berlin's alternative scene, club culture, the squatting movement, urban transformation, and the creativity that has defined Berlin since the fall of the Wall.</p></details><details><summary><span class=""><span class="lang-es">¿Cuánto cuesta el tour alternativo?</span><span class="lang-en">How much does the alternative tour cost?</span></span></summary><p class="lang-es">El tour tiene un precio de 18€ por persona. Incluye 3 horas y 45 minutos de recorrido guiado por los barrios más creativos de Berlín con un guía oficial que conoce la escena local a fondo.</p><p class="lang-en">The tour is priced at €18 per person. It includes 3 hours and 45 minutes of guided walking through Berlin's most creative neighborhoods with an official guide who knows the local scene in depth.</p></details><details><summary><span class=""><span class="lang-es">¿Qué zonas de Berlín se recorren?</span><span class="lang-en">Which areas of Berlin are covered?</span></span></summary><p class="lang-es">El recorrido se centra en Kreuzberg (barrio alternativo por excelencia), Friedrichshain (escena underground y arte callejero) y partes del este de la ciudad donde la cultura alternativa berlinesa tiene su máxima expresión.</p><p class="lang-en">The tour focuses on Kreuzberg (Berlin's quintessential alternative district), Friedrichshain (underground scene and street art), and parts of the east where Berlin's alternative culture reaches its fullest expression.</p></details><details><summary><span class=""><span class="lang-es">¿En qué se diferencia de los tours turísticos tradicionales?</span><span class="lang-en">How is it different from traditional tourist tours?</span></span></summary><p class="lang-es">A diferencia de los tours tradicionales que se centran en monumentos y grandes hitos, este tour te lleva al Berlín auténtico que los locales viven: patios escondidos, talleres de artistas, murales, cafés alternativos y la vibrante cultura underground que hace única a la ciudad.</p><p class="lang-en">Unlike traditional tours that focus on monuments and major landmarks, this tour takes you to the authentic Berlin that locals experience: hidden courtyards, artist workshops, murals, alternative cafés, and the vibrant underground culture that makes the city unique.</p></details></div></section>
+ </div><aside class="r-aside"><div class="r-book"><div class="p-price">€18 <s>€20</s></div><h2 class="lang-es p-book-h">Reserva tu plaza</h2><h2 class="lang-en p-book-h">Reserve your spot</h2><p class="lang-es p-book-note">Cupos limitados — asegura tu lugar con antelación.</p><p class="lang-en p-book-note">Limited spots — secure your place in advance.</p><div class="p-actions"><a href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Quiero%20reservar%20el%20Tour%20de%20Berlín%20Alternativo." target="_blank" rel="noopener" class="p-wa lang-es"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>Reservar por WhatsApp</a><a href="https://wa.me/4915736214462?text=Hi%20Juan!%20I%20want%20to%20book%20the%20Alternative%20Berlin%20Tour." target="_blank" rel="noopener" class="p-wa lang-en"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>Book via WhatsApp</a><a href="../index.html#booking" class="p-form lang-es">Formulario de reserva</a><a href="../index.html#booking" class="p-form lang-en">Booking form</a></div></div></aside></div>
+ <section class="p-others o-a"><h2 class="lang-es">Otros tours</h2><h2 class="lang-en">Other tours</h2><ul><li><a href="free-tour-berlin.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.1.-Puerta-de-Brandemburgo.jpg" alt="" loading="lazy"><h3 class="lang-es">Free Tour Berlín</h3><h3 class="lang-en">Berlin Free Tour</h3><p><span class="">3h 30min</span><i></i><span class="lang-es">En base a propinas</span><span class="lang-en">Tip-based</span></p></a></li><li><a href="muro-de-berlin.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTMGF.-5.-Memorial-Muro-Bernauer-strase.jpg" alt="" loading="lazy"><h3 class="lang-es">Muro de Berlín & Guerra Fría</h3><h3 class="lang-en">Berlin Wall & Cold War</h3><p><span class="">3h 30min</span><i></i><span class="lang-es">En base a propinas</span><span class="lang-en">Tip-based</span></p></a></li><li><a href="nazismo-tercer-reich.html"><img src="../naz.jpg" alt="" loading="lazy"><h3 class="lang-es">Nazismo / Tercer Reich</h3><h3 class="lang-en">Nazism / Third Reich</h3><p><span class="">3h 30min</span><i></i><span class=""><s>€22</s> €20</span></p></a></li><li><a href="sachsenhausen.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/01.-excursion-campo-concentracion-sachsenhausen.jpg" alt="" loading="lazy"><h3 class="">Sachsenhausen</h3><p><span class="">5h 30min</span><i></i><span class=""><s>€30</s> €27</span></p></a></li><li><a href="potsdam.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/04.-fachada-dorada-palacio-sanssouci-potsdam.jpg" alt="" loading="lazy"><h3 class="">Potsdam</h3><p><span class="">5h 45min</span><i></i><span class=""><s>€30</s> €27</span></p></a></li></ul></section>
+ </main>
 <a id="whatsapp-float" href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Quiero%20reservar%20el%20Tour%20de%20Berlín%20Alternativo." target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
-
-<!-- ═══════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════ -->
 <footer class="bg-berlin-surface border-t border-berlin-border pt-12 pb-8">
   <div class="max-w-7xl mx-auto px-6 md:px-10">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mb-8 md:mb-10">

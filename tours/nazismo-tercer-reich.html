@@ -145,10 +145,9 @@
   </style>
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="stylesheet" href="../assets/harmony.css" />
+  <link rel="stylesheet" href="../assets/tours.css" />
 </head>
-<body>
-
-<!-- Navbar -->
+<body class="body-ruta">
 <nav id="navbar" class="w-full py-4 px-6 md:px-10">
   <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
     <a href="../index.html" class="flex flex-col leading-none group">
@@ -209,253 +208,22 @@
     </div>
   </div>
 </nav>
-
-<!-- Breadcrumb -->
-<div class="pt-20 pb-0 px-6 md:px-10 max-w-7xl mx-auto">
-  <div class="flex items-center gap-2 text-xs text-berlin-muted mt-6 overflow-hidden">
-    <a href="../index.html" class="hover:text-gold transition-colors lang-es flex-shrink-0">Inicio</a>
-    <a href="../index.html" class="hover:text-gold transition-colors lang-en flex-shrink-0">Home</a>
-    <span class="flex-shrink-0">›</span>
-    <a href="../index.html#tours" class="hover:text-gold transition-colors flex-shrink-0">Tours</a>
-    <span class="flex-shrink-0">›</span>
-    <span class="text-white lang-es truncate">Nazismo / Tercer Reich</span>
-    <span class="text-white lang-en truncate">Nazism / Third Reich</span>
-  </div>
-</div>
-
-<!-- Hero Image -->
-<div class="relative h-72 md:h-[480px] overflow-hidden mt-4">
-  <img src="../naz.jpg" alt="Tour Nazismo / Tercer Reich — Berlín" class="w-full h-full object-cover" style="filter:brightness(.5) saturate(.7);" />
-  <div class="absolute inset-0 bg-gradient-to-t from-berlin-dark via-berlin-dark/20 to-transparent"></div>
-  <div class="absolute bottom-8 left-6 md:left-10">
-    <span class="inline-block bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase mb-3 lang-es">€20 <span class="line-through opacity-60 font-normal">€22</span></span>
-    <span class="inline-block bg-gold text-berlin-dark text-[10px] font-bold px-2 py-1 rounded tracking-wider uppercase mb-3 lang-en">€20 <span class="line-through opacity-60 font-normal">€22</span></span>
-    <h1 class="section-heading text-3xl md:text-5xl text-white lang-es">Nazismo / Tercer Reich</h1>
-    <h1 class="section-heading text-3xl md:text-5xl text-white lang-en">Nazism / Third Reich</h1>
-    <p class="text-berlin-muted text-sm mt-2 lang-es">Un recorrido riguroso por los escenarios donde se gestó el régimen nazi</p>
-    <p class="text-berlin-muted text-sm mt-2 lang-en">A rigorous tour through the sites where the Nazi regime was forged</p>
-  </div>
-</div>
-
-<!-- Main content -->
-<div class="max-w-7xl mx-auto px-6 md:px-10 py-12">
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-
-    <!-- Left column -->
-    <div class="lg:col-span-2 space-y-8">
-
-      <!-- Info cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-
-        <div class="info-card">
-          <div class="info-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="info-card-label lang-es">Duración</div>
-          <div class="info-card-label lang-en">Duration</div>
-          <div class="info-card-value">3h 30min</div>
-        </div>
-
-        <div class="info-card">
-          <div class="info-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          </div>
-          <div class="info-card-label lang-es">Horarios · Vie y Sáb</div>
-          <div class="info-card-label lang-en">Schedule · Fri &amp; Sat</div>
-          <div class="info-card-value">10:00</div>
-        </div>
-
-        <div class="info-card">
-          <div class="info-card-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <div class="info-card-label lang-es">Precio</div>
-          <div class="info-card-label lang-en">Price</div>
-          <div class="info-card-value"><span class="line-through opacity-50 font-normal text-berlin-muted text-xs">€22</span> €20</div>
-        </div>
-
-      </div>
-
-      <!-- Description -->
-      <div>
-        <h2 class="section-heading text-2xl md:text-3xl text-white mb-4 lang-es">Sobre este tour</h2>
-        <h2 class="section-heading text-2xl md:text-3xl text-white mb-4 lang-en">About this tour</h2>
-        <div class="space-y-4 text-berlin-muted text-[15px] leading-relaxed">
-          <p class="lang-es">Si querés entender la historia del nazismo en Berlín de forma profunda, crítica y contextualizada, este tour del Tercer Reich es para vos. Recorremos los escenarios donde se consolidó el régimen nazi y analizamos cómo funcionó su estructura de poder, propaganda y persecución.</p>
-          <p class="lang-en">If you want to understand the history of Nazism in Berlin in a deep, critical and contextualised way, this Third Reich tour is for you. We walk through the sites where the Nazi regime consolidated its power and analyse how its structures of power, propaganda and persecution actually worked.</p>
-          <p class="lang-es">Durante el recorrido visitamos puntos clave del centro histórico como la Plaza del 18 de Marzo, el Monumento a los Sinti y Roma asesinados por el nazismo, el icónico Edificio del Reichstag, el Monumento a los diputados asesinados durante la República de Weimar y el imponente Memorial soviético de Tiergarten. Finalizamos en el histórico barrio judío de Berlín, un espacio fundamental para comprender la vida judía antes del nazismo, la persecución y la memoria actual.</p>
-          <p class="lang-en">During the tour we visit key sites in the historic centre: the March 18th Square, the Memorial to the Murdered Sinti and Roma, the iconic Reichstag Building, the Memorial to the Members of Parliament Murdered during the Weimar Republic, and the imposing Soviet War Memorial in Tiergarten. We finish in Berlin's historic Jewish Quarter — an essential space for understanding Jewish life before Nazism, the persecution, and how that memory lives on today.</p>
-          <p class="lang-es">Este tour histórico en Berlín no es solo una cronología de la Segunda Guerra Mundial. Mi enfoque busca explicar cómo el nazismo logró consolidarse políticamente, qué papel jugó la ideología y cómo impactó en la sociedad alemana y europea. Analizamos el contexto de la República de Weimar, el ascenso de Hitler y las consecuencias del régimen.</p>
-          <p class="lang-en">This historical tour in Berlin is not just a timeline of World War II. My approach aims to explain how Nazism managed to consolidate itself politically, what role ideology played, and how it impacted German and European society. We analyse the context of the Weimar Republic, Hitler's rise to power, and the consequences of the regime.</p>
-          <p class="lang-es">En mi tour combino experiencia práctica con formación académica en políticas públicas. Durante mi Licenciatura en Estudios Internacionales investigué la construcción ideológica del nazismo y su relación con el Estado y la sociedad. Si querés profundizar, podés leer uno de mis trabajos académicos acá: <a href="https://tinyurl.com/2w59temj" target="_blank" rel="noopener" class="text-gold hover:text-gold-light underline underline-offset-2 transition-colors">👉 tinyurl.com/2w59temj</a></p>
-          <p class="lang-en">In my tour I combine practical experience with an academic background in public policy. During my degree in International Studies I researched the ideological construction of Nazism and its relationship with the State and society. If you'd like to go deeper, you can read one of my academic papers here: <a href="https://tinyurl.com/2w59temj" target="_blank" rel="noopener" class="text-gold hover:text-gold-light underline underline-offset-2 transition-colors">👉 tinyurl.com/2w59temj</a></p>
-          <p class="lang-es">Este tour del Tercer Reich en Berlín está pensado para viajeros interesados en historia, memoria y política europea. Una experiencia rigurosa, reflexiva y accesible para comprender cómo Berlín enfrenta su pasado nazi y por qué sigue siendo relevante en la actualidad.</p>
-          <p class="lang-en">This Third Reich tour in Berlin is designed for travellers interested in history, memory and European politics. A rigorous, thoughtful and accessible experience to understand how Berlin confronts its Nazi past — and why it remains relevant today.</p>
-        </div>
-      </div>
-
-      <!-- Gallery -->
-      <div>
-        <h2 class="section-heading text-xl text-white mb-4 lang-es">Galería del tour</h2>
-        <h2 class="section-heading text-xl text-white mb-4 lang-en">Tour gallery</h2>
-        <div class="gallery-grid">
-          <img class="gallery-main" src="../Berlin_reichstag_west_panorama_2.webp" alt="Reichstag — Parlamento alemán" />
-          <img src="../csm_stolper_4_d0150b66fc.webp" alt="Stolpersteine — Piedras del tropiezo" />
-          <img src="../reichstag4-1.webp" alt="Detalle del Reichstag" />
-          <img src="../Rosenstrasse.webp" alt="Rosenstrasse" />
-        </div>
-      </div>
-
-      <!-- What you'll see -->
-      <div>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-es">¿Qué visitaremos?</h2>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-en">What will we visit?</h2>
-        <ul class="space-y-3">
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Plaza del 18 de Marzo</strong> — El inicio del recorrido en el corazón histórico de Berlín</span><span class="lang-en"><strong class="text-white">March 18th Square</strong> — The starting point in the historic heart of Berlin</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Monumento a los Sinti y Roma asesinados</strong> — Memorial a las víctimas de esta comunidad durante el Holocausto</span><span class="lang-en"><strong class="text-white">Memorial to the Murdered Sinti and Roma</strong> — Memorial to the Romani victims of the Holocaust</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Edificio del Reichstag</strong> — El parlamento alemán y escenario clave del ascenso nazi</span><span class="lang-en"><strong class="text-white">Reichstag Building</strong> — The German parliament and a key site in the Nazi rise to power</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Monumento a los diputados asesinados</strong> — Homenaje a los parlamentarios víctimas del régimen</span><span class="lang-en"><strong class="text-white">Memorial to the Murdered Members of Parliament</strong> — Tribute to the parliamentarians who fell victim to the regime</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Memorial soviético de Tiergarten</strong> — Erigido por la URSS en 1945 en pleno corazón de Berlín</span><span class="lang-en"><strong class="text-white">Soviet War Memorial in Tiergarten</strong> — Erected by the USSR in 1945 in the heart of Berlin</span></li>
-          <li class="flex items-start gap-3 text-[15px] text-berlin-muted"><span class="text-gold mt-0.5 flex-shrink-0">›</span><span class="lang-es"><strong class="text-white">Barrio judío</strong> — Historia y memoria de la comunidad judía berlinesa</span><span class="lang-en"><strong class="text-white">Jewish Quarter</strong> — History and memory of Berlin's Jewish community</span></li>
-        </ul>
-      </div>
-
-      <div class="divider-line"></div>
-
-      <!-- FAQ -->
-      <div>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-es">Preguntas frecuentes</h2>
-        <h2 class="section-heading text-2xl text-white mb-5 lang-en">Frequently asked questions</h2>
-        <div class="space-y-3">
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Se visita algún museo o interior?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">Do we visit any museums or interiors?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El tour es principalmente al aire libre, recorriendo los lugares reales donde ocurrieron los hechos. Se visitan espacios como la Topografía del Terror (exposición al aire libre), el Führerbunker y otros puntos históricos del centro de Berlín.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">The tour is mainly outdoors, visiting the actual places where events took place. We visit sites like the Topography of Terror (open-air exhibition), the Führerbunker, and other historical points in central Berlin.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Cuánto cuesta el tour del Tercer Reich?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">How much does the Third Reich tour cost?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">El tour tiene un precio de 20€ por persona. Incluye 3 horas y 30 minutos de recorrido guiado con un guía oficial certificado. La reserva se puede hacer online de forma rápida.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">The tour is priced at €20 per person. It includes 3 hours and 30 minutes of guided walking with a certified official guide. You can book online quickly.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿Qué lugares se visitan en el tour?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">What places are visited on the tour?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">Se visitan el Führerbunker, la Topografía del Terror, el antiguo Ministerio del Aire del Reich, el barrio judío, la Nueva Sinagoga, Bebelplatz (donde ocurrió la quema de libros) y otros puntos clave del Berlín nazi.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">We visit the Führerbunker, the Topography of Terror, the former Reich Air Ministry, the Jewish Quarter, the New Synagogue, Bebelplatz (where the book burning took place), and other key sites of Nazi Berlin.</p>
-          </details>
-          <details class="info-card cursor-pointer group">
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-es">¿El tour aborda temas sensibles?</summary>
-            <summary class="text-white font-medium text-[15px] pr-6 relative list-none lang-en">Does the tour cover sensitive topics?</summary>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-es">Sí. El tour trata el Holocausto, la persecución nazi y los crímenes del Tercer Reich con el máximo respeto a las víctimas y rigor histórico. El guía Juan Berliner es un profesional certificado que aborda estos temas con la seriedad y sensibilidad que merecen.</p>
-            <p class="text-[14px] text-berlin-muted leading-relaxed mt-2 lang-en">Yes. The tour addresses the Holocaust, Nazi persecution, and the crimes of the Third Reich with the utmost respect for the victims and historical accuracy. Guide Juan Berliner is a certified professional who handles these topics with the seriousness and sensitivity they deserve.</p>
-          </details>
-        </div>
-      </div>
-
-      <div class="divider-line"></div>
-
-      <!-- Reviews -->
-      <div>
-        <h2 class="section-heading text-2xl text-white mb-6 lang-es">Reseñas de este tour</h2>
-        <h2 class="section-heading text-2xl text-white mb-6 lang-en">Reviews for this tour</h2>
-        <div class="space-y-4">
-          <div class="info-card">
-            <div class="text-gold text-sm mb-2">★★★★★</div>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-es">"El tour más completo y riguroso que puedes encontrar sobre el nazismo en Berlín. Juan aborda el tema con el rigor académico y la sensibilidad que merece."</p>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-en">"The most complete and rigorous tour about Nazism in Berlin. Juan addresses the subject with the academic rigor and sensitivity it deserves."</p>
-            <div class="text-sm">
-              <div class="text-white font-semibold">Patricia V.</div>
-              <div class="text-berlin-muted">Google Reviews</div>
-            </div>
-          </div>
-          <div class="info-card">
-            <div class="text-gold text-sm mb-2">★★★★★</div>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-es">"Juan tiene una capacidad excepcional para explicar cómo el nazismo llegó al poder con una claridad y profundidad que nunca había encontrado."</p>
-            <p class="text-[15px] text-berlin-muted leading-relaxed mb-3 lang-en">"Remarkable. Juan's academic background really shines here. He explains how Nazism rose to power with clarity and depth I've never encountered before."</p>
-            <div class="text-sm">
-              <div class="text-white font-semibold">Thomas H.</div>
-              <div class="text-berlin-muted">Google Reviews</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sidebar -->
-    <div class="space-y-5">
-      <!-- Book CTA -->
-      <div class="bg-berlin-surface border border-berlin-border rounded-lg p-5">
-        <h3 class="section-heading text-xl text-white mb-1 lang-es">Reserva tu plaza</h3>
-        <h3 class="section-heading text-xl text-white mb-1 lang-en">Reserve your spot</h3>
-        <p class="text-xs text-berlin-muted mb-4 lang-es">Cupos limitados — asegura tu lugar con antelación.</p>
-        <p class="text-xs text-berlin-muted mb-4 lang-en">Limited spots — book in advance to secure your place.</p>
-        <a href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Quiero%20reservar%20el%20Tour%20del%20Nazismo%20%2F%20Tercer%20Reich." target="_blank" rel="noopener" class="btn-whatsapp flex items-center justify-center gap-2 w-full py-3 rounded-md font-semibold text-sm mb-3 lang-es">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Reservar por WhatsApp
-        </a>
-        <a href="https://wa.me/4915736214462?text=Hi%20Juan!%20I%20want%20to%20book%20the%20Nazism%20%2F%20Third%20Reich%20Tour." target="_blank" rel="noopener" class="btn-whatsapp flex items-center justify-center gap-2 w-full py-3 rounded-md font-semibold text-sm mb-3 lang-en">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Book via WhatsApp
-        </a>
-        <a href="../index.html#booking" class="btn-outline flex items-center justify-center gap-2 w-full py-2.5 rounded-md font-medium text-sm lang-es">Formulario de reserva</a>
-        <a href="../index.html#booking" class="btn-outline flex items-center justify-center gap-2 w-full py-2.5 rounded-md font-medium text-sm lang-en">Booking form</a>
-      </div>
-
-      <!-- Details -->
-      <div class="info-card space-y-4">
-        <div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-es">Punto de encuentro</div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-en">Meeting point</div>
-          <p class="text-sm text-berlin-muted lang-es">Puerta de Brandeburgo, lado sur.</p>
-          <p class="text-sm text-berlin-muted lang-en">Brandenburg Gate, south side.</p>
-          <div class="mt-3 rounded overflow-hidden" style="height:160px;">
-            <iframe src="https://maps.google.com/maps?q=52.5163,13.3779&z=17&output=embed" width="100%" height="160" style="border:0;" loading="lazy" allowfullscreen title="Punto de encuentro"></iframe>
-          </div>
-        </div>
-        <div class="divider-line"></div>
-        <div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-es">Horarios</div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-en">Schedule</div>
-          <p class="text-sm text-berlin-muted">10:00</p>
-        </div>
-        <div class="divider-line"></div>
-        <div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-es">Normas</div>
-          <div class="text-gold text-xs tracking-widest uppercase font-semibold mb-1 lang-en">Rules</div>
-          <p class="text-sm text-berlin-muted lang-es">No se aceptan grupos de más de 6 personas. Grupos mayores deben reservar visita privada.</p>
-          <p class="text-sm text-berlin-muted lang-en">Groups of more than 6 people are not accepted. Larger groups must book a private tour.</p>
-        </div>
-      </div>
-
-      <!-- Other tours -->
-      <div class="info-card">
-        <h3 class="text-gold text-xs tracking-widest uppercase font-semibold mb-3 lang-es">Otros tours</h3>
-        <h3 class="text-gold text-xs tracking-widest uppercase font-semibold mb-3 lang-en">Other tours</h3>
-        <div class="space-y-2">
-          <a href="free-tour-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors duration-200 py-1 border-b border-berlin-border lang-es">Free Tour Berlín</a>
-          <a href="free-tour-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors duration-200 py-1 border-b border-berlin-border lang-en">Berlin Free Tour</a>
-          <a href="muro-de-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors duration-200 py-1 border-b border-berlin-border lang-es">Muro de Berlín</a>
-          <a href="muro-de-berlin.html" class="block text-sm text-berlin-muted hover:text-white transition-colors duration-200 py-1 border-b border-berlin-border lang-en">Berlin Wall</a>
-          <a href="sachsenhausen.html" class="block text-sm text-berlin-muted hover:text-white transition-colors duration-200 py-1 border-b border-berlin-border">Sachsenhausen</a>
-          <a href="potsdam.html" class="block text-sm text-berlin-muted hover:text-white transition-colors duration-200 py-1 border-b border-berlin-border">Potsdam</a>
-          <a href="berlin-alternativo.html" class="block text-sm text-berlin-muted hover:text-white transition-colors duration-200 py-1 lang-es">Berlín Alternativo — 3h45</a>
-          <a href="berlin-alternativo.html" class="block text-sm text-berlin-muted hover:text-white transition-colors duration-200 py-1 lang-en">Alternative Berlin — 3h45</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Floating WhatsApp -->
+<main class="p p-ruta">
+ <header class="r-head"><div class="r-head-text"><nav class="p-crumbs" aria-label="Breadcrumb"><a href="../index.html" class="lang-es">Inicio</a><a href="../index.html" class="lang-en">Home</a><i></i><a href="../index.html#tours">Tours</a><i></i><span class="lang-es p-crumb-now">Nazismo / Tercer Reich</span><span class="lang-en p-crumb-now">Nazism / Third Reich</span></nav><h1 class="lang-es">Nazismo / Tercer Reich</h1><h1 class="lang-en">Nazism / Third Reich</h1><p class="lang-es r-sub">Un recorrido riguroso por los escenarios donde se gestó el régimen nazi</p><p class="lang-en r-sub">A rigorous tour through the sites where the Nazi regime was forged</p><dl class="p-facts"><div><dt><span class="lang-es">Duración</span><span class="lang-en">Duration</span></dt><dd><span class="">3h 30min</span></dd></div><div><dt><span class="lang-es">Horarios · Vie y Sáb</span><span class="lang-en">Schedule · Fri &amp; Sat</span></dt><dd><span class="">10:00</span></dd></div><div><dt><span class="lang-es">Precio</span><span class="lang-en">Price</span></dt><dd><span class=""><s>€22</s> €20</span></dd></div></dl></div>
+ <div class="r-head-img"><img src="../naz.jpg" alt="Tour Nazismo / Tercer Reich — Berlín" fetchpriority="high"></div></header>
+ <div class="r-body"><div class="r-main">
+  <section><h2 class="lang-es">Sobre este tour</h2><h2 class="lang-en">About this tour</h2><div class="p-prose"><p class="lang-es">Si querés entender la historia del nazismo en Berlín de forma profunda, crítica y contextualizada, este tour del Tercer Reich es para vos. Recorremos los escenarios donde se consolidó el régimen nazi y analizamos cómo funcionó su estructura de poder, propaganda y persecución.</p><p class="lang-es">Durante el recorrido visitamos puntos clave del centro histórico como la Plaza del 18 de Marzo, el Monumento a los Sinti y Roma asesinados por el nazismo, el icónico Edificio del Reichstag, el Monumento a los diputados asesinados durante la República de Weimar y el imponente Memorial soviético de Tiergarten. Finalizamos en el histórico barrio judío de Berlín, un espacio fundamental para comprender la vida judía antes del nazismo, la persecución y la memoria actual.</p><p class="lang-es">Este tour histórico en Berlín no es solo una cronología de la Segunda Guerra Mundial. Mi enfoque busca explicar cómo el nazismo logró consolidarse políticamente, qué papel jugó la ideología y cómo impactó en la sociedad alemana y europea. Analizamos el contexto de la República de Weimar, el ascenso de Hitler y las consecuencias del régimen.</p><p class="lang-es">En mi tour combino experiencia práctica con formación académica en políticas públicas. Durante mi Licenciatura en Estudios Internacionales investigué la construcción ideológica del nazismo y su relación con el Estado y la sociedad. Si querés profundizar, podés leer uno de mis trabajos académicos acá: <a href="https://tinyurl.com/2w59temj" target="_blank" rel="noopener" class="text-gold hover:text-gold-light underline underline-offset-2 transition-colors">👉 tinyurl.com/2w59temj</a></p><p class="lang-es">Este tour del Tercer Reich en Berlín está pensado para viajeros interesados en historia, memoria y política europea. Una experiencia rigurosa, reflexiva y accesible para comprender cómo Berlín enfrenta su pasado nazi y por qué sigue siendo relevante en la actualidad.</p><p class="lang-en">If you want to understand the history of Nazism in Berlin in a deep, critical and contextualised way, this Third Reich tour is for you. We walk through the sites where the Nazi regime consolidated its power and analyse how its structures of power, propaganda and persecution actually worked.</p><p class="lang-en">During the tour we visit key sites in the historic centre: the March 18th Square, the Memorial to the Murdered Sinti and Roma, the iconic Reichstag Building, the Memorial to the Members of Parliament Murdered during the Weimar Republic, and the imposing Soviet War Memorial in Tiergarten. We finish in Berlin's historic Jewish Quarter — an essential space for understanding Jewish life before Nazism, the persecution, and how that memory lives on today.</p><p class="lang-en">This historical tour in Berlin is not just a timeline of World War II. My approach aims to explain how Nazism managed to consolidate itself politically, what role ideology played, and how it impacted German and European society. We analyse the context of the Weimar Republic, Hitler's rise to power, and the consequences of the regime.</p><p class="lang-en">In my tour I combine practical experience with an academic background in public policy. During my degree in International Studies I researched the ideological construction of Nazism and its relationship with the State and society. If you'd like to go deeper, you can read one of my academic papers here: <a href="https://tinyurl.com/2w59temj" target="_blank" rel="noopener" class="text-gold hover:text-gold-light underline underline-offset-2 transition-colors">👉 tinyurl.com/2w59temj</a></p><p class="lang-en">This Third Reich tour in Berlin is designed for travellers interested in history, memory and European politics. A rigorous, thoughtful and accessible experience to understand how Berlin confronts its Nazi past — and why it remains relevant today.</p></div></section>
+  <section class="r-route"><h2 class="lang-es">¿Qué visitaremos?</h2><h2 class="lang-en">What will we visit?</h2><ol><li class=""><div class="r-stop"><h3><span class="lang-es">Plaza del 18 de Marzo</span><span class="lang-en">March 18th Square</span></h3><p class="lang-es">El inicio del recorrido en el corazón histórico de Berlín</p><p class="lang-en">The starting point in the historic heart of Berlin</p></div></li><li class=""><div class="r-stop"><h3><span class="lang-es">Monumento a los Sinti y Roma asesinados</span><span class="lang-en">Memorial to the Murdered Sinti and Roma</span></h3><p class="lang-es">Memorial a las víctimas de esta comunidad durante el Holocausto</p><p class="lang-en">Memorial to the Romani victims of the Holocaust</p></div></li><li class="has-img"><div class="r-stop"><h3><span class="lang-es">Edificio del Reichstag</span><span class="lang-en">Reichstag Building</span></h3><p class="lang-es">El parlamento alemán y escenario clave del ascenso nazi</p><p class="lang-en">The German parliament and a key site in the Nazi rise to power</p></div><img src="../Berlin_reichstag_west_panorama_2.webp" alt="Reichstag — Parlamento alemán" loading="lazy"></li><li class=""><div class="r-stop"><h3><span class="lang-es">Monumento a los diputados asesinados</span><span class="lang-en">Memorial to the Murdered Members of Parliament</span></h3><p class="lang-es">Homenaje a los parlamentarios víctimas del régimen</p><p class="lang-en">Tribute to the parliamentarians who fell victim to the regime</p></div></li><li class="has-img"><div class="r-stop"><h3><span class="lang-es">Memorial soviético de Tiergarten</span><span class="lang-en">Soviet War Memorial in Tiergarten</span></h3><p class="lang-es">Erigido por la URSS en 1945 en pleno corazón de Berlín</p><p class="lang-en">Erected by the USSR in 1945 in the heart of Berlin</p></div><img src="../naz.jpg" alt="Tour Nazismo / Tercer Reich — Berlín" loading="lazy"></li><li class="has-img"><div class="r-stop"><h3><span class="lang-es">Barrio judío</span><span class="lang-en">Jewish Quarter</span></h3><p class="lang-es">Historia y memoria de la comunidad judía berlinesa</p><p class="lang-en">History and memory of Berlin's Jewish community</p></div><img src="../Rosenstrasse.webp" alt="Rosenstrasse" loading="lazy"></li></ol></section>
+  <section class="r-gal n2"><h2 class="lang-es">Galería del tour</h2><h2 class="lang-en">Tour gallery</h2><div><figure class="p-plate "><img src="../csm_stolper_4_d0150b66fc.webp" alt="Stolpersteine — Piedras del tropiezo" loading="lazy"><figcaption class="lang-es">Stolpersteine — Piedras del tropiezo</figcaption></figure><figure class="p-plate "><img src="../reichstag4-1.webp" alt="Detalle del Reichstag" loading="lazy"><figcaption class="lang-es">Detalle del Reichstag</figcaption></figure></div></section>
+  <section class="r-details"><div class="p-detail"><h3><span class="lang-es">Punto de encuentro</span><span class="lang-en">Meeting point</span></h3><p class="lang-es">Puerta de Brandeburgo, lado sur.</p><p class="lang-en">Brandenburg Gate, south side.</p><div class="p-map"><iframe src="https://maps.google.com/maps?q=52.5163,13.3779&z=17&output=embed" loading="lazy" allowfullscreen title="Punto de encuentro"></iframe></div></div><div class="p-detail"><h3><span class="lang-es">Horarios</span><span class="lang-en">Schedule</span></h3><p class="">10:00</p></div><div class="p-detail"><h3><span class="lang-es">Normas</span><span class="lang-en">Rules</span></h3><p class="lang-es">No se aceptan grupos de más de 6 personas. Grupos mayores deben reservar visita privada.</p><p class="lang-en">Groups of more than 6 people are not accepted. Larger groups must book a private tour.</p></div></section>
+  <section><h2 class="lang-es">Reseñas de este tour</h2><h2 class="lang-en">Reviews for this tour</h2><div class="p-reviews"><figure><div class="p-stars" role="img" aria-label="5/5"><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg></div><blockquote><p class="">"Very good tour of Berlin learning about the history of the Nazis, politics and the memorials. Juan was very knowledgeable and sensitive to the history"</p></blockquote><figcaption><b class="">Ben Beeston</b> <span>Google Reviews</span></figcaption></figure><figure><div class="p-stars" role="img" aria-label="5/5"><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg><svg viewBox="0 0 20 20" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M10 1.6l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.9l6-.8z"/></svg></div><blockquote><p class="">"We loved the Third Reich Tour we did with Juan! Such a knowledgeable and passionate guide, we learned so much and loved our experience. Highly reccomend!"</p></blockquote><figcaption><b class="">Hannah Weiss</b> <span>Google Reviews</span></figcaption></figure></div></section>
+  <section><h2 class="lang-es">Preguntas frecuentes</h2><h2 class="lang-en">Frequently asked questions</h2><div class="p-faq"><details><summary><span class=""><span class="lang-es">¿Se visita algún museo o interior?</span><span class="lang-en">Do we visit any museums or interiors?</span></span></summary><p class="lang-es">El tour es principalmente al aire libre, recorriendo los lugares reales donde ocurrieron los hechos. Se visitan espacios como la Topografía del Terror (exposición al aire libre), el Führerbunker y otros puntos históricos del centro de Berlín.</p><p class="lang-en">The tour is mainly outdoors, visiting the actual places where events took place. We visit sites like the Topography of Terror (open-air exhibition), the Führerbunker, and other historical points in central Berlin.</p></details><details><summary><span class=""><span class="lang-es">¿Cuánto cuesta el tour del Tercer Reich?</span><span class="lang-en">How much does the Third Reich tour cost?</span></span></summary><p class="lang-es">El tour tiene un precio de 20€ por persona. Incluye 3 horas y 30 minutos de recorrido guiado con un guía oficial certificado. La reserva se puede hacer online de forma rápida.</p><p class="lang-en">The tour is priced at €20 per person. It includes 3 hours and 30 minutes of guided walking with a certified official guide. You can book online quickly.</p></details><details><summary><span class=""><span class="lang-es">¿Qué lugares se visitan en el tour?</span><span class="lang-en">What places are visited on the tour?</span></span></summary><p class="lang-es">Se visitan el Führerbunker, la Topografía del Terror, el antiguo Ministerio del Aire del Reich, el barrio judío, la Nueva Sinagoga, Bebelplatz (donde ocurrió la quema de libros) y otros puntos clave del Berlín nazi.</p><p class="lang-en">We visit the Führerbunker, the Topography of Terror, the former Reich Air Ministry, the Jewish Quarter, the New Synagogue, Bebelplatz (where the book burning took place), and other key sites of Nazi Berlin.</p></details><details><summary><span class=""><span class="lang-es">¿El tour aborda temas sensibles?</span><span class="lang-en">Does the tour cover sensitive topics?</span></span></summary><p class="lang-es">Sí. El tour trata el Holocausto, la persecución nazi y los crímenes del Tercer Reich con el máximo respeto a las víctimas y rigor histórico. El guía Juan Berliner es un profesional certificado que aborda estos temas con la seriedad y sensibilidad que merecen.</p><p class="lang-en">Yes. The tour addresses the Holocaust, Nazi persecution, and the crimes of the Third Reich with the utmost respect for the victims and historical accuracy. Guide Juan Berliner is a certified professional who handles these topics with the seriousness and sensitivity they deserve.</p></details></div></section>
+ </div><aside class="r-aside"><div class="r-book"><div class="p-price">€20 <s>€22</s></div><h2 class="lang-es p-book-h">Reserva tu plaza</h2><h2 class="lang-en p-book-h">Reserve your spot</h2><p class="lang-es p-book-note">Cupos limitados — asegura tu lugar con antelación.</p><p class="lang-en p-book-note">Limited spots — book in advance to secure your place.</p><div class="p-actions"><a href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Quiero%20reservar%20el%20Tour%20del%20Nazismo%20%2F%20Tercer%20Reich." target="_blank" rel="noopener" class="p-wa lang-es"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>Reservar por WhatsApp</a><a href="https://wa.me/4915736214462?text=Hi%20Juan!%20I%20want%20to%20book%20the%20Nazism%20%2F%20Third%20Reich%20Tour." target="_blank" rel="noopener" class="p-wa lang-en"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>Book via WhatsApp</a><a href="../index.html#booking" class="p-form lang-es">Formulario de reserva</a><a href="../index.html#booking" class="p-form lang-en">Booking form</a></div></div></aside></div>
+ <section class="p-others o-a"><h2 class="lang-es">Otros tours</h2><h2 class="lang-en">Other tours</h2><ul><li><a href="free-tour-berlin.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTB.1.-Puerta-de-Brandemburgo.jpg" alt="" loading="lazy"><h3 class="lang-es">Free Tour Berlín</h3><h3 class="lang-en">Berlin Free Tour</h3><p><span class="">3h 30min</span><i></i><span class="lang-es">En base a propinas</span><span class="lang-en">Tip-based</span></p></a></li><li><a href="muro-de-berlin.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/FTMGF.-5.-Memorial-Muro-Bernauer-strase.jpg" alt="" loading="lazy"><h3 class="lang-es">Muro de Berlín & Guerra Fría</h3><h3 class="lang-en">Berlin Wall & Cold War</h3><p><span class="">3h 30min</span><i></i><span class="lang-es">En base a propinas</span><span class="lang-en">Tip-based</span></p></a></li><li><a href="sachsenhausen.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/01.-excursion-campo-concentracion-sachsenhausen.jpg" alt="" loading="lazy"><h3 class="">Sachsenhausen</h3><p><span class="">5h 30min</span><i></i><span class=""><s>€30</s> €27</span></p></a></li><li><a href="potsdam.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/04.-fachada-dorada-palacio-sanssouci-potsdam.jpg" alt="" loading="lazy"><h3 class="">Potsdam</h3><p><span class="">5h 45min</span><i></i><span class=""><s>€30</s> €27</span></p></a></li><li><a href="berlin-alternativo.html"><img src="https://exploraberlin.com/wp-content/uploads/2024/12/02.-berlin-mural-east-side-gallery.jpg" alt="" loading="lazy"><h3 class="lang-es">Berlín Alternativo</h3><h3 class="lang-en">Alternative Berlin</h3><p><span class="">3h 45min</span><i></i><span class=""><s>€20</s> €18</span></p></a></li></ul></section>
+ </main>
 <a id="whatsapp-float" href="https://wa.me/4915736214462?text=¡Hola%20Juan!%20Quiero%20reservar%20el%20Tour%20del%20Nazismo%20%2F%20Tercer%20Reich." target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
-
-<!-- ═══════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════ -->
 <footer class="bg-berlin-surface border-t border-berlin-border pt-12 pb-8">
   <div class="max-w-7xl mx-auto px-6 md:px-10">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mb-8 md:mb-10">
